@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export function RelationshipBadge({ type, children }) {
   const baseStyle =
     'inline-flex items-center justify-center rounded-lg px-2 py-0.5 font-16-regular';
@@ -10,8 +12,14 @@ export function RelationshipBadge({ type, children }) {
   };
 
   return (
-    <span className={`${baseStyle} ${variantStyles[type] || ''}`}>
+    <span
+      className={[baseStyle, variantStyles[type]].filter(Boolean).join(' ')}>
       {children}
     </span>
   );
 }
+
+RelationshipBadge.propTypes = {
+  type: PropTypes.oneOf(['friend', 'family', 'coworker', 'other']).isRequired,
+  children: PropTypes.node.isRequired,
+};
