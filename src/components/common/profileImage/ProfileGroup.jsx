@@ -1,4 +1,4 @@
-// Participants.jsx
+// ProfileGroup.jsx
 // 프로필 그룹 컴포넌트
 import ProfileImage from './ProfileImage';
 

@@ -1,4 +1,6 @@
 // ProfileImage.jsx
+// 기본 프로필 1개 컴포넌트
+
 const ProfileImage = ({
   src,
   alt = '프로필이미지',

@@ -1,3 +1,6 @@
+// ProfileSelector.jsx
+// 프로필 선택 컴포넌트
+
 import { useState } from 'react';
 import ProfileImage from './ProfileImage';
 
