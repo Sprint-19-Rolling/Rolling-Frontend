@@ -122,7 +122,7 @@
 @utility font-16-medium {
   font-size: var(--text-16);
   line-height: var(--leading-16);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 @utility font-16-bold {
