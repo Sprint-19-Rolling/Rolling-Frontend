@@ -1,13 +1,7 @@
 import Router from '@/router/Router';
-import Header from './components/common/Header';
 
 const App = () => {
-  return (
-    <div>
-      <Header />
-      <Router />
-    </div>
-  );
+  return <Router />;
 };
 
 export default App;
