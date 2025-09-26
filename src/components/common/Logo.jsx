@@ -1,14 +1,13 @@
-import Logo from '@/assets/logo/logo.svg?url';
+import { Link } from 'react-router-dom';
+import LogoImage from '@/assets/logo/logo.svg?url';
 
-const LogoComponent = () => {
+const Logo = () => {
   return (
-    <a
-      href="/"
+    <Link
+      to="/"
       className="flex items-center gap-2 text-purple-600 no-underline">
-      <img src={Logo} alt="Rolling Logo" className="h-[100px] w-[100px]" />
-      <span className="font-poppins text-[19.97px] leading-[100%] font-bold text-[#4A494F]" />
-    </a>
+      <img src={LogoImage} alt="Rolling Logo" className="h-10" />
+    </Link>
   );
 };
-
-export default LogoComponent;
+export default Logo;
