@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import EditRoling from '@/assets/icons/ic-pencil.svg?url';
+import EditRolling from '@/assets/icons/ic-pencil.svg?url';
 
 const NavLinks = () => {
   const location = useLocation();
@@ -7,7 +7,7 @@ const NavLinks = () => {
   const isPostRelatedPage = location.pathname.startsWith('/post');
 
   if (isPostRelatedPage) {
-    return <nav className="flex gap-8" />;
+    return null;
   }
 
   return (
@@ -21,7 +21,7 @@ const NavLinks = () => {
         to="/post"
         className="font-pretendard flex h-10 w-10 cursor-pointer items-center justify-center rounded-[6px] border border-[#CCC] bg-white transition hover:border-gray-900 md:hidden"
         aria-label="롤링페이퍼 만들기">
-        <img src={EditRoling} alt="롤링페이퍼 만들기" className="h-8 w-8" />
+        <img src={EditRolling} alt="롤링페이퍼 만들기" className="h-8 w-8" />
       </Link>
     </nav>
   );
