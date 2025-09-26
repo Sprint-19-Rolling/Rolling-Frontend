@@ -5,6 +5,7 @@ import ArrowRightIcon from '@/assets/icons/ic-arrow-right.svg';
 import CheckIcon from '@/assets/icons/ic-check.svg';
 import DeletedIcon from '@/assets/icons/ic-deleted.svg';
 import EditIcon from '@/assets/icons/ic-edit.svg';
+import EditRoling from '@/assets/icons/ic-pencil.svg';
 import PlusIcon from '@/assets/icons/ic-plus.svg';
 import ShareIcon from '@/assets/icons/ic-share.svg';
 
@@ -18,4 +19,5 @@ export default {
   EditIcon,
   PlusIcon,
   ShareIcon,
+  EditRoling,
 };
