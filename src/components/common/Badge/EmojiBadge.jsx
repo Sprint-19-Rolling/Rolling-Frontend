@@ -1,15 +1,36 @@
+import { cva } from 'class-variance-authority';
 import PropTypes from 'prop-types';
+import { cn } from '@/utils/style';
 
-export function EmojiBadge({ emoji, count }) {
+// 이모지 뱃지 스타일 정의
+const emojiBadgeStyle = cva(
+  'inline-flex items-center justify-center rounded-full bg-black/50 text-white font-16-regular',
+  {
+    variants: {
+      size: {
+        md: 'px-3 py-2 h-[36px] text-sm',
+        lg: 'px-4 py-2 h-[40px] text-base',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+    },
+  }
+);
+
+export const EmojiBadge = ({ emoji, count, size = 'md' }) => {
   return (
-    <span className="inline-flex h-[36px] items-center justify-center gap-2 rounded-full bg-black/50 px-3 font-16-regular text-white">
-      <span>{emoji}</span>
-      <span>{count}</span>
+    <span className={cn(emojiBadgeStyle({ size }))}>
+      <span className="mr-1">{emoji}</span>
+      {count !== undefined && <span>{count}</span>}
     </span>
   );
-}
+};
 
 EmojiBadge.propTypes = {
-  emoji: PropTypes.string.isRequired, // 이모지는 반드시 문자열
-  count: PropTypes.number.isRequired, // 숫자는 반드시 number
+  emoji: PropTypes.string.isRequired,
+  count: PropTypes.number,
+  size: PropTypes.oneOf(['md', 'lg']),
 };
+
+export default EmojiBadge;
