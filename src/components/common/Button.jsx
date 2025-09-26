@@ -3,7 +3,7 @@ import { cn } from '@/utils/style';
 
 /**
  * 공통 버튼 컴포넌트
- * @param props.children - 버튼 내부에 표시될 내용
+ * @param props.children - 버튼 내부에 표시할 내용
  * @param props.type - 버튼 타입 (button, submit, reset) 기본값: button
  * @param props.theme - 버튼 스타일 테마 ('primary' | 'secondary' | 'outlined' | 'icon') 기본값: primary
  * @param props.size - 버튼 높이 (28 | 32 | 36 | 40 | 56) 기본값: null
