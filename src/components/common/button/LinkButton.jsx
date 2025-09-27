@@ -20,7 +20,10 @@ const LinkButton = ({
   ...props
 }) => {
   return (
-    <Link to={to} className={cn(buttonVariants({ theme, size, full }))} {...props}>
+    <Link
+      to={to}
+      className={cn(buttonVariants({ theme, size, full }))}
+      {...props}>
       {children}
     </Link>
   );
