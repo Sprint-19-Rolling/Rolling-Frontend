@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router';
-import EditRolling from '@/assets/icons/icons';
+import icons from '@/assets/icons/icons';
 import LogoAsset from '@/assets/logo/logo';
 
 const Header = () => {
@@ -26,11 +26,7 @@ const Header = () => {
                 to="/post"
                 className="font-pretendard flex h-10 w-10 cursor-pointer items-center justify-center rounded-[6px] border border-[#CCC] bg-white transition hover:border-gray-900 md:hidden"
                 aria-label="롤링페이퍼 만들기">
-                <img
-                  src={EditRolling}
-                  alt="롤링페이퍼 만들기"
-                  className="h-8 w-8"
-                />
+                <icons.EditRolling width={32} height={32} />
               </Link>
             </nav>
           )}
