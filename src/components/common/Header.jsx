@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router';
-import EditRolling from '@/assets/icons/ic-pencil.svg?url';
+import EditRolling from '@/assets/icons/icons';
 import LogoAsset from '@/assets/logo/logo';
 
 const Header = () => {
