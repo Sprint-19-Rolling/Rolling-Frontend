@@ -1,0 +1,15 @@
+@utility footer-text-bold {
+  @apply font-16-bold text-gray-500;
+}
+
+@utility footer-text {
+  @apply font-16-regular text-gray-500;
+}
+
+@utility footer-link {
+  @apply font-16-bold text-gray-500 hover:text-gray-900;
+}
+
+@utility footer-separator {
+  @apply font-14-regular text-gray-300;
+}
