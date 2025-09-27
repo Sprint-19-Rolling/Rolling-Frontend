@@ -1,9 +1,11 @@
+//관계 뱃지 컴포넌트
+
 import { cva } from 'class-variance-authority';
 import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
 
 const relationshipBadgeStyle = cva(
-  'inline-flex items-center justify-center rounded-lg px-2 py-0.5 font-16-regular h-[32px]',
+  'inline-flex items-center justify-center rounded px-2 py-0.5 font-14-regular h-[20px]',
   {
     variants: {
       type: {
@@ -13,13 +15,10 @@ const relationshipBadgeStyle = cva(
         지인: 'bg-orange-100 text-orange-600',
       },
     },
-    defaultVariants: {
-      type: '지인',
-    },
   }
 );
 
-const RelationshipBadge = ({ type }) => {
+const RelationshipBadge = ({ type = '지인' }) => {
   return <span className={cn(relationshipBadgeStyle({ type }))}>{type}</span>;
 };
 

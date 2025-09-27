@@ -1,3 +1,5 @@
+//이모지 뱃지 컴포넌트
+
 import { cva } from 'class-variance-authority';
 import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
