@@ -28,6 +28,7 @@ LinkButton.propTypes = {
   theme: PropTypes.oneOf(['primary', 'secondary', 'outlined', 'icon']),
   size: PropTypes.oneOf([28, 32, 36, 40, 56, null]),
   full: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default LinkButton;

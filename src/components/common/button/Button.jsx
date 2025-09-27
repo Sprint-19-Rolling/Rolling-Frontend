@@ -33,6 +33,7 @@ Button.propTypes = {
   full: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default Button;
