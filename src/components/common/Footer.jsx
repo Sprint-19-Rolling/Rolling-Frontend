@@ -7,14 +7,14 @@ const Footer = () => {
         <logo.Logo width={106} height={37} />
         <address className="flex flex-col gap-2 not-italic">
           <h3 className="font-16-bold text-gray-700">Sprint 19기 - 7팀</h3>
-          <ul className="flex gap-2">
-            <li className="mr-1 footer-text-bold">팀원</li>
-            <li className="footer-text">이아름</li>
-            <li className="footer-text">양은지</li>
-            <li className="footer-text">최희락</li>
-            <li className="footer-text">차혁</li>
-            <li className="footer-text">선기훈</li>
-          </ul>
+          <dl className="flex gap-2">
+            <dt className="mr-1 footer-text-bold">팀원</dt>
+            <dd className="footer-text">이아름</dd>
+            <dd className="footer-text">양은지</dd>
+            <dd className="footer-text">최희락</dd>
+            <dd className="footer-text">차혁</dd>
+            <dd className="footer-text">선기훈</dd>
+          </dl>
           <ul className="flex items-center gap-3">
             {/* Todo: 시연영상, 발표 자료 완성 시 링크 추가 예정 */}
             <li>
