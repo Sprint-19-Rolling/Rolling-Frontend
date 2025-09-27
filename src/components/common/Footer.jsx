@@ -22,13 +22,17 @@ const Footer = () => {
                 시연영상
               </a>
             </li>
-            <li className="footer-separator">|</li>
+            <li className="footer-separator" aria-hidden="true">
+              |
+            </li>
             <li>
               <a className="footer-link" href="#">
                 발표자료
               </a>
             </li>
-            <li className="footer-separator">|</li>
+            <li className="footer-separator" aria-hidden="true">
+              |
+            </li>
             <li>
               <a
                 className="footer-link"
