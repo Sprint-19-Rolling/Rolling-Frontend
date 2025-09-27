@@ -9,12 +9,13 @@ const LinkButton = ({
   theme = 'primary',
   size = null,
   full = false,
+  className,
   ...props
 }) => {
   return (
     <Link
       to={to}
-      className={cn(buttonVariants({ theme, size, full }))}
+      className={cn(buttonVariants({ theme, size, full }), className)}
       {...props}>
       {children}
     </Link>

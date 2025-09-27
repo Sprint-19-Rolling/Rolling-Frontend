@@ -10,11 +10,12 @@ const Button = ({
   full = false,
   disabled = false,
   onClick,
+  className,
   ...props
 }) => {
   return (
     <button
-      className={cn(buttonVariants({ theme, size, full }))}
+      className={cn(buttonVariants({ theme, size, full }), className)}
       type={type}
       {...props}
       onClick={onClick}
