@@ -31,22 +31,22 @@ export default function ProfileDropdown() {
   }, []);
 
   return (
-    <div className="relative inline-block" ref={ref}>
+    <div className="relative w-[120px] inline-block" ref={ref}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center justify-center w-9 h-9 bg-transparent border-none text-white"
+        className="ml-auto flex items-center justify-center w-9 h-9 bg-transparent border-none text-white"
       >
         <Icplus className="text-black  bg-gray-800 " sx={{ fontSize: 30 }} />
       </button>
 
       {isDropdownOpen && (
-        <div className="absolute top-10 right-0 bg-gray-800 text-white p-2 rounded shadow-lg z-50">
-          <ul className="flex flex-col list-none m-0 p-0 gap-6">
+        <div className="absolute top-10 right-0 bg-gray-700 text-white p-2 rounded shadow-lg z-50">
+          <ul className="cursor-pointer rounded-lg border border-gray-900 px-3 py-2 hover:bg-gray-700">
             <li className="border border-gray-900 rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700">texttexttext</li>
-            <li className="rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700">texttexttext</li>
-            <li className="rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700">texttexttext</li>
-            <li className="rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700">texttexttext</li>
-            <li className="rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700">texttexttext</li>
+            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
+            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
+            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
+            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
           </ul>
         </div>
       )}
