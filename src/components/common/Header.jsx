@@ -1,6 +1,7 @@
 import { useLocation, Link } from 'react-router';
 import icons from '@/assets/icons/icons';
 import LogoAsset from '@/assets/logo/logo';
+import LinkButton from '@/components/common/button/LinkButton';
 
 const Header = () => {
   const location = useLocation();
@@ -15,19 +16,21 @@ const Header = () => {
           </Link>
 
           {!isPostRelatedPage && (
-            <nav className="flex gap-8">
-              <Link
+            <nav>
+              <LinkButton
                 to="/post"
-                className="font-pretendard hidden h-10 cursor-pointer items-center justify-center gap-[10px] rounded-[6px] border border-[#CCC] bg-white px-4 py-2 text-[16px] leading-[26px] font-bold tracking-[-0.16px] text-[#181818] transition hover:border-gray-900 hover:bg-gray-100 md:flex">
+                size={40}
+                theme="outlined"
+                className="hidden transition md:flex">
                 롤링 페이퍼 만들기
-              </Link>
-
-              <Link
+              </LinkButton>
+              <LinkButton
                 to="/post"
-                className="font-pretendard flex h-10 w-10 cursor-pointer items-center justify-center rounded-[6px] border border-[#CCC] bg-white transition hover:border-gray-900 md:hidden"
-                aria-label="롤링페이퍼 만들기">
+                theme="icon"
+                className="transition md:hidden"
+                aria-label="롤링 페이퍼 만들기">
                 <icons.EditRolling width={32} height={32} />
-              </Link>
+              </LinkButton>
             </nav>
           )}
         </div>
