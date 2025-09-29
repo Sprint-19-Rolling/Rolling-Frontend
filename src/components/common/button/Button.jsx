@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { buttonVariants } from '@/style/button-style';
+import { buttonVariants } from '@/style/components/button-style';
 import { cn } from '@/utils/style';
 
 const Button = ({
