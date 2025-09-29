@@ -40,8 +40,23 @@ export const buttonVariants = cva(
         56: 'w-70 h-14 rounded-2xl font-18-bold',
       },
       full: {
-        true: 'w-full',
+        mobile: 'w-full md:w-auto',
+        tablet: 'w-full lg:w-auto',
+        always: 'w-full',
       },
     },
+
+    compoundVariants: [
+      {
+        size: 56,
+        full: 'mobile',
+        class: 'md:w-70',
+      },
+      {
+        size: 56,
+        full: 'tablet',
+        class: 'lg:w-70',
+      },
+    ],
   }
 );

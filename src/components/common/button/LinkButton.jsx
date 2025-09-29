@@ -8,7 +8,7 @@ const LinkButton = ({
   children,
   theme = 'primary',
   size = null,
-  full = false,
+  full,
   className,
   ...props
 }) => {
@@ -27,7 +27,7 @@ LinkButton.propTypes = {
   to: PropTypes.string.isRequired,
   theme: PropTypes.oneOf(['primary', 'secondary', 'outlined', 'icon']),
   size: PropTypes.oneOf([28, 32, 36, 40, 56, null]),
-  full: PropTypes.bool,
+  full: PropTypes.oneOf(['mobile', 'tablet', 'always']),
   className: PropTypes.string,
 };
 
