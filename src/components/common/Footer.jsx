@@ -2,8 +2,8 @@ import logo from '@/assets/logo/logo';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-surface p-6 py-12 md:py-[60px]">
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-4 md:flex-row md:gap-[120px]">
+    <footer className="w-full bg-surface p-6 py-12 md:py-15">
+      <div className="mx-auto flex max-w-[1200px] flex-col gap-4 md:flex-row md:gap-30">
         <logo.Logo width={106} height={37} />
         <address className="flex flex-col gap-2 not-italic">
           <h3 className="font-16-bold text-gray-700">Sprint 19기 - 7팀</h3>
