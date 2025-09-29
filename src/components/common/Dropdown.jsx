@@ -36,7 +36,7 @@ export default function ProfileDropdown() {
         onClick={toggleDropdown}
         className="flex items-center justify-center w-9 h-9 bg-transparent border-none text-white"
       >
-        <Icplus className="text-black background-color: #000000; " sx={{ fontSize: 30 }} />
+        <Icplus className="text-black  bg-gray-800 " sx={{ fontSize: 30 }} />
       </button>
 
       {isDropdownOpen && (
