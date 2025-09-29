@@ -6,9 +6,7 @@ import { cn } from '@/utils/style';
 const Footer = ({ className }) => {
   return (
     <footer
-      className={cn(
-        `bg-surface wrapper-px md:py-15 w-full py-12 ${className}`
-      )}>
+      className={cn('bg-surface wrapper-px md:py-15 w-full py-12', className)}>
       <div className="content md:gap-30 flex flex-col gap-4 md:flex-row">
         <logo.Logo width={106} height={37} />
         <address className="flex flex-col gap-2 not-italic">
