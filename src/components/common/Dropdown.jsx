@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Icplus from "@/assets/icons/ic-plus.svg";
 
 export default function ProfileDropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -36,7 +36,7 @@ export default function ProfileDropdown() {
         onClick={toggleDropdown}
         className="flex items-center justify-center w-9 h-9 bg-transparent border-none text-white"
       >
-        <AccountCircleIcon className="text-white" sx={{ fontSize: 30 }} />
+        <Icplus className="text-white" sx={{ fontSize: 30 }} />
       </button>
 
       {isDropdownOpen && (
