@@ -1,14 +1,14 @@
-// ProfileSelector.jsx
+// ProfileSelect.jsx
 // 프로필 선택 컴포넌트
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import ProfileImage from './ProfileImage';
 
-const ProfileSelector = ({ profiles, onSelect }) => {
-  const [selectedId, setSelectedId] = useState(null);
+const ProfileSelect = ({ profiles, onSelect }) => {
+  const [selectedUrl, setselectedUrl] = useState(null);
 
   const handleSelect = (url) => {
-    setSelectedId(url);
+    setselectedUrl(url);
     onSelect(url);
   };
 
@@ -20,10 +20,10 @@ const ProfileSelector = ({ profiles, onSelect }) => {
             key={url}
             src={url}
             size="large"
-            isSelected={selectedId === url}
+            isSelected={selectedUrl === url}
             borderColor="gray"
             isClickable={true}
-            margin="mr-2"
+            className="mr-2"
             onClick={() => handleSelect(url)}
           />
         );
@@ -32,9 +32,9 @@ const ProfileSelector = ({ profiles, onSelect }) => {
   );
 };
 
-ProfileSelector.propTypes = {
+ProfileSelect.propTypes = {
   profiles: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 
-export default ProfileSelector;
+export default ProfileSelect;

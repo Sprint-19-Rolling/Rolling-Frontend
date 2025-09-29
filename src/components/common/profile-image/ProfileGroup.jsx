@@ -2,7 +2,6 @@
 // 프로필 그룹 컴포넌트
 import PropTypes from 'prop-types';
 import ProfileImage from './ProfileImage';
-import '@/style/style.css';
 
 const ProfileGroup = ({ participants }) => {
   const visible = participants.slice(0, 3);
@@ -25,7 +24,7 @@ const ProfileGroup = ({ participants }) => {
       })}
 
       {hiddenCount > 0 && (
-        <div className="-ml-2 flex h-7 w-7 items-center justify-center rounded-full border-1 border-gray-300 bg-white font-12-medium text-gray-600">
+        <div className="-ml-2 flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 bg-white font-12-medium text-gray-600">
           +{hiddenCount}
         </div>
       )}
