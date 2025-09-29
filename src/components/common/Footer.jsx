@@ -1,9 +1,14 @@
+import PropTypes from 'prop-types';
 import logo from '@/assets/logo/logo';
+import { cn } from '@/utils/style';
 
-const Footer = () => {
+const Footer = ({ className }) => {
   return (
-    <footer className="w-full bg-surface p-6 py-12 md:py-15">
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-4 md:flex-row md:gap-30">
+    <footer
+      className={cn(
+        `wrapper-px w-full bg-surface py-12 md:py-15 ${className}`
+      )}>
+      <div className="content flex flex-col gap-4 md:flex-row md:gap-[120px]">
         <logo.Logo width={106} height={37} />
         <address className="flex flex-col gap-2 not-italic">
           <h3 className="font-16-bold text-gray-700">Sprint 19기 - 7팀</h3>
@@ -47,6 +52,10 @@ const Footer = () => {
       </div>
     </footer>
   );
+};
+
+Footer.propTypes = {
+  className: PropTypes.string,
 };
 
 export default Footer;
