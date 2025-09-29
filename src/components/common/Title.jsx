@@ -3,7 +3,8 @@ import { cn } from '@/utils/style';
 
 const Title = ({ children, className, as: Component = 'h2' }) => {
   return (
-    <Component className={cn('font-24-bold text-gray-900', className)}>
+    <Component
+      className={cn('font-20-bold text-gray-900 md:font-24-bold', className)}>
       {children}
     </Component>
   );
