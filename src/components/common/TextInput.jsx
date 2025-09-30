@@ -44,7 +44,7 @@ const TextInput = ({
           placeholder={placeholder}
           disabled={disabled}
           className={cn(
-            'font-pretendard flex-1 bg-transparent text-base font-normal leading-[26px] tracking-[-0.16px] text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
+            'font-16-regular flex-1 bg-transparent text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
             className
           )}
           {...props}
