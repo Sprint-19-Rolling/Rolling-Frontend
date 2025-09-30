@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export const validateText = (text) => {
   if (!text || text.trim() === '') {
-    return '값을 입력해주세요.';
+    return '이름을 입력해주세요.';
   }
   const trimmed = text.trim();
   if (trimmed.length < 2) {
