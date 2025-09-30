@@ -31,29 +31,27 @@ const TextInput = ({
   ...props
 }) => {
   return (
-    <div className="flex w-full flex-col items-center gap-2">
-      <div className="w-full">
-        <div className={inputWrapper({ error })}>
-          <input
-            id={name}
-            name={name}
-            type={type}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onBlur={(e) => onBlur && onBlur(e.target.value)}
-            placeholder={placeholder}
-            disabled={disabled}
-            className={cn(
-              "flex-1 bg-transparent font-['Pretendard'] text-base font-normal leading-[26px] tracking-[-0.16px] text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50",
-              className
-            )}
-            {...props}
-          />
-        </div>
-        {error && errorMessage && (
-          <p className="mt-1 text-sm text-red-500">{errorMessage}</p>
-        )}
+    <div className="w-full">
+      <div className={inputWrapper({ error })}>
+        <input
+          id={name}
+          name={name}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={(e) => onBlur && onBlur(e.target.value)}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn(
+            'font-pretendard flex-1 bg-transparent text-base font-normal leading-[26px] tracking-[-0.16px] text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
+            className
+          )}
+          {...props}
+        />
       </div>
+      {error && errorMessage && (
+        <p className="mt-1 text-sm text-red-500">{errorMessage}</p>
+      )}
     </div>
   );
 };
