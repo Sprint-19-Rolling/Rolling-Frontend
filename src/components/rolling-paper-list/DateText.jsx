@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { formatDate } from '@/hooks/formatDate';
+import { formatDate } from '@/utils/formatDate';
 
 const DateText = ({ createdAt }) => {
   return (
