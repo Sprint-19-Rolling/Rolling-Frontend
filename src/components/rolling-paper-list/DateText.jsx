@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
+import { formatDate } from '@/hooks/formatDate';
 
-const DateText = ({ date }) => {
-  return <span className="font-12-regular text-gray-400">{date}</span>;
+const DateText = ({ createdAt }) => {
+  return (
+    <span className="font-12-regular text-gray-400">
+      {formatDate(createdAt)}
+    </span>
+  );
 };
 
 DateText.propsType = {
-  date: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default DateText;
