@@ -1,5 +1,5 @@
 import LinkButton from '@/components/common/button/LinkButton';
-import ServiceIntro from '@/components/main-page/ServiceIntro';
+import ServiceIntro from '@/components/main/ServiceIntro';
 import { SERVICE_INTRO_DATA } from '@/constants/main';
 
 const Main = () => {
