@@ -1,5 +1,4 @@
 function TextInput({
-  label,
   name,
   type = 'text',
   placeholder,
@@ -10,14 +9,11 @@ function TextInput({
   errorMessage,
   className = '',
   disabled = false,
+  ...props
 }) {
   return (
     <div className="flex w-full flex-col items-center gap-2">
       <div className="w-full">
-        <label htmlFor={name} className="mb-3 block text-2xl font-bold">
-          {label}
-        </label>
-
         <div
           className={`flex w-full items-center gap-2.5 rounded-lg border-2 bg-white px-3 py-3 ${
             error ? 'border-red-500' : 'border-gray-300'
@@ -31,7 +27,8 @@ function TextInput({
             onBlur={(e) => onBlur && onBlur(e.target.value)}
             placeholder={placeholder}
             disabled={disabled}
-            className={`Pretendard, 16px, 400, 26px, -0.16px (var(--gray-900)) (var(--gray-500)) flex-1 bg-transparent font-['Pretendard'] text-base leading-[26px] font-normal tracking-[-0.16px] text-[#181818] outline-none placeholder:text-gray-400 hover:text-[#555] disabled:cursor-not-allowed disabled:opacity-50 ${className} `}
+            className={`(var(--gray-900)) (var(--gray-500)) flex-1 bg-transparent font-['Pretendard'] text-base font-normal leading-[26px] tracking-[-0.16px] text-[#181818] outline-none placeholder:text-gray-400 hover:text-[#555] disabled:cursor-not-allowed disabled:opacity-50 ${className} `}
+            {...props}
           />
         </div>
         {error && errorMessage && (
