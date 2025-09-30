@@ -21,7 +21,7 @@ const Footer = ({ className }) => {
               );
             })}
           </dl>
-          <ul className="flex items-center gap-3">
+          <ul className="flex items-center">
             {FOOTER_LINKS.map((link, idx) => {
               return (
                 <li key={link.label} className="flex items-center">
