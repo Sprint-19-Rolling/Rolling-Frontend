@@ -1,19 +1,27 @@
 import { cva } from 'class-variance-authority';
+import PropTypes from 'prop-types';
 import Title from '@/components/common/Title';
 import { cn } from '@/utils/style';
 
-const ServiceIntro = ({ introTag, introTitle, introDesc, image, right }) => {
-  const serviceIntroVariants = cva(
-    `flex w-full flex-col justify-between rounded-3xl bg-surface py-6 md:py-10 lg:flex-row lg:p-15 lg:pr-0`,
-    {
-      variants: {
-        right: {
-          true: 'lg:flex-row-reverse lg:justify-end lg:pl-0',
-        },
+const serviceIntroVariants = cva(
+  `flex w-full flex-col justify-between rounded-3xl bg-surface py-6 md:py-10 lg:flex-row lg:p-15 lg:pr-0`,
+  {
+    variants: {
+      right: {
+        true: 'lg:flex-row-reverse lg:justify-end lg:pl-0',
       },
-    }
-  );
+    },
+  }
+);
 
+const ServiceIntro = ({
+  introTag,
+  introTitle,
+  introDesc,
+  image,
+  imageAlt,
+  right = false,
+}) => {
   return (
     <section className={cn(serviceIntroVariants({ right }))}>
       <div className="mb-12 pl-6 md:mb-9 md:pl-10 lg:px-0">
@@ -29,11 +37,20 @@ const ServiceIntro = ({ introTag, introTitle, introDesc, image, right }) => {
       </div>
       <img
         src={image}
-        alt="Rolling 소개 이미지"
+        alt={imageAlt}
         className="h-auto w-full object-contain lg:max-w-[720px]"
       />
     </section>
   );
+};
+
+ServiceIntro.propTypes = {
+  introTag: PropTypes.string.isRequired,
+  introTitle: PropTypes.string.isRequired,
+  introDesc: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  imageAlt: PropTypes.string.isRequired,
+  right: PropTypes.bool,
 };
 
 export default ServiceIntro;
