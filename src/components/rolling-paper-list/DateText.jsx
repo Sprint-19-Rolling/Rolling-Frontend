@@ -3,9 +3,9 @@ import { formatDate } from '@/utils/formatDate';
 
 const DateText = ({ createdAt }) => {
   return (
-    <span className="font-12-regular text-gray-400">
+    <time dateTime={createdAt} className="font-12-regular text-gray-400">
       {formatDate(createdAt)}
-    </span>
+    </time>
   );
 };
 
