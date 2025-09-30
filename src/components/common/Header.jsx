@@ -8,8 +8,8 @@ const Header = () => {
   const isPostRelatedPage = location.pathname.startsWith('/post');
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
-      <div className="mx-auto max-w-[1200px] px-5">
+    <header className="wrapper-px sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+      <div className="content">
         <div className="flex h-16 items-center justify-between">
           <Link to="/">
             <LogoAsset.Logo />

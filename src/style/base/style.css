@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './fonts.css';
+@import './twUtils.css';
 
 /* Tailwind 테마 설정 */
 @theme {

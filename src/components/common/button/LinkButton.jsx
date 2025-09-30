@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { buttonVariants } from '@/style/button-style';
+import { buttonVariants } from '@/style/components/buttonStyle';
 import { cn } from '@/utils/style';
 
 const LinkButton = ({
