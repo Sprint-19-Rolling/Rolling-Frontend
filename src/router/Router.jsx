@@ -1,4 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router';
+import MainLayout from '@/components/common/MainLayout';
 import List from '@/pages/List';
 import Main from '@/pages/Main';
 import Post from '@/pages/Post';
@@ -10,14 +11,16 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Main />} />
-        <Route path="/list" element={<List />} />
-        <Route path="/post">
-          <Route index element={<Post />} />
-          <Route path=":id" element={<PostDetail />} />
-          <Route path=":id/edit" element={<PostEdit />} />
-          <Route path=":id/message" element={<PostMessage />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Main />} />
+          <Route path="list" element={<List />} />
+          <Route path="post">
+            <Route index element={<Post />} />
+            <Route path=":id/edit" element={<PostEdit />} />
+            <Route path=":id/message" element={<PostMessage />} />
+          </Route>
         </Route>
+        <Route path="/post/:id" element={<PostDetail />} />
       </Routes>
     </BrowserRouter>
   );

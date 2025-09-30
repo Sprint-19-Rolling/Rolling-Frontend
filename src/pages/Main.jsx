@@ -1,11 +1,5 @@
-import Header from '@/components/common/Header';
-
 const Main = () => {
-  return (
-    <>
-      <Header />
-    </>
-  );
+  return <div>메인페이지~</div>;
 };
 
 export default Main;
