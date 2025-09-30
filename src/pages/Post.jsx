@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import GenericInput from '@/components/common/GenericInput';
+import Title from '@/components/common/Title';
 
 const Post = () => {
   const [toValue, setToValue] = useState('');
@@ -7,8 +8,8 @@ const Post = () => {
   return (
     <>
       <div>
+        <Title>To.</Title>
         <GenericInput
-          label="To."
           name="To"
           placeholder="받는 사람 이름을 입력해 주세요"
           errorMessage="이름을 입력해 주세요"
