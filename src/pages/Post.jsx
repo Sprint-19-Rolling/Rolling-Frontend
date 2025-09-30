@@ -8,7 +8,9 @@ const Post = () => {
   return (
     <>
       <div>
-        <Title>To.</Title>
+        <Title as="label" htmlFor="To">
+          To.
+        </Title>
         <GenericInput
           name="To"
           placeholder="받는 사람 이름을 입력해 주세요"

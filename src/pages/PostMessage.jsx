@@ -8,7 +8,9 @@ const PostMessage = () => {
   return (
     <>
       <div>
-        <Title>From.</Title>
+        <Title as="label" htmlFor="From">
+          From.
+        </Title>
         <GenericInput
           name="From"
           placeholder="이름을 입력해 주세요"
