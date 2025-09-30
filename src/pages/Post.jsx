@@ -1,3 +1,4 @@
+
 import GenericInput from '@/components/common/GenericInput';
 import { useInput } from '@/hooks/useInput';
 
@@ -19,6 +20,12 @@ const Post = () => {
       />
     </div>
   );
+
+import TabButtonBox from '@/components/post/TabButtonBox';
+
+const Post = () => {
+  return <TabButtonBox />;
+
 };
 
 export default Post;

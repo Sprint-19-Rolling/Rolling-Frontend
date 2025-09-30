@@ -1,4 +1,4 @@
-import mainImg1 from '@/assets/images/img-01.jpg';
-import mainImg2 from '@/assets/images/img-02.jpg';
+import mainImg1 from '@/assets/images/main-img-01.png';
+import mainImg2 from '@/assets/images/main-img-02.png';
 
 export default { mainImg1, mainImg2 };
