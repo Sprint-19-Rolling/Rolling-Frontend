@@ -11,8 +11,10 @@ export default function GenericInput({
 }) {
   const [error, setError] = useState('');
 
-  const finalPlaceholder = placeholder || `${label}을(를) 입력해 주세요`;
-  const finalErrorMessage = errorMessage || `${label}을(를) 입력해 주세요`;
+  const finalPlaceholder =
+    placeholder ?? (label ? `${label}을(를) 입력해 주세요` : '');
+  const finalErrorMessage =
+    errorMessage ?? (label ? `${label}을(를) 입력해 주세요` : '');
 
   const validate = (v) => {
     if (!v.trim()) {
