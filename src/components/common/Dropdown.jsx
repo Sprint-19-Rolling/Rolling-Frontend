@@ -1,12 +1,17 @@
-import { useState, useRef, useEffect } from "react";
-import Icplus from "@/assets/icons/ic-plus.svg";
+import { useState, useEffect, useRef } from 'react';
+import ArrowDown from '@/assets/icons/ic-arrow-down.svg';
+import BasicDropdown from '@/components/common/BasicDropdown';
 
-export default function ProfileDropdown() {
+function Dropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selected, setSelected] = useState('');
   const ref = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const handleSelected = (value) => {
+    setSelected(value);
+    setIsDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -15,41 +20,35 @@ export default function ProfileDropdown() {
         setIsDropdownOpen(false);
       }
     };
-
-    const handleKeyDown = (event) => {
-      if(event.key === "Escape") {
-        setIsDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown );
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown ); 
-    }; 
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
-    <div className="relative w-[120px] inline-block" ref={ref}>
-      <button
+    <div className="relative w-[318px]" ref={ref}>
+      <input
+        type="text"
+        value={selected}
+        readOnly
+        placeholder="placeholder"
         onClick={toggleDropdown}
-        className="ml-auto flex items-center justify-center w-9 h-9 bg-transparent border-none text-white"
-      >
-        <Icplus className="text-black  bg-gray-800 " sx={{ fontSize: 30 }} />
-      </button>
+        className={`h-[45px] w-full rounded border-1 border-gray-700 px-3 py-2 pr-8 ${
+          selected
+            ? 'font-bold text-blue-600'
+            : 'font-normal text-gray-900 italic placeholder-gray-900'
+        }`}
+      />
+
+      <span className="pointer-events-none absolute top-1/2 right-1 -translate-y-1/2 text-gray-900">
+        <ArrowDown />
+      </span>
 
       {isDropdownOpen && (
-        <div className="absolute top-10 right-0 bg-gray-700 text-white p-2 rounded shadow-lg z-50">
-          <ul className="cursor-pointer rounded-lg border border-gray-900 px-3 py-2 hover:bg-gray-700">
-            <li className="border border-gray-900 rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700">texttexttext</li>
-            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
-            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
-            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
-            <li className="cursor-pointer rounded-lg px-3 py-2 hover:bg-gray-700">texttexttext</li>
-          </ul>
+        <div className="absolute top-full left-0 z-50 mt-1 max-h-[220px] w-full overflow-y-auto rounded-lg border bg-white p-2 shadow-lg">
+          <BasicDropdown onSelect={handleSelected} />
         </div>
       )}
     </div>
   );
 }
+export default Dropdown;
