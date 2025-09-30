@@ -39,6 +39,7 @@ const ServiceIntro = ({
         src={image}
         alt={imageAlt}
         className="h-auto w-full object-contain lg:max-w-[720px]"
+        loading="lazy"
       />
     </section>
   );
