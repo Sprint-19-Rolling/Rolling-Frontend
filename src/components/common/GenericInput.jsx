@@ -2,12 +2,12 @@ import { useState } from 'react';
 import TextInput from '@/components/common/TextInput';
 
 export default function GenericInput({
-  label,
   name,
   placeholder,
   errorMessage,
   value,
   onChange,
+  label,
 }) {
   const [error, setError] = useState('');
 
@@ -26,7 +26,6 @@ export default function GenericInput({
   return (
     <div className={`w-full`}>
       <TextInput
-        label={label}
         name={name}
         placeholder={finalPlaceholder}
         value={value}
