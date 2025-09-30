@@ -1,4 +1,4 @@
-import GenericInput from '@/components/common/GenericInput';
+import TextInput from '@/components/common/TextInput';
 import { useInput } from '@/hooks/useInput';
 
 const Post = () => {
@@ -14,9 +14,8 @@ const Post = () => {
         className="font-20-bold md:font-24-bold text-gray-900">
         To.
       </label>
-      <GenericInput
+      <TextInput
         name="To"
-        label="받는 사람"
         placeholder="받는 사람 이름을 입력해 주세요"
         {...toInput}
       />
