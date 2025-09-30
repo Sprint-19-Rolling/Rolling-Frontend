@@ -1,3 +1,5 @@
+import { cn } from '@/utils/style';
+
 function TextInput({
   name,
   type = 'text',
@@ -15,9 +17,10 @@ function TextInput({
     <div className="flex w-full flex-col items-center gap-2">
       <div className="w-full">
         <div
-          className={`flex w-full items-center gap-2.5 rounded-lg border-2 bg-white px-3 py-3 ${
+          className={cn(
+            'flex w-full items-center gap-2.5 rounded-lg border-2 bg-white px-3 py-3 focus-within:border-[#555] active:border-[#3A3A3A]',
             error ? 'border-red-500' : 'border-gray-300'
-          } focus-within:border-[#555] active:border-[#3A3A3A]`}>
+          )}>
           <input
             id={name}
             name={name}
@@ -27,7 +30,7 @@ function TextInput({
             onBlur={(e) => onBlur && onBlur(e.target.value)}
             placeholder={placeholder}
             disabled={disabled}
-            className={`(var(--gray-900)) (var(--gray-500)) flex-1 bg-transparent font-['Pretendard'] text-base font-normal leading-[26px] tracking-[-0.16px] text-[#181818] outline-none placeholder:text-gray-400 hover:text-[#555] disabled:cursor-not-allowed disabled:opacity-50 ${className} `}
+            className={`flex-1 bg-transparent font-['Pretendard'] text-base font-normal leading-[26px] tracking-[-0.16px] text-[#181818] outline-none placeholder:text-gray-400 hover:text-[#555] disabled:cursor-not-allowed disabled:opacity-50 ${className} `}
             {...props}
           />
         </div>
