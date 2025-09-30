@@ -11,7 +11,7 @@ const tabs = [
 
 // 버튼 스타일 정의
 const tabButton = cva(
-  'flex items-center justify-center font-16-medium transition-all duration-200 rounded-md h-10 w-[118px] md:w-[122px]',
+  'flex items-center justify-center font-16-bold transition-all duration-200 rounded-md h-10 w-[118px] md:w-[122px]',
   {
     variants: {
       active: {
