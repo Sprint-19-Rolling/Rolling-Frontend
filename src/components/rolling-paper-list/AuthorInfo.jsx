@@ -24,7 +24,7 @@ const AuthorInfo = ({ sender, profileImageURL, relationship }) => {
 AuthorInfo.propTypes = {
   sender: PropTypes.string.isRequired,
   profileImageURL: PropTypes.string.isRequired,
-  relationship: PropTypes.string.isRequired,
+  relationship: PropTypes.oneOf(['친구', '가족', '동료', '지인']).isRequired,
 };
 
 export default AuthorInfo;
