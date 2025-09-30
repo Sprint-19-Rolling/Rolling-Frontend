@@ -1,25 +1,23 @@
-import { useState } from 'react';
 import GenericInput from '@/components/common/GenericInput';
-import Title from '@/components/common/Title';
+import { useInput } from '@/hooks/useInput';
 
 const Post = () => {
-  const [toValue, setToValue] = useState('');
+  const toInput = useInput('', '받는 사람', '이름을 입력해 주세요');
 
   return (
-    <>
-      <div>
-        <Title as="label" htmlFor="To">
-          To.
-        </Title>
-        <GenericInput
-          name="To"
-          placeholder="받는 사람 이름을 입력해 주세요"
-          errorMessage="이름을 입력해 주세요"
-          value={toValue}
-          onChange={setToValue}
-        />
-      </div>
-    </>
+    <div>
+      <label
+        htmlFor="To"
+        className="font-20-bold md:font-24-bold text-gray-900">
+        To.
+      </label>
+      <GenericInput
+        name="To"
+        label="받는 사람"
+        placeholder="받는 사람 이름을 입력해 주세요"
+        {...toInput}
+      />
+    </div>
   );
 };
 
