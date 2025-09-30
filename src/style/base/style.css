@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './fonts.css';
+@import './twUtils.css';
 
 /* Tailwind 테마 설정 */
 @theme {
@@ -122,7 +123,7 @@
 @utility font-16-medium {
   font-size: var(--text-16);
   line-height: var(--leading-16);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 @utility font-16-bold {
@@ -159,6 +160,12 @@
   font-size: var(--text-14);
   line-height: var(--leading-14);
   font-weight: 400;
+}
+
+@utility font-12-medium {
+  font-size: var(--text-12);
+  line-height: var(--leading-12);
+  font-weight: 500;
 }
 
 @utility font-12-regular {
