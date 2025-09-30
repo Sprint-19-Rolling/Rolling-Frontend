@@ -1,4 +1,4 @@
-export default function BasicDropdown({ onSelect }) {
+const BasicDropdown = ({ onSelect }) => {
   const items = [
     'texttexttext',
     'texttexttext',
@@ -23,4 +23,6 @@ export default function BasicDropdown({ onSelect }) {
       </ul>
     </div>
   );
-}
+};
+
+export default BasicDropdown;

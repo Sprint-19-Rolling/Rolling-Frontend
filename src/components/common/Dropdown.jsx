@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import ArrowDown from '@/assets/icons/ic-arrow-down.svg';
 import BasicDropdown from '@/components/common/BasicDropdown';
 
-function Dropdown() {
+const Dropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selected, setSelected] = useState('');
   const ref = useRef(null);
@@ -50,5 +50,5 @@ function Dropdown() {
       )}
     </div>
   );
-}
+};
 export default Dropdown;
