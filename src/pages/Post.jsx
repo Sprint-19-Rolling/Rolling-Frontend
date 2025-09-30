@@ -2,7 +2,10 @@ import GenericInput from '@/components/common/GenericInput';
 import { useInput } from '@/hooks/useInput';
 
 const Post = () => {
-  const toInput = useInput('', '받는 사람', '이름을 입력해 주세요');
+  const toInput = useInput({
+    label: '받는 사람',
+    customErrorMessage: '이름을 입력해 주세요',
+  });
 
   return (
     <div>
