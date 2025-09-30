@@ -9,7 +9,7 @@ const DateText = ({ createdAt }) => {
   );
 };
 
-DateText.propsType = {
+DateText.propTypes = {
   createdAt: PropTypes.string.isRequired,
 };
 
