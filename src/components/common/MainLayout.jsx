@@ -4,15 +4,15 @@ import Header from '@/components/common/Header';
 
 const MainLayout = () => {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="wrapper-px">
+      <main className="wrapper-px flex-grow">
         <div className="content">
           <Outlet />
         </div>
-      </div>
+      </main>
       <Footer className={'pb-32'} />
-    </>
+    </div>
   );
 };
 
