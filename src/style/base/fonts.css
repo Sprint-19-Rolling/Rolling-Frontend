@@ -48,7 +48,7 @@
   src:
     url('/fonts/noto-sans-kr-v38-korean-bold.woff2') format('woff2'),
     url('/fonts/noto-sans-kr-v38-korean-bold.woff') format('woff');
-  font-weight: 400;
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
