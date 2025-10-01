@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import SharIcon from '@/assets/icons/ic-share.svg';
+import ShareIcon from '@/assets/icons/ic-share.svg';
 
 const ShareDropdownWrapper = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ const ShareDropdownWrapper = () => {
       <button
         onClick={toggleDropdown}
         className="flex h-full w-full items-center justify-center">
-        <SharIcon className="h-6 w-6" />
+        <ShareIcon className="h-6 w-6" />
       </button>
 
       {isOpen && <ShareDropdown />}

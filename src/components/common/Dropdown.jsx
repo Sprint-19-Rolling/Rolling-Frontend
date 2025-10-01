@@ -68,7 +68,7 @@ const Dropdown = () => {
 
       {errorMessage && (
         <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
-          {errorMessage || 'Placeholder'}
+          {errorMessage}
         </p>
       )}
 
