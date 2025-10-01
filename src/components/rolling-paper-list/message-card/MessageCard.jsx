@@ -18,6 +18,10 @@ const textStyle = cva(
 );
 
 /**
+ * @typedef {'Pretendard'|'Noto Sans'|'나눔명조'|'나눔손글씨 손편지체'} fontType
+ */
+
+/**
  * 롤링페이퍼 목록에서 사용되는 메시지 카드 컴포넌트입니다.
  * 클릭 시 해당 메시지의 상세 모달을 띄웁니다.
  * @param {object} props
@@ -26,7 +30,7 @@ const textStyle = cva(
  * @param {string} props.relationship - 작성자와 받는 사람의 관계
  * @param {string} props.createdAt - 메시지가 작성된 날짜
  * @param {string} props.content - 메시지의 본문 내용
- * @param {'Pretendard'|'Noto Sans'|'나눔명조'|'나눔손글씨 손편지체'} props.font - 메시지 내용에 적용할 폰트 변수
+ * @param {fontType} props.font - 메시지 내용에 적용할 폰트 변수 'Pretendard'|'Noto Sans'|'나눔명조'|'나눔손글씨 손편지체'
  * @param {function} props.onClick - 카드를 클릭했을 때 실행될 핸들러 함수 (모달 열기)
  * @returns {JSX.Element}
  */
