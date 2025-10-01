@@ -27,6 +27,5 @@
 
 /* card-style */
 @utility card-style {
-  @apply flex h-[230px] rounded-3xl bg-white sm:h-[284px] md:h-[280px];
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+  @apply flex h-[230px] rounded-3xl bg-white shadow-[0_2px_12px_0_rgba(0,0,0,0.08)] sm:h-[284px] md:h-[280px];
 }
