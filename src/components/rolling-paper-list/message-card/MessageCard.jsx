@@ -1,4 +1,5 @@
 import { cva } from 'class-variance-authority';
+import DOMPurify from 'dompurify';
 import AuthorInfo from '@/components/rolling-paper-list/AuthorInfo';
 import DateText from '@/components/rolling-paper-list/DateText';
 import { cn } from '@/utils/style';
@@ -40,6 +41,9 @@ const MessageCard = ({
   font,
   onClick,
 }) => {
+  const sanitizedContent = DOMPurify.sanitize(content);
+  const plainTextContent = sanitizedContent.replace(/<[^>]*>/g, '');
+
   return (
     <button
       type="button"
@@ -51,7 +55,7 @@ const MessageCard = ({
         relationship={relationship}
         className={'pb-3.75 border-b border-gray-200'}
       />
-      <div className={cn(textStyle({ font }))}>{content}</div>
+      <div className={cn(textStyle({ font }))}>{plainTextContent}</div>
       <DateText className={'mt-auto'} createdAt={createdAt} />
     </button>
   );
