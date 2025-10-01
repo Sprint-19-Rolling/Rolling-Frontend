@@ -6,6 +6,9 @@
 @theme {
   --font-sans:
     'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-noto: 'Noto Sans', sans-serif;
+  --font-nanum-myeongjo: 'Nanum Myeongjo', serif;
+  --font-nanum-sonpyeonji: 'Sonpyeonji', cursive;
 
   /* 컬러 */
   --color-purple-100: #f8f0ff;
@@ -172,4 +175,17 @@
   font-size: var(--text-12);
   line-height: var(--leading-12);
   font-weight: 400;
+}
+
+/* font family 유틸리티 */
+@utility ff-noto {
+  font-family: var(--font-noto);
+}
+
+@utility ff-nanum-myeongjo {
+  font-family: var(--font-nanum-myeongjo);
+}
+
+@utility ff-nanum-sonpyeonji {
+  font-family: var(--font-nanum-sonpyeonji);
 }
