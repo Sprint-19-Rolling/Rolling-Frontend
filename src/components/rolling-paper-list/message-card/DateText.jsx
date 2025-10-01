@@ -12,9 +12,11 @@ const dataTextVariants = cva(`text-gray-400`, {
   },
 });
 
-const DateText = ({ createdAt, size = 'card' }) => {
+const DateText = ({ createdAt, size = 'card', className }) => {
   return (
-    <time dateTime={createdAt} className={cn(dataTextVariants({ size }))}>
+    <time
+      dateTime={createdAt}
+      className={cn(dataTextVariants({ size }), className)}>
       {formatDate(createdAt)}
     </time>
   );
@@ -23,6 +25,7 @@ const DateText = ({ createdAt, size = 'card' }) => {
 DateText.propTypes = {
   createdAt: PropTypes.string.isRequired,
   size: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default DateText;
