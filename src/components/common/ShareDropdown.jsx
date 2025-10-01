@@ -20,7 +20,7 @@ const ShareDropdownWrapper = () => {
   }, []);
 
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative inline-block" ref={ref}>
       <button onClick={toggleDropdown} className="p-1">
         <SharIcon className="h-6 w-6" />
       </button>
@@ -32,12 +32,12 @@ const ShareDropdownWrapper = () => {
 
 const ShareDropdown = () => {
   return (
-    <div className="bg-white-700 absolute left-0 top-10 z-50 h-[120px] w-[140px] rounded p-2">
-      <ul className="m-0 flex list-none flex-col p-0">
-        <li className="cursor-pointer rounded-lg border-gray-900 px-3 py-2 hover:bg-gray-100">
+    <div className="absolute top-full h-[116px] w-[138px] -translate-x-1/2 rounded bg-white shadow">
+      <ul className="m-0 flex list-none flex-col gap-0 p-0">
+        <li className="cursor-pointer rounded-lg border border-gray-900 px-3 py-4 hover:bg-gray-100">
           카카오톡 공유
         </li>
-        <li className="cursor-pointer rounded-lg border-gray-900 px-3 py-2 hover:bg-gray-100">
+        <li className="cursor-pointer rounded-lg border-gray-900 px-3 py-4 hover:bg-gray-100">
           URL 공유
         </li>
       </ul>

@@ -1,5 +1,6 @@
 const BasicDropdown = ({ onSelect }) => {
   const items = [
+    '선택해주세요',
     'texttexttext',
     'texttexttext',
     'texttexttext',
