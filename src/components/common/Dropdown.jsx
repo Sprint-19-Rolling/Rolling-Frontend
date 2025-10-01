@@ -3,17 +3,27 @@ import ArrowDown from '@/assets/icons/ic-arrow-down.svg';
 import BasicDropdown from '@/components/common/BasicDropdown';
 
 const Dropdown = () => {
+  const DROPDOWN_ITEMS = [
+    '선택해주세요',
+    'texttexttext 1',
+    'texttexttext 2',
+    'texttexttext 3',
+    'texttexttext 4',
+    'texttexttext 5',
+    'texttexttext 6',
+  ];
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState(DROPDOWN_ITEMS[0]);
   const [errorMessage, setErrorMessage] = useState(null);
   const ref = useRef(null);
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const handleSelected = (value) => {
-    if (value === '선택해주세요') {
+    if (value === DROPDOWN_ITEMS[0]) {
       setErrorMessage('Error Message');
-      setSelected('');
+
       setIsDropdownOpen(false);
     } else {
       setErrorMessage(null);
@@ -35,10 +45,10 @@ const Dropdown = () => {
   const inputClass = `border-1 h-[45px] w-full rounded px-3 py-2 pr-8 focus:outline-none 
     ${
       errorMessage
-        ? 'border-red-500 focus-within:border-red-500 active:border-red-500' // 에러가 있을 때 빨간색 테두리
+        ? 'border-red-500 focus-within:border-red-500 active:border-red-500'
         : selected
-          ? 'border-gray-700 font-bold text-blue-600' // 선택된 값이 있을 때 파란색 텍스트
-          : 'border-gray-700 font-normal italic text-gray-900 placeholder-gray-900' // 기본 상태
+          ? 'border-gray-700 font-bold text-blue-600'
+          : 'border-gray-700 font-normal italic text-gray-900 placeholder-gray-900'
     }
   `;
 
@@ -46,7 +56,7 @@ const Dropdown = () => {
     <div className="relative w-[318px]" ref={ref}>
       <input
         type="text"
-        value={selected}
+        value={selected !== DROPDOWN_ITEMS[0] ? selected : ''}
         readOnly
         placeholder="placeholder"
         onClick={toggleDropdown}
@@ -57,14 +67,14 @@ const Dropdown = () => {
       </span>
 
       {errorMessage && (
-        <p className="**top-full** absolute left-0 mt-1 text-sm text-red-500">
+        <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
           {errorMessage || 'Placeholder'}
         </p>
       )}
 
       {isDropdownOpen && (
         <div className="absolute left-0 top-full z-50 mt-1 max-h-[220px] w-full overflow-y-auto rounded-lg border bg-white p-2 shadow-lg">
-          <BasicDropdown onSelect={handleSelected} />
+          <BasicDropdown items={DROPDOWN_ITEMS} onSelect={handleSelected} />
         </div>
       )}
     </div>

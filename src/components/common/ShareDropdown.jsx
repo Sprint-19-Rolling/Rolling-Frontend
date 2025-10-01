@@ -20,8 +20,12 @@ const ShareDropdownWrapper = () => {
   }, []);
 
   return (
-    <div className="relative inline-block" ref={ref}>
-      <button onClick={toggleDropdown} className="p-1">
+    <div
+      className="border-1 relative inline-block h-9 w-14 rounded-lg border-gray-300"
+      ref={ref}>
+      <button
+        onClick={toggleDropdown}
+        className="flex h-full w-full items-center justify-center">
         <SharIcon className="h-6 w-6" />
       </button>
 
