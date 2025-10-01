@@ -24,7 +24,7 @@ const AuthorInfo = ({ sender, profileImageURL, relationship, className }) => {
         alt={sender + ' 프로필 이미지'}
         borderColor="gray"
       />
-      <div>
+      <div className="flex flex-col items-start">
         <div className="font-16-regular sm:font-20-regular mb-0.5 flex gap-1.5 leading-6 text-gray-900 sm:mb-1.5">
           <span>From.</span>
           <span className="font-bold">{sender}</span>
