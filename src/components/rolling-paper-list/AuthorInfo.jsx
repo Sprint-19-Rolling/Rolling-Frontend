@@ -14,7 +14,7 @@ import { cn } from '@/utils/style';
 
 const AuthorInfo = ({ sender, profileImageURL, relationship, className }) => {
   return (
-    <div className={cn('flex gap-3.5', className)}>
+    <div className={cn('flex w-full gap-3.5', className)}>
       <ProfileImage
         src={profileImageURL}
         alt={sender + ' 프로필 이미지'}
