@@ -4,12 +4,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import '../../style/base/quill-custom.css';
 
 const Font = Quill.import('formats/font');
-Font.whitelist = [
-  'noto-sans',
-  'pretendard',
-  'nanum-myeongjo',
-  'nanum-sonpyeonji',
-];
+Font.whitelist = ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'];
 Quill.register(Font, true);
 
 const TextEditor = () => {
