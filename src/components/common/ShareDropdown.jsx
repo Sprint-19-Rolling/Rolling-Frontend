@@ -14,7 +14,7 @@ const ShareDropdownWrapper = () => {
 
   return (
     <div
-      className="border-1 relative inline-block h-9 w-14 rounded-lg border-gray-300"
+      className="relative inline-block h-9 w-14 rounded-lg border border-gray-300"
       ref={ref}>
       <button
         onClick={toggleDropdown}
@@ -29,7 +29,7 @@ const ShareDropdownWrapper = () => {
 
 const ShareDropdown = () => {
   return (
-    <div className="absolute top-full w-[138px] -translate-x-1/2 rounded bg-white shadow">
+    <div className="absolute left-1/2 top-full w-[138px] -translate-x-1/2 rounded bg-white shadow">
       <ul className="m-0 flex list-none flex-col gap-0 divide-y divide-gray-200 p-0">
         <li
           onClick={() => alert('카카오톡 공유기능 구현 필요')}

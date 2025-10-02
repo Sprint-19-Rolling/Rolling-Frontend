@@ -23,22 +23,25 @@ const Dropdown = ({ items = DROPDOWN_ITEMS, placeholder = 'placeholder' }) => {
     setIsDropdownOpen((prev) => !prev);
   }, []);
 
-  const handleSelected = useCallback((value) => {
-    setIsDropdownOpen(false);
+  const handleSelected = useCallback(
+    (value) => {
+      setIsDropdownOpen(false);
 
-    if (value === DROPDOWN_ITEMS[0]) {
-      setErrorMessage('항목을 선택해주세요.');
-      setSelected('');
-    } else {
-      setSelected(value);
-      setErrorMessage(null);
-    }
-  }, []);
+      if (value === items[0]) {
+        setErrorMessage('항목을 선택해주세요.');
+        setSelected('');
+      } else {
+        setSelected(value);
+        setErrorMessage(null);
+      }
+    },
+    [items]
+  );
 
   useClickOutside(ref, () => setIsDropdownOpen(false));
 
   const inputClass = `
-    border-1 h-[45px] w-full rounded px-3 py-2 pr-8 focus:outline-none
+    border h-[45px] w-full rounded px-3 py-2 pr-8 focus:outline-none
     ${
       errorMessage
         ? 'border-red-500 focus:border-red-500'
@@ -49,7 +52,7 @@ const Dropdown = ({ items = DROPDOWN_ITEMS, placeholder = 'placeholder' }) => {
   `;
 
   return (
-    <div className="relative w-[318px]" ref={ref}>
+    <div className="relative w-full" ref={ref}>
       <input
         type="text"
         value={selected}
@@ -70,9 +73,11 @@ const Dropdown = ({ items = DROPDOWN_ITEMS, placeholder = 'placeholder' }) => {
       )}
 
       {isDropdownOpen && (
-        <div className="absolute left-0 top-full z-50 mt-1 max-h-[220px] w-full overflow-y-auto rounded-lg border bg-white p-2 shadow-lg">
-          <BasicDropdown items={items} onSelect={handleSelected} />
-        </div>
+        <BasicDropdown
+          items={items}
+          onSelect={handleSelected}
+          className="absolute left-0 top-full z-50 mt-1 max-h-[220px] w-full shadow-lg"
+        />
       )}
     </div>
   );
