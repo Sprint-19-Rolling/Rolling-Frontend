@@ -1,5 +1,6 @@
 import { cva } from 'class-variance-authority';
 import DOMPurify from 'dompurify';
+import { useMemo } from 'react';
 import Icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
 import AuthorInfo from '@/components/rolling-paper-list/AuthorInfo';
@@ -47,8 +48,14 @@ const MessageCard = ({
   edit = false,
   onDelete,
 }) => {
-  const sanitizedContent = DOMPurify.sanitize(content);
-  const plainTextContent = sanitizedContent.replace(/<[^>]*>/g, '');
+  const sanitizedContent = useMemo(
+    () =>
+      DOMPurify.sanitize(content, {
+        ALLOWED_TAGS: ['img'],
+        ALLOWED_ATTR: ['src', 'alt'],
+      }),
+    [content]
+  );
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -84,7 +91,12 @@ const MessageCard = ({
           <Icons.DeletedIcon />
         </Button>
       )}
-      <div className={cn(textStyle({ font }))}>{plainTextContent}</div>
+      <div
+        className={cn(textStyle({ font }))}
+        dangerouslySetInnerHTML={{
+          __html: sanitizedContent,
+        }}
+      />
       <DateText className={'mt-auto'} createdAt={createdAt} />
     </div>
   );
