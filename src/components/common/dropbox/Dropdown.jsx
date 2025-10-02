@@ -1,3 +1,43 @@
+import { cva } from 'class-variance-authority';
+import {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
+import icons from '@/assets/icons/icons';
+import BasicDropdown from '@/components/common/dropbox/BasicDropdown';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { cn } from '@/utils/style';
+
+const DROPDOWN_ITEMS = [
+  '선택해주세요',
+  'texttexttext 1',
+  'texttexttext 2',
+  'texttexttext 3',
+];
+
+const inputVariants = cva(
+  'border h-[45px] w-full rounded-lg px-3 py-2 pr-8 focus:outline-none focus:border-2 focus:border-gray-500 cursor-pointer',
+  {
+    variants: {
+      error: {
+        true: 'border-red-500',
+        false: 'border-gray-300',
+      },
+      selected: {
+        true: 'font-16-regular text-gray-900',
+        false: 'font-normal italic text-gray-900 placeholder-gray-900',
+      },
+    },
+    defaultVariants: {
+      error: false,
+      selected: false,
+    },
+  }
+);
+
 /**
  * Dropdown 컴포넌트
  *
@@ -5,12 +45,10 @@
  * 유효성 검사를 위한 `validate` 메서드와 선택 값을 가져오는 `getValue` 메서드를 ref를 통해 외부에서 사용할 수 있습니다.
  *
  * @component
- *
  * @param {Object} props - 컴포넌트의 props
  * @param {string[]} [props.items] - 드롭다운에 표시할 항목 배열 (기본값: DROPDOWN_ITEMS)
  * @param {string} [props.placeholder] - 입력 필드에 표시될 플레이스홀더 텍스트 (기본값: "placeholder")
  * @param {React.Ref} ref - 외부에서 getValue 및 validate 메서드에 접근할 수 있도록 하는 ref
- *
  * @returns {JSX.Element} Dropdown 컴포넌트
  *
  * @example
@@ -22,31 +60,9 @@
  *   placeholder="옵션을 선택하세요"
  * />
  *
- * // 유효성 검사
  * const isValid = dropdownRef.current?.validate();
- *
- * // 선택된 값 가져오기
  * const selected = dropdownRef.current?.getValue();
  */
-
-import {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  useRef,
-  useCallback,
-} from 'react';
-import icons from '@/assets/icons/icons';
-import BasicDropdown from '@/components/common/BasicDropdown';
-import { useClickOutside } from '@/hooks/useClickOutside';
-
-const DROPDOWN_ITEMS = [
-  '선택해주세요',
-  'texttexttext 1',
-  'texttexttext 2',
-  'texttexttext 3',
-];
-
 const Dropdown = forwardRef(
   ({ items = DROPDOWN_ITEMS, placeholder = 'placeholder' }, ref) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -79,17 +95,6 @@ const Dropdown = forwardRef(
       },
     }));
 
-    const inputClass = `
-      border h-[45px] w-full rounded-lg px-3 py-2 pr-8 
-      focus:outline-none focus:border-2 focus:border-gray-500
-      ${errorMessage ? 'border-red-500' : 'border-gray-300'}
-      ${
-        selected
-          ? 'font-bold text-blue-600'
-          : 'font-normal italic text-gray-900 placeholder-gray-900'
-      }
-    `;
-
     return (
       <div className="relative w-[318px]" ref={containerRef}>
         <input
@@ -98,11 +103,21 @@ const Dropdown = forwardRef(
           readOnly
           placeholder={placeholder}
           onClick={toggleDropdown}
-          className={inputClass}
+          className={cn(
+            inputVariants({
+              error: !!errorMessage,
+              selected: !!selected,
+            })
+          )}
         />
 
-        <span className="pointer-events-none absolute right-2 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center text-gray-900">
-          {isDropdownOpen ? <icons.ArrowUpIcon /> : <icons.ArrowDownIcon />}
+        <span className="pointer-events-none absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center text-gray-900">
+          <icons.ArrowtopIcon
+            className={cn(
+              'transition-transform duration-200',
+              isDropdownOpen && 'rotate-180'
+            )}
+          />
         </span>
 
         {errorMessage && (
@@ -113,14 +128,9 @@ const Dropdown = forwardRef(
 
         {isDropdownOpen && (
           <BasicDropdown
-            items={[
-              'texttexttext',
-              'texttexttext',
-              'texttexttext',
-              'texttexttext',
-            ]}
+            items={items}
             onSelect={handleSelected}
-            className="absolute left-0 top-full z-50 mt-1 max-h-[220px] w-full shadow-lg"
+            className="absolute left-0 top-full z-50 mt-2 max-h-[220px] w-full shadow-lg"
           />
         )}
       </div>

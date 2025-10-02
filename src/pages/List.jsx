@@ -1,5 +1,5 @@
-import Dropdown from '@/components/common/Dropdown';
-import ShareDropdownWrapper from '@/components/common/ShareDropdown';
+import Dropdown from '@/components/common/dropbox/Dropdown';
+import ShareDropdownWrapper from '@/components/common/dropbox/ShareDropdown';
 
 const List = () => {
   return (

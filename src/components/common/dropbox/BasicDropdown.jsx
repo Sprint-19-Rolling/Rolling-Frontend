@@ -19,11 +19,10 @@
  *   size="share"
  * />
  */
-
 const BasicDropdown = ({ items, onSelect, className = '', size = 'basic' }) => {
   const sizeStyles = {
     basic:
-      'rounded-lg bg-white p-2 border border-gray-200 shadow-md max-h-[220px]',
+      'rounded-lg bg-white  border border-gray-200 shadow-md max-h-[220px]',
     share: 'rounded bg-white shadow w-[138px]',
   };
 
@@ -32,13 +31,13 @@ const BasicDropdown = ({ items, onSelect, className = '', size = 'basic' }) => {
   return (
     <div className={`${baseClasses} ${className}`}>
       <ul
-        className={`m-0 flex list-none flex-col gap-0 p-0 ${size === 'share' ? 'divide-y divide-gray-200' : 'gap-2'} `}>
+        className={`flex flex-col gap-0 ${size === 'share' ? 'divide-y divide-gray-200' : 'gap-0'} `}>
         {items.map((item) => {
           return (
             <li
               key={item}
               onClick={() => onSelect?.(item)}
-              className={`cursor-pointer text-gray-800 ${size === 'share' ? 'px-3 py-4 hover:bg-gray-100' : 'rounded-lg px-3 py-2 hover:bg-gray-100'} `}>
+              className={`cursor-pointer text-gray-900 ${size === 'share' ? 'px-3 py-4 hover:bg-gray-100' : 'rounded-lg px-3 py-2 hover:bg-gray-100'} `}>
               {item}
             </li>
           );

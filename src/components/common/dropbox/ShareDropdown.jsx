@@ -1,8 +1,15 @@
+import { useState, useRef } from 'react';
+import icons from '@/assets/icons/icons';
+import Button from '@/components/common/button/Button';
+import BasicDropdown from '@/components/common/dropbox/BasicDropdown';
+import { useClickOutside } from '@/hooks/useClickOutside';
+
 /**
  * ShareDropdownWrapper 컴포넌트
  *
- * 공유 아이콘 버튼을 눌렀을 때 공유 옵션 드롭다운을 표시하는 컴포넌트입니다.
- * 외부 클릭 시 드롭다운이 닫히며, 공유 방식(카카오톡/URL 공유)을 선택할 수 있습니다.
+ * 공유 아이콘 버튼을 클릭하면 공유 옵션 드롭다운(BasicDropdown)이 표시됩니다.
+ * 드롭다운은 외부 영역 클릭 시 닫히며, 항목 선택 시 콜백 처리가 됩니다.
+ * 드롭다운은 버튼의 **오른쪽 테두리에 정렬**되어 표시됩니다.
  *
  * @component
  *
@@ -11,11 +18,6 @@
  * @example
  * <ShareDropdownWrapper />
  */
-
-import { useState, useRef } from 'react';
-import ShareIcon from '@/assets/icons/ic-share.svg';
-import BasicDropdown from '@/components/common/BasicDropdown';
-import { useClickOutside } from '@/hooks/useClickOutside';
 
 const ShareDropdownWrapper = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,18 +44,20 @@ const ShareDropdownWrapper = () => {
     <div
       className="relative inline-block h-9 w-14 rounded-lg border border-gray-300"
       ref={ref}>
-      <button
+      <Button
+        theme="icon"
+        size={36}
         onClick={toggleDropdown}
         className="flex h-full w-full items-center justify-center">
-        <ShareIcon className="h-6 w-6" />
-      </button>
+        <icons.ShareIcon className="h-6 w-6" />
+      </Button>
 
       {isOpen && (
         <BasicDropdown
           items={shareItems}
           onSelect={handleSelect}
           size="share"
-          className="absolute left-1/2 top-full -translate-x-1/2"
+          className="absolute right-0 top-full mt-2"
         />
       )}
     </div>
