@@ -3,18 +3,59 @@ import { api } from '@/apis/axios.js';
 import { cn } from '@/utils/style';
 import SelectItem from './TabSelectItem';
 
+/**
+ * 색상 선택용 TailwindCSS 클래스 배열
+ * @type {string[]}
+ */
 const colorChips = [
-  'bg-orange-200',
+  'bg-beige-200',
   'bg-purple-200',
   'bg-blue-200',
   'bg-green-200',
 ];
 
+/**
+ * 이미지 데이터 객체 타입
+ * @typedef {Object} ImageData
+ * @property {string} original - 원본 이미지 URL
+ * @property {string} thumbnail - 썸네일 이미지 URL (200x200)
+ */
+
+/**
+ * TabContents 컴포넌트 props 정의
+ * @typedef {Object} TabContentsProps
+ * @property {'color'|'image'} activeTab - 현재 활성화된 탭
+ * @property {{ type: 'color'|'image', index: number } | null} selected - 현재 선택된 항목 정보
+ * @property {(type: 'color'|'image', index: number, value: string) => void} onSelect - 항목 선택 시 호출되는 콜백
+ */
+
+/**
+ * 탭에 따라 색상 또는 이미지 선택 UI를 렌더링하는 컴포넌트
+ *
+ * @param {TabContentsProps} props
+ * @returns {JSX.Element}
+ *
+ * @example
+ * <TabContents
+ *   activeTab="color"
+ *   selected={{ type: 'color', index: 0 }}
+ *   onSelect={(type, idx, value) => console.log(type, idx, value)}
+ * />
+ */
 const TabContents = ({ activeTab, selected, onSelect }) => {
-  const [imageUrls, setImageUrls] = useState([]); // [{ original, thumbnail }]
+  /**
+   * API에서 가져온 이미지 URL 목록
+   * @type {ImageData[]}
+   */
+  const [imageUrls, setImageUrls] = useState([]);
+
+  /** 로딩 상태 */
   const [loading, setLoading] = useState(false);
+
+  /** 에러 상태 */
   const [error, setError] = useState(null);
 
+  // 이미지 탭 활성화 시 API 호출
   useEffect(() => {
     if (activeTab === 'image' && imageUrls.length === 0) {
       const controller = new AbortController();
@@ -27,7 +68,7 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
           const originals = res.data.imageUrls || [];
           const mapped = originals.map((url) => ({
             original: url,
-            thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'), // 이미지 썸네일: 원본 크기에서 200x200으로 변경
+            thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'), // 썸네일 변환
           }));
           setImageUrls(mapped);
         })
@@ -39,13 +80,14 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
         })
         .finally(() => setLoading(false));
 
-      return () => controller.abort();
+      return () => controller.abort(); // 컴포넌트 언마운트 시 요청 취소
     }
   }, [activeTab]);
 
   if (activeTab === 'image' && loading) {
     return <div className="py-20 text-center">이미지 불러오는 중...</div>;
   }
+
   if (error) {
     return <div className="py-20 text-center text-red-500">{error}</div>;
   }
@@ -56,6 +98,7 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
         colorChips.map((color, idx) => {
           const isSelected =
             selected?.type === 'color' && selected?.index === idx;
+
           return (
             <SelectItem
               key={`color-${idx}`}
@@ -70,11 +113,11 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
         imageUrls.map((img, idx) => {
           const isSelected =
             selected?.type === 'image' && selected?.index === idx;
+
           return (
             <SelectItem
               key={`image-${idx}`}
               isSelected={isSelected}
-              // 원본 URL을 onSelect로 넘김
               onClick={() => onSelect('image', idx, img.original)}>
               <img
                 src={img.thumbnail}
