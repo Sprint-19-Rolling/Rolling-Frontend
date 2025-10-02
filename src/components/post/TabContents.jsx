@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/apis/axios.js';
+import { cn } from '@/utils/style';
 import SelectItem from './TabSelectItem';
 
 const colorChips = [
@@ -26,7 +27,7 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
           const originals = res.data.imageUrls || [];
           const mapped = originals.map((url) => ({
             original: url,
-            thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
+            thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'), // 이미지 썸네일: 원본 크기에서 200x200으로 변경
           }));
           setImageUrls(mapped);
         })
@@ -73,14 +74,15 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
             <SelectItem
               key={`image-${idx}`}
               isSelected={isSelected}
-              // 👉 원본 URL을 onSelect로 넘김
+              // 원본 URL을 onSelect로 넘김
               onClick={() => onSelect('image', idx, img.original)}>
               <img
                 src={img.thumbnail}
                 alt={`배경 이미지-${idx}`}
-                className={`h-full w-full object-cover transition-opacity duration-200 ${
+                className={cn(
+                  'h-full w-full object-cover transition-opacity duration-200',
                   isSelected ? 'opacity-70' : 'opacity-100'
-                }`}
+                )}
                 loading="lazy"
               />
             </SelectItem>
