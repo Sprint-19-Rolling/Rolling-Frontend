@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import ArrowDown from '@/assets/icons/ic-arrow-down.svg';
 import BasicDropdown from '@/components/common/BasicDropdown';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 const Dropdown = () => {
   const DROPDOWN_ITEMS = [
@@ -32,15 +33,7 @@ const Dropdown = () => {
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(ref, () => setIsDropdownOpen(false));
 
   const inputClass = `border-1 h-[45px] w-full rounded px-3 py-2 pr-8 focus:outline-none 
     ${

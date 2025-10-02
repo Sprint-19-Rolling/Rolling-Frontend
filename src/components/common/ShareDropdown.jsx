@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import ShareIcon from '@/assets/icons/ic-share.svg';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 const ShareDropdownWrapper = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,15 +10,7 @@ const ShareDropdownWrapper = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(ref, () => setIsOpen(false));
 
   return (
     <div
