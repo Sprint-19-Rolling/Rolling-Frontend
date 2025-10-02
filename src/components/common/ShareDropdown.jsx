@@ -29,12 +29,16 @@ const ShareDropdownWrapper = () => {
 
 const ShareDropdown = () => {
   return (
-    <div className="absolute top-full h-[116px] w-[138px] -translate-x-1/2 rounded bg-white shadow">
-      <ul className="m-0 flex list-none flex-col gap-0 p-0">
-        <li className="cursor-pointer rounded-lg border border-gray-900 px-3 py-4 hover:bg-gray-100">
+    <div className="absolute top-full w-[138px] -translate-x-1/2 rounded bg-white shadow">
+      <ul className="m-0 flex list-none flex-col gap-0 divide-y divide-gray-200 p-0">
+        <li
+          onClick={() => alert('카카오톡 공유기능 구현 필요')}
+          className="cursor-pointer px-3 py-4 hover:bg-gray-100">
           카카오톡 공유
         </li>
-        <li className="cursor-pointer rounded-lg border-gray-900 px-3 py-4 hover:bg-gray-100">
+        <li
+          onClick={() => alert(' URL 공유 공유기능 구현 필요')}
+          className="cursor-pointer px-3 py-4 hover:bg-gray-100">
           URL 공유
         </li>
       </ul>
