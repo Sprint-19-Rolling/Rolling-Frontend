@@ -1,3 +1,43 @@
+import { cva } from 'class-variance-authority';
+import { cn } from '@/utils/style';
+
+const dropdownContainerVariants = cva('', {
+  variants: {
+    size: {
+      basic:
+        'rounded-lg bg-white  border border-gray-200 shadow-md max-h-[220px]',
+      share: 'rounded bg-white shadow w-[138px]',
+    },
+  },
+  defaultVariants: {
+    size: 'basic',
+  },
+});
+
+const listVariants = cva('flex flex-col gap-0', {
+  variants: {
+    size: {
+      basic: 'gap-0',
+      share: 'divide-y divide-gray-200',
+    },
+  },
+  defaultVariants: {
+    size: 'basic',
+  },
+});
+
+const itemVariants = cva('cursor-pointer text-gray-900', {
+  variants: {
+    size: {
+      basic: 'rounded-lg px-3 py-2 hover:bg-gray-100',
+      share: 'px-3 py-4 hover:bg-gray-100',
+    },
+  },
+  defaultVariants: {
+    size: 'basic',
+  },
+});
+
 /**
  * BasicDropdown 컴포넌트
  *
@@ -19,25 +59,17 @@
  *   size="share"
  * />
  */
+
 const BasicDropdown = ({ items, onSelect, className = '', size = 'basic' }) => {
-  const sizeStyles = {
-    basic:
-      'rounded-lg bg-white  border border-gray-200 shadow-md max-h-[220px]',
-    share: 'rounded bg-white shadow w-[138px]',
-  };
-
-  const baseClasses = sizeStyles[size] || sizeStyles.basic;
-
   return (
-    <div className={`${baseClasses} ${className}`}>
-      <ul
-        className={`flex flex-col gap-0 ${size === 'share' ? 'divide-y divide-gray-200' : 'gap-0'} `}>
+    <div className={cn(dropdownContainerVariants({ size }), className)}>
+      <ul className={cn(listVariants({ size }))}>
         {items.map((item) => {
           return (
             <li
               key={item}
               onClick={() => onSelect?.(item)}
-              className={`cursor-pointer text-gray-900 ${size === 'share' ? 'px-3 py-4 hover:bg-gray-100' : 'rounded-lg px-3 py-2 hover:bg-gray-100'} `}>
+              className={cn(itemVariants({ size }))}>
               {item}
             </li>
           );
