@@ -24,3 +24,8 @@
 @utility footer-separator {
   @apply font-14-regular text-gray-300;
 }
+
+/* card-style */
+@utility card-style {
+  @apply flex h-[230px] rounded-3xl bg-white shadow-[0_2px_12px_0_rgba(0,0,0,0.08)] sm:h-[284px] md:h-[280px];
+}
