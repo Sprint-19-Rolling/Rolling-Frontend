@@ -66,7 +66,7 @@ const MessageCard = ({
     <div
       role="button"
       tabIndex={0}
-      className="card-style relative flex-col items-start gap-4 p-6 pt-7"
+      className="card-style relative cursor-pointer flex-col items-start gap-4 p-6 pt-7"
       onClick={onClick}
       onKeyDown={handleKeyDown}>
       <AuthorInfo
