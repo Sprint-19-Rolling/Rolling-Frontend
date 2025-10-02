@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap');
 
 @font-face {
-  font-family: 'NanumSonPyeonJi';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/NanumSonPyeonJi.woff2')
-    format('woff2');
+  font-family: 'Handletter';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Handletter.woff')
+    format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -32,14 +32,26 @@
   font-family: 'Nanum Myeongjo', serif !important;
 }
 
-.ql-snow
-  .ql-picker.ql-font
-  .ql-picker-label[data-value='nanum-sonpyeonji']::before,
-.ql-snow
-  .ql-picker.ql-font
-  .ql-picker-item[data-value='nanum-sonpyeonji']::before {
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='handletter']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='handletter']::before {
   content: '나눔손글씨 손편지체';
-  font-family: 'NanumSonPyeonJi', cursive !important;
+  font-family: 'Handletter', cursive !important;
+}
+
+.ql-font-noto-sans {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.ql-font-pretendard {
+  font-family: 'Pretendard', sans-serif !important;
+}
+
+.ql-font-nanum-myeongjo {
+  font-family: 'Nanum Myeongjo', serif !important;
+}
+
+.ql-font-handletter {
+  font-family: 'Handletter', cursive !important;
 }
 
 .ql-picker.ql-font .ql-picker-label:not([data-value])::before {
