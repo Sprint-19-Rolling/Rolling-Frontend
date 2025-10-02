@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/apis/axios.js';
-import icons from '@/assets/icons/icons';
+import SelectItem from './TabSelectItem';
 
-// 컬러칩 배열
 const colorChips = [
   'bg-orange-200',
   'bg-purple-200',
@@ -11,26 +10,43 @@ const colorChips = [
 ];
 
 const TabContents = ({ activeTab, selected, onSelect }) => {
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]); // [{ original, thumbnail }]
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (activeTab === 'image') {
+    if (activeTab === 'image' && imageUrls.length === 0) {
+      const controller = new AbortController();
       setLoading(true);
+      setError(null);
+
       api
-        .get('/background-images/')
+        .get('/background-images/', { signal: controller.signal })
         .then((res) => {
-          setImageUrls(res.data.imageUrls || []);
+          const originals = res.data.imageUrls || [];
+          const mapped = originals.map((url) => ({
+            original: url,
+            thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
+          }));
+          setImageUrls(mapped);
         })
         .catch((err) => {
-          console.error('이미지 API 호출 실패:', err);
+          if (err.name !== 'CanceledError') {
+            console.error('이미지 API 호출 실패:', err);
+            setError('이미지를 불러오는 데 실패했습니다.');
+          }
         })
         .finally(() => setLoading(false));
+
+      return () => controller.abort();
     }
   }, [activeTab]);
 
   if (activeTab === 'image' && loading) {
     return <div className="py-20 text-center">이미지 불러오는 중...</div>;
+  }
+  if (error) {
+    return <div className="py-20 text-center text-red-500">{error}</div>;
   }
 
   return (
@@ -40,49 +56,34 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
           const isSelected =
             selected?.type === 'color' && selected?.index === idx;
           return (
-            <div
+            <SelectItem
               key={`color-${idx}`}
+              isSelected={isSelected}
               onClick={() => onSelect('color', idx, color)}
-              className={`relative flex aspect-square w-full cursor-pointer items-center justify-center rounded-[16px] border border-black/10 ${color}`}>
-              {isSelected && (
-                <div className="absolute flex h-10 w-10 items-center justify-center rounded-full bg-gray-500">
-                  <icons.CheckIcon
-                    width={24}
-                    height={24}
-                    className="text-white"
-                  />
-                </div>
-              )}
-            </div>
+              className={color}
+            />
           );
         })}
 
       {activeTab === 'image' &&
-        imageUrls.map((url, idx) => {
+        imageUrls.map((img, idx) => {
           const isSelected =
             selected?.type === 'image' && selected?.index === idx;
           return (
-            <div
+            <SelectItem
               key={`image-${idx}`}
-              onClick={() => onSelect('image', idx, url)}
-              className="relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-[16px] border border-black/10">
+              isSelected={isSelected}
+              // 👉 원본 URL을 onSelect로 넘김
+              onClick={() => onSelect('image', idx, img.original)}>
               <img
-                src={url}
-                alt={`이미지칩-${idx}`}
+                src={img.thumbnail}
+                alt={`배경 이미지-${idx}`}
                 className={`h-full w-full object-cover transition-opacity duration-200 ${
                   isSelected ? 'opacity-70' : 'opacity-100'
                 }`}
+                loading="lazy"
               />
-              {isSelected && (
-                <div className="absolute flex h-10 w-10 items-center justify-center rounded-full bg-gray-500">
-                  <icons.CheckIcon
-                    width={24}
-                    height={24}
-                    className="text-white"
-                  />
-                </div>
-              )}
-            </div>
+            </SelectItem>
           );
         })}
     </div>
