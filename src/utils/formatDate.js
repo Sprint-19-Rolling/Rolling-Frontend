@@ -22,7 +22,9 @@ export const formatDate = (isoDate) => {
     timeZone: 'Asia/Seoul',
   };
 
-  const formattedDate = date.toLocaleString('ko-KR', options);
-
-  return formattedDate.replace(/\s/g, '').slice(0, -1);
+  const parts = new Intl.DateTimeFormat('ko-KR', options).formatToParts(date);
+  const year = parts.find(({ type }) => type === 'year').value;
+  const month = parts.find(({ type }) => type === 'month').value;
+  const day = parts.find(({ type }) => type === 'day').value;
+  return `${year}.${month}.${day}`;
 };
