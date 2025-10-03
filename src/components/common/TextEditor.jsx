@@ -3,78 +3,105 @@ import ReactQuill, { Quill } from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import '../../style/base/quill-custom.css';
 
+// 🎨 공통 색상 팔레트 상수 정의
+const QUILL_COLORS = [
+  '#000000',
+  '#e60000',
+  '#ff9900',
+  '#ffff00',
+  '#008a00',
+  '#0066cc',
+  '#9933ff',
+  '#ffffff',
+  '#facccc',
+  '#ffebcc',
+  '#ffffcc',
+  '#cce8cc',
+  '#cce0f5',
+  '#ebd6ff',
+  '#bbbbbb',
+  '#f06666',
+  '#ffc266',
+  '#ffff66',
+  '#66b966',
+  '#66a3e0',
+  '#c285ff',
+  '#888888',
+  '#a10000',
+  '#b26b00',
+  '#b2b200',
+  '#006100',
+  '#0047b2',
+  '#6b24b2',
+  '#444444',
+  '#5c0000',
+  '#663d00',
+  '#666600',
+  '#003700',
+  '#002966',
+  '#3d1466',
+];
+
+// 폰트 화이트리스트 설정
 const Font = Quill.import('formats/font');
 Font.whitelist = ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'];
 Quill.register(Font, true);
 
-const TextEditor = ({ value, onChange }) => {
-  const reactQuillRef = useRef(null);
-
+// 체크리스트 툴바 및 상태 동기화 커스텀 훅
+const useChecklistToolbarManager = (reactQuillRef) => {
   useEffect(() => {
-    if (!reactQuillRef.current) {
+    const quill = reactQuillRef.current?.getEditor();
+    if (!quill) {
       return;
     }
 
-    const editor = reactQuillRef.current.getEditor();
-    const container = editor.root;
+    const container = quill.root;
 
-    const updateListButtons = () => {
-      const selection = editor.getSelection();
-      if (!selection) {
+    const updateToolbarButtons = () => {
+      const range = quill.getSelection();
+      if (!range) {
         return;
       }
 
-      const [leaf] = editor.getLeaf(selection.index);
-      let currentNode = leaf?.domNode;
-
-      let isCheckList = false;
-      let isOrderedList = false;
-      let isBulletList = false;
-
-      while (currentNode && currentNode !== editor.root) {
-        if (currentNode.tagName === 'LI') {
-          const listType = currentNode.getAttribute('data-list');
-          if (listType === 'check') {
-            isCheckList = true;
-          } else if (listType === 'ordered') {
-            isOrderedList = true;
-          } else if (listType === 'bullet') {
-            isBulletList = true;
-          }
-          break;
-        }
-        currentNode = currentNode.parentElement;
+      const formats = quill.getFormat(range);
+      const toolbar = quill.getModule('toolbar')?.container;
+      if (!toolbar) {
+        return;
       }
 
-      const toolbar = reactQuillRef.current
-        .getEditor()
-        .getModule('toolbar').container;
-
-      const checkButton = toolbar?.querySelector(
+      const checkButton = toolbar.querySelector(
         'button.ql-list[value="check"]'
       );
-      const orderedButton = toolbar?.querySelector(
+      const orderedButton = toolbar.querySelector(
         'button.ql-list[value="ordered"]'
       );
-      const bulletButton = toolbar?.querySelector(
+      const bulletButton = toolbar.querySelector(
         'button.ql-list[value="bullet"]'
       );
 
       if (checkButton) {
-        checkButton.classList.toggle('ql-active', isCheckList);
+        checkButton.classList.toggle('ql-active', formats.list === 'check');
       }
       if (orderedButton) {
-        orderedButton.classList.toggle('ql-active', isOrderedList);
+        orderedButton.classList.toggle('ql-active', formats.list === 'ordered');
       }
       if (bulletButton) {
-        bulletButton.classList.toggle('ql-active', isBulletList);
+        bulletButton.classList.toggle('ql-active', formats.list === 'bullet');
       }
     };
 
     const updateChecklistColors = () => {
-      const checkItems = container.querySelectorAll('li[data-list="check"]');
-      checkItems.forEach((item) => {
-        const isChecked = item.getAttribute('data-checked') === 'true';
+      const items = container.querySelectorAll('li[data-list="check"]');
+      items.forEach((item) => {
+        const blot = Quill.find(item);
+        if (!blot) {
+          return;
+        }
+
+        const index = quill.getIndex(blot);
+        const formats = quill.getFormat(index, 1);
+        const isChecked = formats.checked === true;
+
         const uiElement = item.querySelector('.ql-ui');
         if (uiElement) {
           uiElement.setAttribute(
@@ -91,36 +118,47 @@ const TextEditor = ({ value, onChange }) => {
         return;
       }
 
-      const isChecked = listItem.getAttribute('data-checked') === 'true';
-      listItem.setAttribute('data-checked', String(!isChecked));
-
       const blot = Quill.find(listItem);
-      if (blot) {
-        const index = editor.getIndex(blot);
-        editor.setSelection(index, 0);
+      if (!blot) {
+        return;
       }
 
-      setTimeout(updateListButtons, 10);
+      const index = quill.getIndex(blot);
+      const formats = quill.getFormat(index, 1);
+      const isChecked = formats.checked === true;
+
+      quill.formatLine(index, 1, { checked: !isChecked });
+      quill.setSelection(index, 0, 'silent');
+
+      updateToolbarButtons();
     };
 
     const handleTextChange = () => {
-      updateListButtons();
+      updateToolbarButtons();
       updateChecklistColors();
     };
 
-    setTimeout(updateListButtons, 100);
-    setTimeout(updateChecklistColors, 100);
+    // 초기 상태 동기화
+    updateToolbarButtons();
+    updateChecklistColors();
 
-    editor.on('selection-change', updateListButtons);
-    editor.on('text-change', handleTextChange);
+    quill.on('selection-change', updateToolbarButtons);
+    quill.on('text-change', handleTextChange);
     container.addEventListener('click', handleClick);
 
     return () => {
-      editor.off('selection-change', updateListButtons);
-      editor.off('text-change', handleTextChange);
+      quill.off('selection-change', updateToolbarButtons);
+      quill.off('text-change', handleTextChange);
       container.removeEventListener('click', handleClick);
     };
-  }, []);
+  }, [reactQuillRef]);
+};
+
+const TextEditor = ({ value, onChange }) => {
+  const reactQuillRef = useRef(null);
+
+  // 체크리스트 상태 관리 훅 실행
+  useChecklistToolbarManager(reactQuillRef);
 
   const modules = useMemo(
     () => ({
@@ -132,86 +170,7 @@ const TextEditor = ({ value, onChange }) => {
           [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
           [{ header: [3, 4, 5, false] }],
           ['image', 'link'],
-          [
-            {
-              color: [
-                '#000000',
-                '#e60000',
-                '#ff9900',
-                '#ffff00',
-                '#008a00',
-                '#0066cc',
-                '#9933ff',
-                '#ffffff',
-                '#facccc',
-                '#ffebcc',
-                '#ffffcc',
-                '#cce8cc',
-                '#cce0f5',
-                '#ebd6ff',
-                '#bbbbbb',
-                '#f06666',
-                '#ffc266',
-                '#ffff66',
-                '#66b966',
-                '#66a3e0',
-                '#c285ff',
-                '#888888',
-                '#a10000',
-                '#b26b00',
-                '#b2b200',
-                '#006100',
-                '#0047b2',
-                '#6b24b2',
-                '#444444',
-                '#5c0000',
-                '#663d00',
-                '#666600',
-                '#003700',
-                '#002966',
-                '#3d1466',
-              ],
-            },
-            {
-              background: [
-                '#000000',
-                '#e60000',
-                '#ff9900',
-                '#ffff00',
-                '#008a00',
-                '#0066cc',
-                '#9933ff',
-                '#ffffff',
-                '#facccc',
-                '#ffebcc',
-                '#ffffcc',
-                '#cce8cc',
-                '#cce0f5',
-                '#ebd6ff',
-                '#bbbbbb',
-                '#f06666',
-                '#ffc266',
-                '#ffff66',
-                '#66b966',
-                '#66a3e0',
-                '#c285ff',
-                '#888888',
-                '#a10000',
-                '#b26b00',
-                '#b2b200',
-                '#006100',
-                '#0047b2',
-                '#6b24b2',
-                '#444444',
-                '#5c0000',
-                '#663d00',
-                '#666600',
-                '#003700',
-                '#002966',
-                '#3d1466',
-              ],
-            },
-          ],
+          [{ color: QUILL_COLORS }, { background: QUILL_COLORS }],
           ['clean'],
         ],
         handlers: {
@@ -224,7 +183,7 @@ const TextEditor = ({ value, onChange }) => {
                   range.index,
                   range.length,
                   'font',
-                  'noto-sans'
+                  'Font.whitelist[0]'
                 );
               }
             }
