@@ -15,9 +15,9 @@ const emojiBadgeStyle = cva(
     },
   }
 );
-const EmojiBadge = ({ emoji, count, size = 'md' }) => {
+const EmojiBadge = ({ className, emoji, count, size = 'md' }) => {
   return (
-    <span className={cn(emojiBadgeStyle({ size }))}>
+    <span className={cn(emojiBadgeStyle({ size }), className)}>
       <span className="mr-1.5">{emoji}</span>
       {count !== undefined && <span>{count}</span>}
     </span>
