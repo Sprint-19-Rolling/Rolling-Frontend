@@ -94,10 +94,6 @@
   font-family: 'Nanum Myeongjo', serif;
 }
 
-.ql-editor .ql-font-nanum-sonpyeonji {
-  font-family: 'NanumSonPyeonJi', cursive;
-}
-
 .ql-editor ol,
 .ql-editor ul {
   padding-left: 0;
@@ -116,11 +112,6 @@
 
 .ql-editor ol {
   counter-reset: list-0;
-}
-
-.ql-editor li[data-list='check'] {
-  padding-left: 1.5em;
-  position: relative;
 }
 
 .ql-container {
@@ -181,10 +172,7 @@
   stroke: #7c3aed !important;
 }
 
-.ql-snow .ql-toolbar button:hover:not(.ql-active),
-.ql-snow .ql-toolbar button:focus:not(.ql-active),
-.ql-snow .ql-toolbar .ql-picker-label:hover:not(.ql-active),
-.ql-snow .ql-toolbar .ql-picker-label:focus:not(.ql-active) {
+.ql-snow .ql-toolbar button:is(:hover, :focus):not(.ql-active) {
   color: #7c3aed !important;
   background-color: transparent !important;
   box-shadow: none !important;
