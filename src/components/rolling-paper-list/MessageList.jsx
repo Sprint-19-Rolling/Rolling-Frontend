@@ -22,37 +22,34 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
 
   const observerRef = useRef(null);
 
-  useEffect(
-    function messageListUseEffect() {
-      if (loading) {
-        return;
-      }
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && nextUrl && !isFetching) {
-            fetchMore();
-          }
-        },
-        {
-          threshold: 1.0,
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && nextUrl && !isFetching) {
+          fetchMore();
         }
-      );
+      },
+      {
+        threshold: 1.0,
+      }
+    );
 
-      const target = observerRef.current;
+    const target = observerRef.current;
 
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
       if (target) {
-        observer.observe(target);
+        observer.unobserve(target);
       }
-
-      return () => {
-        if (target) {
-          observer.unobserve(target);
-        }
-      };
-    },
-    [nextUrl, fetchMore, loading, isFetching]
-  );
+    };
+  }, [nextUrl, fetchMore, loading, isFetching]);
 
   const handleMessageCardClick = (messageData) => {
     // TODO: 모달 구현 로직 추가 필요
