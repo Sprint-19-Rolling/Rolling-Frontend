@@ -82,16 +82,15 @@
   min-height: 260px;
 }
 
-.ql-editor .ql-font-noto-sans {
-  font-family: 'Noto Sans KR', sans-serif;
+.ql-editor.ql-blank::before {
+  color: #9ca3af;
+  font-style: normal;
+  pointer-events: none;
+  display: block;
 }
-
-.ql-editor .ql-font-pretendard {
-  font-family: 'Pretendard', sans-serif;
-}
-
-.ql-editor .ql-font-nanum-myeongjo {
-  font-family: 'Nanum Myeongjo', serif;
+.ql-editor:not(.ql-blank)::before {
+  content: none !important;
+  display: none !important;
 }
 
 .ql-editor ol,
@@ -114,6 +113,25 @@
   counter-reset: list-0;
 }
 
+.ql-editor li[data-list='check'] {
+  list-style-type: none !important;
+  position: relative;
+  padding-left: 1.5em;
+}
+.ql-editor li[data-list='check'] > .ql-ui {
+  position: absolute;
+  left: 0;
+  color: #9ca3af !important;
+  cursor: pointer;
+}
+.ql-editor li[data-list='check']:not([data-checked='true']):hover > .ql-ui {
+  color: #7c3aed !important;
+}
+.ql-editor li[data-list='check'][data-checked='true'] > .ql-ui {
+  color: #7c3aed !important;
+  font-weight: bold !important;
+}
+
 .ql-container {
   min-height: 260px;
   font-size: 16px;
@@ -129,8 +147,16 @@
 }
 
 .ql-editor.ql-blank::before {
+  content: attr(data-placeholder);
   color: #9ca3af;
   font-style: normal;
+  pointer-events: none;
+  display: block;
+}
+
+.ql-editor:not(.ql-blank)::before {
+  content: none !important;
+  display: none !important;
 }
 
 .ql-editor li[data-list='check'] {
