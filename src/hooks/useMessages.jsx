@@ -27,6 +27,8 @@ const useMessages = (recipientId) => {
       return;
     }
 
+    const controller = new AbortController();
+
     // 기존 값 초기화
     setMessages([]);
     setNextUrl(null);
@@ -36,11 +38,15 @@ const useMessages = (recipientId) => {
       setLoading(true);
       try {
         const response = await teamApi.get(
-          `recipients/${recipientId}/messages/?limit=${MESSAGES_LIMIT}&offset=0`
+          `recipients/${recipientId}/messages/?limit=${MESSAGES_LIMIT}&offset=0`,
+          { signal: controller.signal }
         );
         setMessages(response.data.results);
         setNextUrl(response.data.next);
       } catch (err) {
+        if (err.name === 'CanceledError') {
+          return;
+        }
         setError({
           status: err.response?.status || 500,
           message: err.response?.data?.message || err.message,
@@ -51,6 +57,10 @@ const useMessages = (recipientId) => {
     };
 
     fetchInit();
+
+    return () => {
+      controller.abort();
+    };
   }, [recipientId, setError]);
 
   const fetchMore = useCallback(async () => {
