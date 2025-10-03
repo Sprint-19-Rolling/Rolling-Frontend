@@ -53,6 +53,7 @@
   --color-black: #000000;
   --color-error: #dc3a3a;
   --color-surface: #f6f8ff;
+  --color-divider: #ededed;
 
   /* 텍스트 사이즈 */
   --text-12: 12px;
