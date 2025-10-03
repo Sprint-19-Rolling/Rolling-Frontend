@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
+import LinkButton from '@/components/common/button/LinkButton';
 import { useBackground } from '@/hooks/useBackground';
 import { cn } from '@/utils/style';
 
@@ -51,7 +52,7 @@ const List = () => {
         backgroundData?.type === 'color' ? backgroundData.value : ''
       )}
       style={getBackgroundStyle()}>
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto">
         {/* 누구에게 작성했는지 표기 */}
         <h1 className="mb-4 text-2xl font-bold">To.{to}</h1>
         {to ? (

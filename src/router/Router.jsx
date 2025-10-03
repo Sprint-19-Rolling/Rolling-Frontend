@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router';
 import MainLayout from '@/components/common/MainLayout';
 import List from '@/pages/List';
 import Main from '@/pages/Main';

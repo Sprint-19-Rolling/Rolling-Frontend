@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import TextInput from '@/components/common/TextInput';
 import Title from '@/components/common/Title';
 import TabButtonBox from '@/components/post/TabButtonBox';
