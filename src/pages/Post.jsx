@@ -1,4 +1,5 @@
 import TextInput from '@/components/common/TextInput';
+import Title from '@/components/common/Title';
 import TabButtonBox from '@/components/post/TabButtonBox';
 import { useInput } from '@/hooks/useInput';
 
@@ -10,11 +11,7 @@ const Post = () => {
 
   return (
     <div>
-      <label
-        htmlFor="To"
-        className="font-20-bold md:font-24-bold text-gray-900">
-        To.
-      </label>
+      <Title>To.</Title>
       <TextInput
         name="To"
         placeholder="받는 사람 이름을 입력해 주세요"
