@@ -25,21 +25,16 @@ const Error = () => {
   return (
     <div className="flex h-60 flex-col items-center justify-center gap-4 rounded-xl bg-white">
       {error.status === 404 ? (
-        <>
-          <Title as="h3">해당하는 데이터가 없어요 😢</Title>
-          <Button onClick={handleGoMain} size={40} theme="secondary">
-            메인으로 가기
-          </Button>
-        </>
+        <Title as="h3">해당하는 데이터가 없어요 😢</Title>
       ) : (
         <>
           <Title as="h3">에러가 발생했습니다.</Title>
           <p>{error.message}</p>
-          <Button onClick={handleGoMain} size={40} theme="outlined">
-            메인으로 가기
-          </Button>
         </>
       )}
+      <Button onClick={handleGoMain} size={40} theme="secondary">
+        메인으로 가기
+      </Button>
     </div>
   );
 };
