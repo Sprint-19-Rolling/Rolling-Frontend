@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import ReactQuill, { Quill } from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import '../../style/base/quill-custom.css';
@@ -7,8 +7,7 @@ const Font = Quill.import('formats/font');
 Font.whitelist = ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'];
 Quill.register(Font, true);
 
-const TextEditor = () => {
-  const [value, setValue] = useState('');
+const TextEditor = ({ value, onChange }) => {
   const reactQuillRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +46,10 @@ const TextEditor = () => {
         currentNode = currentNode.parentElement;
       }
 
-      const toolbar = document.querySelector('.ql-toolbar');
+      const toolbar = reactQuillRef.current
+        .getEditor()
+        .getModule('toolbar').container;
+
       const checkButton = toolbar?.querySelector(
         'button.ql-list[value="check"]'
       );
@@ -69,6 +71,20 @@ const TextEditor = () => {
       }
     };
 
+    const updateChecklistColors = () => {
+      const checkItems = container.querySelectorAll('li[data-list="check"]');
+      checkItems.forEach((item) => {
+        const isChecked = item.getAttribute('data-checked') === 'true';
+        const uiElement = item.querySelector('.ql-ui');
+        if (uiElement) {
+          uiElement.setAttribute(
+            'data-color-init',
+            isChecked ? 'purple' : 'gray'
+          );
+        }
+      });
+    };
+
     const handleClick = (e) => {
       const listItem = e.target.closest('li[data-list="check"]');
       if (!listItem) {
@@ -87,33 +103,21 @@ const TextEditor = () => {
       setTimeout(updateListButtons, 10);
     };
 
-    const updateChecklistColors = () => {
-      const checkItems = container.querySelectorAll('li[data-list="check"]');
-      checkItems.forEach((item) => {
-        const isChecked = item.getAttribute('data-checked') === 'true';
-        const uiElement = item.querySelector('.ql-ui');
-        if (uiElement) {
-          uiElement.setAttribute(
-            'data-color-init',
-            isChecked ? 'purple' : 'gray'
-          );
-        }
-      });
+    const handleTextChange = () => {
+      updateListButtons();
+      updateChecklistColors();
     };
 
     setTimeout(updateListButtons, 100);
     setTimeout(updateChecklistColors, 100);
 
     editor.on('selection-change', updateListButtons);
-    editor.on('text-change', () => {
-      updateListButtons();
-      updateChecklistColors();
-    });
+    editor.on('text-change', handleTextChange);
     container.addEventListener('click', handleClick);
 
     return () => {
       editor.off('selection-change', updateListButtons);
-      editor.off('text-change', updateListButtons);
+      editor.off('text-change', handleTextChange);
       container.removeEventListener('click', handleClick);
     };
   }, []);
@@ -237,7 +241,7 @@ const TextEditor = () => {
         ref={reactQuillRef}
         theme="snow"
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         modules={modules}
         placeholder="여기에 내용을 입력해주세요."
       />
