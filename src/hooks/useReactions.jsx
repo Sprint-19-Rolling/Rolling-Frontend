@@ -1,20 +1,25 @@
+import { useCallback } from 'react';
 import { teamApi } from '@/apis/axios';
-import { RECIPIENT_PAGE_LIMIT } from '@/constants/rollingPaperList';
 import useDataFetch from '@/hooks/useDataFetch';
+import useResponsiveSize from '@/hooks/useResponsiveSize';
 
 const useReactions = (recipientId) => {
-  const fetcher = async (signal) => {
-    const res = await teamApi.get(
-      `recipients/${recipientId}/reactions/?limit=${RECIPIENT_PAGE_LIMIT}&offset=0`,
-      {
-        signal,
-      }
-    );
+  const pageSize = useResponsiveSize();
 
-    return res.data.results;
-  };
+  const fetcher = useCallback(
+    async (signal) => {
+      const limit = pageSize;
+      const res = await teamApi.get(
+        `recipients/${recipientId}/reactions/?limit=${limit}&offset=0`,
+        { signal }
+      );
 
-  const { data, loading } = useDataFetch(fetcher, [recipientId]);
+      return res.data.results;
+    },
+    [recipientId, pageSize]
+  );
+
+  const { data, loading } = useDataFetch(fetcher, [recipientId, pageSize]);
 
   return { reactions: data, loading };
 };
