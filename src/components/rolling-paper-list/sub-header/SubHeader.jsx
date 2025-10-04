@@ -3,6 +3,7 @@ import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import EmojiPickerButton from '@/components/rolling-paper-list/sub-header/EmojiPickerButton';
 import EmojiSummary from '@/components/rolling-paper-list/sub-header/EmojiSummary';
 import useError from '@/hooks/useError';
+import useReactions from '@/hooks/useReactions';
 import useRecipientHeaderData from '@/hooks/useRecipientHeaderData';
 import { cn } from '@/utils/style';
 
@@ -10,6 +11,7 @@ const SubHeader = ({ recipientId }) => {
   const { error } = useError();
   const { recipientData, setRecipientData, loading } =
     useRecipientHeaderData(recipientId);
+  const { reactions, loading: reactionsLoading } = useReactions(recipientId);
 
   if (error) {
     return null;
@@ -81,6 +83,8 @@ const SubHeader = ({ recipientId }) => {
           <div className="flex w-full items-center justify-between gap-[15px] px-5 py-2 sm:w-fit sm:gap-[13px] sm:p-0">
             <EmojiSummary
               className="mr-auto sm:-mr-[5px]"
+              reacions={reactions}
+              loading={reactionsLoading}
               topReactions={[...topReactions]
                 .sort((a, b) => b.count - a.count)
                 .slice(0, 3)}
