@@ -5,7 +5,7 @@ import EmojiBadge from '@/components/common/badge/EmojiBadge';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/style';
 
-// 공통 스타일 별도로 분리했습니다.
+// 이모지 드롭다운 컨테이너 공통 스타일 분리
 const dropdownContainerStyle = cva(
   'shadow-basic absolute right-0 top-full mt-[7px] grid gap-2 rounded-lg border border-gray-300 bg-white'
 );
