@@ -83,7 +83,7 @@ const SubHeader = ({ recipientId }) => {
           <div className="flex w-full items-center justify-between gap-[15px] px-5 py-2 sm:w-fit sm:gap-[13px] sm:p-0">
             <EmojiSummary
               className="mr-auto sm:-mr-[5px]"
-              reacions={reactions}
+              reactions={reactions}
               loading={reactionsLoading}
               topReactions={[...topReactions]
                 .sort((a, b) => b.count - a.count)

@@ -28,7 +28,7 @@ const dropdownContainerStyle = cva(
  * @param {boolean} props.loading - 전체 이모지 목록 로딩 상태
  * @returns {JSX.Element | null}
  */
-const EmojiSummary = ({ className, topReactions, reacions, loading }) => {
+const EmojiSummary = ({ className, topReactions, reactions, loading }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setIsOpen(false));
@@ -73,8 +73,8 @@ const EmojiSummary = ({ className, topReactions, reacions, loading }) => {
             <span className="col-span-3 text-center md:col-span-4">
               로딩중...
             </span>
-          ) : reacions && reacions.length > 0 ? (
-            reacions.map((item) => {
+          ) : reactions && reactions.length > 0 ? (
+            reactions.map((item) => {
               return (
                 <EmojiBadge
                   key={item.id}
