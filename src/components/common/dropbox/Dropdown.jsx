@@ -19,7 +19,7 @@ const DROPDOWN_ITEMS = [
 ];
 
 const inputVariants = cva(
-  'border h-[45px] w-full rounded-lg px-3 py-2 pr-8 focus:outline-none focus:border-2 focus:border-gray-500 cursor-pointer',
+  'border h-[50px] w-full rounded-lg px-3 py-2 pr-8 focus:outline-none focus:border-2 focus:border-gray-500 cursor-pointer',
   {
     variants: {
       error: {
@@ -96,7 +96,7 @@ const Dropdown = forwardRef(
     }));
 
     return (
-      <div className="relative w-[318px]" ref={containerRef}>
+      <div className="relative w-[320px]" ref={containerRef}>
         <input
           type="text"
           value={selected}

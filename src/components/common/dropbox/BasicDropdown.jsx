@@ -1,12 +1,11 @@
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/style';
 
-const dropdownContainerVariants = cva('', {
+const dropdownContainerVariants = cva('bg-white shadow', {
   variants: {
     size: {
-      basic:
-        'rounded-lg bg-white  border border-gray-200 shadow-md max-h-[220px]',
-      share: 'rounded bg-white shadow w-[138px]',
+      basic: 'rounded-lg border border-gray-200 shadow-md max-h-[220px]',
+      share: 'rounded w-[138px]',
     },
   },
   defaultVariants: {
@@ -18,7 +17,7 @@ const listVariants = cva('flex flex-col gap-0', {
   variants: {
     size: {
       basic: 'gap-0',
-      share: 'divide-y divide-gray-200',
+      share: '',
     },
   },
   defaultVariants: {
@@ -26,17 +25,9 @@ const listVariants = cva('flex flex-col gap-0', {
   },
 });
 
-const itemVariants = cva('cursor-pointer text-gray-900', {
-  variants: {
-    size: {
-      basic: 'rounded-lg px-3 py-2 hover:bg-gray-100',
-      share: 'px-3 py-4 hover:bg-gray-100',
-    },
-  },
-  defaultVariants: {
-    size: 'basic',
-  },
-});
+const itemVariants = cva(
+  'cursor-pointer text-gray-900 h-[50px] px-[16px] py-[12px] hover:bg-gray-100'
+);
 
 /**
  * BasicDropdown 컴포넌트

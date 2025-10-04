@@ -41,9 +41,7 @@ const ShareDropdownWrapper = () => {
   };
 
   return (
-    <div
-      className="relative inline-block h-9 w-14 rounded-lg border border-gray-300"
-      ref={ref}>
+    <div className="relative h-9 w-14" ref={ref}>
       <Button
         theme="icon"
         size={36}
