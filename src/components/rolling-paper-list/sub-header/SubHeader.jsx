@@ -1,3 +1,4 @@
+import ShareDropdown from '@/components/common/dropbox/ShareDropdown';
 import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import EmojiPickerButton from '@/components/rolling-paper-list/sub-header/EmojiPickerButton';
 import EmojiSummary from '@/components/rolling-paper-list/sub-header/EmojiSummary';
@@ -89,10 +90,7 @@ const SubHeader = ({ recipientId }) => {
               onSuccess={handleEmojiUpdate}
             />
             <div className="divider-style" />
-            {/* TODO: 공유드롭다운 추가 예정 */}
-            <button className="h-[32px] w-[36px] border sm:h-[36px] sm:w-[56px]">
-              공유
-            </button>
+            <ShareDropdown />
           </div>
         </div>
       </div>
