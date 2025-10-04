@@ -1,7 +1,5 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { teamApi } from '@/apis/axios';
-import useError from '@/hooks/useError';
+import useDataFetch from '@/hooks/useDataFetch';
 
 /**
  * 롤링페이퍼 수신자(Recipient)에 대한 헤더 표시용 핵심 데이터를 불러오는 커스텀 훅입니다.
@@ -21,58 +19,21 @@ import useError from '@/hooks/useError';
  * }} - 수신자 정보 객체와 로딩 상태를 반환
  */
 const useRecipientHeaderData = (recipientId) => {
-  const { setError } = useError();
-  const [recipientData, setRecipientData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const fetcher = async (signal) => {
+    const res = await teamApi.get(`recipients/${recipientId}/`, { signal });
 
-  useEffect(() => {
-    if (!recipientId) {
-      return;
-    }
-
-    const controller = new AbortController();
-
-    setRecipientData(null);
-    setError(null);
-    setLoading(true);
-
-    const fetchHeaderData = async () => {
-      try {
-        const recipientRes = await teamApi.get(`recipients/${recipientId}/`, {
-          signal: controller.signal,
-        });
-        const data = {
-          name: recipientRes.data.name,
-          messageCount: recipientRes.data.messageCount,
-          recentMessages: recipientRes.data.recentMessages,
-          reactionCount: recipientRes.data.reactionCount,
-          topReactions: recipientRes.data.topReactions,
-        };
-        setRecipientData(data);
-      } catch (err) {
-        if (axios.isCancel(err) || err.name === 'CanceledError') {
-          return;
-        }
-
-        setError({
-          status: err.response?.status || 500,
-          message:
-            err.response?.data?.message ||
-            '헤더 데이터를 불러오는 데 실패했습니다.',
-        });
-      } finally {
-        setLoading(false);
-      }
+    return {
+      name: res.data.name,
+      messageCount: res.data.messageCount,
+      recentMessages: res.data.recentMessages,
+      reactionCount: res.data.reactionCount,
+      topReactions: res.data.topReactions,
     };
+  };
 
-    fetchHeaderData();
+  const { data, setData, loading } = useDataFetch(fetcher, [recipientId]);
 
-    return () => {
-      controller.abort();
-    };
-  }, [recipientId, setError]);
-
-  return { recipientData, setRecipientData, loading };
+  return { recipientData: data, setRecipientData: setData, loading };
 };
 
 export default useRecipientHeaderData;
