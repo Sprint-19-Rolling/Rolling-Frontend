@@ -47,10 +47,7 @@ const SubHeader = ({ recipientId }) => {
           r.emoji === reaction.emoji ? { ...r, count: reaction.count } : r
         );
       } else {
-        newTopReactions = [
-          ...prev.topReactions,
-          { emoji: reaction.emoji, count: reaction.count },
-        ];
+        newTopReactions = [...prev.topReactions, reaction];
       }
 
       const sortTopReactions = newTopReactions
