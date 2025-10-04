@@ -1,8 +1,9 @@
 import EmojiPicker from 'emoji-picker-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { teamApi } from '@/apis/axios';
 import icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import useError from '@/hooks/useError';
 
 /**
@@ -16,6 +17,8 @@ import useError from '@/hooks/useError';
 const EmojiPickerButton = ({ recipientId, onSuccess }) => {
   const { setError } = useError();
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  useClickOutside(ref, () => setIsOpen(false));
 
   const handleTogglePicker = () => {
     setIsOpen((prev) => !prev);
@@ -42,7 +45,7 @@ const EmojiPickerButton = ({ recipientId, onSuccess }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <Button
         aria-label="이모티콘 추가 버튼"
         theme="outlined"
