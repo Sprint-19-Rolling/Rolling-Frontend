@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { teamApi } from '@/apis/axios';
 import { MESSAGES_LIMIT } from '@/constants/rollingPaperList';
@@ -44,7 +45,7 @@ const useMessages = (recipientId) => {
         setMessages(response.data.results);
         setNextUrl(response.data.next);
       } catch (err) {
-        if (err.name === 'CanceledError') {
+        if (axios.isCancel(err) || err.name === 'CanceledError') {
           return;
         }
         setError({
