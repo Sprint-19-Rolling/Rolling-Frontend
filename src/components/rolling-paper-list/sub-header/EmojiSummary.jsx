@@ -24,7 +24,7 @@ const dropdownContainerStyle = cva(
  * @param {object} props - 컴포넌트의 props
  * @param {string} [props.className] - 외부에서 전달된 CSS 클래스
  * @param {Array<ReactionItem>} props.topReactions - 화면에 표시할 요약 이모지 목록 (빈 배열일 경우 null 반환)
- * @param {Array<ReactionItem> | null} [props.reacions] - 드롭다운에 표시할 이모지 목록
+ * @param {Array<ReactionItem> | null} [props.reactions] - 드롭다운에 표시할 이모지 목록
  * @param {boolean} props.loading - 전체 이모지 목록 로딩 상태
  * @returns {JSX.Element | null}
  */

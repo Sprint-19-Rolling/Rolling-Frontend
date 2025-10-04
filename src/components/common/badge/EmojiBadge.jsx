@@ -19,7 +19,7 @@ const emojiBadgeStyle = cva(
  * @component
  * @param {object} props - 컴포넌트의 props
  * @param {string} props.emoji - 표시할 이모지 문자열 (필수)
- * @param {number} [props.count] - 이모지 카운트 (필수)
+ * @param {number} props.count - 이모지 카운트 (필수)
  * @param {'md' | 'lg'} [props.size='md'] - 뱃지의 크기 옵션
  * @param {string} [props.className] - 뱃지에 적용할 추가적인 Tailwind CSS 클래스
  * @returns {JSX.Element} 이모지 뱃지 컴포넌트
