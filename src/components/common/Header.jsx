@@ -11,9 +11,11 @@ const Header = () => {
     <header className="wrapper-px sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
       <div className="content">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/">
-            <LogoAsset.Logo />
-          </Link>
+          <h1>
+            <Link to="/">
+              <LogoAsset.Logo />
+            </Link>
+          </h1>
 
           {!isPostRelatedPage && (
             <nav>
