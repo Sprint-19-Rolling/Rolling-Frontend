@@ -9,5 +9,6 @@ export const MESSAGE_LIST_SKELETON_ARRAY = Array.from({
 
 /**
  * 롤링페이퍼 메세지 limit → 최대 8개
+ * 리액션 limit → 최대 8개
  */
-export const MESSAGES_LIMIT = 8;
+export const RECIPIENT_PAGE_LIMIT = 8;
