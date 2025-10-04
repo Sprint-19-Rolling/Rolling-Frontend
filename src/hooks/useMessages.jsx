@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { teamApi } from '@/apis/axios';
-import { MESSAGES_LIMIT } from '@/constants/rollingPaperList';
+import { RECIPIENT_PAGE_LIMIT } from '@/constants/rollingPaperList';
+import useDataFetch from '@/hooks/useDataFetch';
 import useError from '@/hooks/useError';
 
 /**
@@ -8,7 +9,7 @@ import useError from '@/hooks/useError';
  * 무한 스크롤(nextUrl) 기반으로 추가 데이터를 가져오는 커스텀 훅
  * @param {string} props.recipientId - 롤링페이퍼 수신자의 ID
  * @returns {{
- * messages: Array,
+ * messages: Array<Object>,
  * loading: boolean,
  * isFetching: boolean,
  * nextUrl: string | null,
@@ -17,62 +18,30 @@ import useError from '@/hooks/useError';
  */
 const useMessages = (recipientId) => {
   const { setError } = useError();
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const fetchMessages = async (signal) => {
+    const res = await teamApi.get(
+      `recipients/${recipientId}/messages/?limit=${RECIPIENT_PAGE_LIMIT}&offset=0`,
+      { signal }
+    );
+    return { results: res.data.results, nextUrl: res.data.next };
+  };
+
+  const { data, setData, loading } = useDataFetch(fetchMessages, [recipientId]);
   const [isFetching, setIsFetching] = useState(false);
-  const [nextUrl, setNextUrl] = useState(null);
-
-  useEffect(() => {
-    if (!recipientId) {
-      return;
-    }
-
-    const controller = new AbortController();
-
-    // 기존 값 초기화
-    setMessages([]);
-    setNextUrl(null);
-    setError(null);
-
-    const fetchInit = async () => {
-      setLoading(true);
-      try {
-        const response = await teamApi.get(
-          `recipients/${recipientId}/messages/?limit=${MESSAGES_LIMIT}&offset=0`,
-          { signal: controller.signal }
-        );
-        setMessages(response.data.results);
-        setNextUrl(response.data.next);
-      } catch (err) {
-        if (err.name === 'CanceledError') {
-          return;
-        }
-        setError({
-          status: err.response?.status || 500,
-          message: err.response?.data?.message || err.message,
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInit();
-
-    return () => {
-      controller.abort();
-    };
-  }, [recipientId, setError]);
 
   const fetchMore = useCallback(async () => {
-    if (!nextUrl || isFetching) {
+    if (!data?.nextUrl || isFetching) {
       return;
     }
 
     setIsFetching(true);
     try {
-      const response = await teamApi.get(nextUrl);
-      setMessages((prev) => [...prev, ...response.data.results]);
-      setNextUrl(response.data.next);
+      const res = await teamApi.get(data.nextUrl);
+      setData((prev) => ({
+        results: [...prev.results, ...res.data.results],
+        nextUrl: res.data.next,
+      }));
     } catch (err) {
       setError({
         status: err.response?.status || 500,
@@ -81,9 +50,15 @@ const useMessages = (recipientId) => {
     } finally {
       setIsFetching(false);
     }
-  }, [nextUrl, isFetching, setError]);
+  }, [data, isFetching, setData, setError]);
 
-  return { messages, loading, isFetching, nextUrl, fetchMore };
+  return {
+    messages: data?.results || [],
+    loading,
+    isFetching,
+    nextUrl: data?.nextUrl || null,
+    fetchMore,
+  };
 };
 
 export default useMessages;

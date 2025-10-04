@@ -5,21 +5,17 @@ import BasicDropdown from '@/components/common/dropbox/BasicDropdown';
 import { useClickOutside } from '@/hooks/useClickOutside';
 
 /**
- * ShareDropdownWrapper 컴포넌트
+ * ShareDropdown 컴포넌트
  *
  * 공유 아이콘 버튼을 클릭하면 공유 옵션 드롭다운(BasicDropdown)이 표시됩니다.
  * 드롭다운은 외부 영역 클릭 시 닫히며, 항목 선택 시 콜백 처리가 됩니다.
- * 드롭다운은 버튼의 **오른쪽 테두리에 정렬**되어 표시됩니다.
+ * 드롭다운은 버튼의 오른쪽 테두리에 정렬되어 표시됩니다.
  *
  * @component
- *
  * @returns {JSX.Element} 공유 버튼과 드롭다운 메뉴를 포함한 컴포넌트
- *
- * @example
- * <ShareDropdownWrapper />
  */
 
-const ShareDropdownWrapper = () => {
+const ShareDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
 
@@ -41,15 +37,14 @@ const ShareDropdownWrapper = () => {
   };
 
   return (
-    <div className="relative h-9 w-14" ref={ref}>
+    <div className="relative" ref={ref}>
       <Button
         theme="icon"
-        size={36}
-        onClick={toggleDropdown}
-        className="flex h-full w-full items-center justify-center">
-        <icons.ShareIcon className="h-6 w-6" />
+        size={32}
+        className={'w-9 sm:h-9 sm:w-14'}
+        onClick={toggleDropdown}>
+        <icons.ShareIcon />
       </Button>
-
       {isOpen && (
         <BasicDropdown
           items={shareItems}
@@ -62,4 +57,4 @@ const ShareDropdownWrapper = () => {
   );
 };
 
-export default ShareDropdownWrapper;
+export default ShareDropdown;

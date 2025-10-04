@@ -2,7 +2,7 @@ import AddIcon from '@/assets/icons/ic-add.svg';
 import ArrowDownIcon from '@/assets/icons/ic-arrow-down.svg';
 import ArrowLeftIcon from '@/assets/icons/ic-arrow-left.svg';
 import ArrowRightIcon from '@/assets/icons/ic-arrow-right.svg';
-import ArrowtopIcon from '@/assets/icons/ic-arrow-top.svg';
+import ArrowTopIcon from '@/assets/icons/ic-arrow-top.svg';
 import CheckIcon from '@/assets/icons/ic-check.svg';
 import DeletedIcon from '@/assets/icons/ic-deleted.svg';
 import EditIcon from '@/assets/icons/ic-edit.svg';
@@ -15,7 +15,7 @@ export default {
   ArrowDownIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
-  ArrowtopIcon,
+  ArrowTopIcon,
   CheckIcon,
   DeletedIcon,
   EditIcon,
