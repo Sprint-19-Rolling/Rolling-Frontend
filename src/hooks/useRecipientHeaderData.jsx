@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { teamApi } from '@/apis/axios';
 import useError from '@/hooks/useError';
@@ -15,12 +16,13 @@ import useError from '@/hooks/useError';
  * @param {string} recipientId - 롤링페이퍼 수신자의 ID
  * @returns {{
  * recipient: RecipientData | null
+ * setRecipientData: function(RecipientData | null)
  * loading: boolean
  * }} - 수신자 정보 객체와 로딩 상태를 반환
  */
 const useRecipientHeaderData = (recipientId) => {
   const { setError } = useError();
-  const [recipient, setRecipient] = useState(null);
+  const [recipientData, setRecipientData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const useRecipientHeaderData = (recipientId) => {
 
     const controller = new AbortController();
 
-    setRecipient(null);
+    setRecipientData(null);
     setError(null);
     setLoading(true);
 
@@ -39,20 +41,16 @@ const useRecipientHeaderData = (recipientId) => {
         const recipientRes = await teamApi.get(`recipients/${recipientId}/`, {
           signal: controller.signal,
         });
-        const recipientData = {
+        const data = {
           name: recipientRes.data.name,
           messageCount: recipientRes.data.messageCount,
           recentMessages: recipientRes.data.recentMessages,
           reactionCount: recipientRes.data.reactionCount,
           topReactions: recipientRes.data.topReactions,
         };
-        setRecipient(recipientData);
+        setRecipientData(data);
       } catch (err) {
-        if (
-          err.code === 'ERR_CANCELED' ||
-          err.name === 'CanceledError' ||
-          err.message === 'canceled'
-        ) {
+        if (axios.isCancel(err) || err.name === 'CanceledError') {
           return;
         }
 
@@ -74,7 +72,7 @@ const useRecipientHeaderData = (recipientId) => {
     };
   }, [recipientId, setError]);
 
-  return { recipient, loading };
+  return { recipientData, setRecipientData, loading };
 };
 
 export default useRecipientHeaderData;
