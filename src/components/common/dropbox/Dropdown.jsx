@@ -112,7 +112,7 @@ const Dropdown = forwardRef(
         />
 
         <span className="pointer-events-none absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center text-gray-900">
-          <icons.ArrowtopIcon
+          <icons.ArrowDownIcon
             className={cn(
               'transition-transform duration-200',
               isDropdownOpen && 'rotate-180'
