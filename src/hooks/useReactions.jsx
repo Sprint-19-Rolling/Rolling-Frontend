@@ -19,9 +19,12 @@ const useReactions = (recipientId) => {
     [recipientId, pageSize]
   );
 
-  const { data, loading } = useDataFetch(fetcher, [recipientId, pageSize]);
+  const { data, setData, loading } = useDataFetch(fetcher, [
+    recipientId,
+    pageSize,
+  ]);
 
-  return { reactions: data, loading };
+  return { reactions: data, setReactions: setData, loading, pageSize };
 };
 
 export default useReactions;

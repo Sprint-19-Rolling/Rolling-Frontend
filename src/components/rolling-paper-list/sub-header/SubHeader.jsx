@@ -11,7 +11,12 @@ const SubHeader = ({ recipientId }) => {
   const { error } = useError();
   const { recipientData, setRecipientData, loading } =
     useRecipientHeaderData(recipientId);
-  const { reactions, loading: reactionsLoading } = useReactions(recipientId);
+  const {
+    reactions,
+    setReactions,
+    loading: reactionsLoading,
+    pageSize,
+  } = useReactions(recipientId);
 
   if (error) {
     return null;
@@ -26,6 +31,7 @@ const SubHeader = ({ recipientId }) => {
   }
 
   const handleEmojiUpdate = (reaction) => {
+    // topReacions 객체 낙관적 업데이트
     setRecipientData((prev) => {
       if (!prev) {
         return prev;
@@ -34,8 +40,8 @@ const SubHeader = ({ recipientId }) => {
       const existing = prev.topReactions.find(
         (r) => r.emoji === reaction.emoji
       );
-      let newTopReactions;
 
+      let newTopReactions;
       if (existing) {
         newTopReactions = prev.topReactions.map((r) =>
           r.emoji === reaction.emoji ? { ...r, count: reaction.count } : r
@@ -46,7 +52,35 @@ const SubHeader = ({ recipientId }) => {
           { emoji: reaction.emoji, count: reaction.count },
         ];
       }
-      return { ...prev, topReactions: newTopReactions };
+
+      const sortTopReactions = newTopReactions
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 3);
+
+      return { ...prev, topReactions: sortTopReactions };
+    });
+
+    // reactions 배열 낙관적 업데이트
+    setReactions((prev) => {
+      if (!prev) {
+        return [reaction];
+      }
+
+      const existingIndex = prev.findIndex((r) => r.emoji === reaction.emoji);
+      let updatedReactions;
+      if (existingIndex !== -1) {
+        updatedReactions = prev.map((r, index) =>
+          index === existingIndex ? { ...r, count: reaction.count } : r
+        );
+      } else {
+        updatedReactions = [...prev, reaction];
+      }
+
+      const sortedReactions = updatedReactions.sort(
+        (a, b) => b.count - a.count
+      );
+
+      return sortedReactions.slice(0, pageSize);
     });
   };
 
@@ -85,9 +119,7 @@ const SubHeader = ({ recipientId }) => {
               className="mr-auto sm:-mr-[5px]"
               reactions={reactions}
               loading={reactionsLoading}
-              topReactions={[...topReactions]
-                .sort((a, b) => b.count - a.count)
-                .slice(0, 3)}
+              topReactions={topReactions}
             />
             <EmojiPickerButton
               recipientId={recipientId}
