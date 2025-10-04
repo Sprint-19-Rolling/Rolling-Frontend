@@ -1,8 +1,14 @@
+import { cva } from 'class-variance-authority';
 import { useRef, useState } from 'react';
 import Icons from '@/assets/icons/icons';
 import EmojiBadge from '@/components/common/badge/EmojiBadge';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/style';
+
+// 공통 스타일 별도로 분리했습니다.
+const dropdownContainerStyle = cva(
+  'shadow-basic absolute right-0 top-full mt-[7px] grid gap-2 rounded-lg border border-gray-300 bg-white'
+);
 
 /**
  * @typedef {Object} ReactionItem
@@ -42,7 +48,7 @@ const EmojiSummary = ({ className, topReactions, reacions, loading }) => {
       {topReactions.map((item) => {
         return (
           <EmojiBadge
-            size="s"
+            size="lg"
             key={item.id}
             emoji={item.emoji}
             count={item.count}
@@ -60,23 +66,26 @@ const EmojiSummary = ({ className, topReactions, reacions, loading }) => {
       {isOpen && (
         <div
           className={cn(
-            `shadow-basic absolute right-0 top-full mt-[7px] grid w-[312px] grid-cols-4 gap-2 rounded-lg border border-gray-300 bg-white p-6`
+            dropdownContainerStyle(),
+            'w-[203px] grid-cols-3 p-4 sm:w-[248px] md:w-[312px] md:grid-cols-4 md:p-6'
           )}>
           {loading ? (
-            <span className="col-span-4 text-center">로딩중...</span>
+            <span className="col-span-3 text-center md:col-span-4">
+              로딩중...
+            </span>
           ) : reacions && reacions.length > 0 ? (
             reacions.map((item) => {
               return (
                 <EmojiBadge
                   key={item.id}
-                  size="s"
+                  size="lg"
                   emoji={item.emoji}
                   count={item.count}
                 />
               );
             })
           ) : (
-            <span className="col-span-4 text-center text-gray-500">
+            <span className="col-span-3 text-center text-gray-500 md:col-span-4">
               데이터를 불러올 수 없습니다.
             </span>
           )}
