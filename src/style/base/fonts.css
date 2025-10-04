@@ -35,8 +35,8 @@
 @font-face {
   font-family: 'Noto Sans KR';
   src:
-    url('/fonts/noto-sans-kr-v38-korean-regular.woff2') format('woff2'),
-    url('/fonts/noto-sans-kr-v38-korean-regular.woff') format('woff');
+    url('/fonts/woff2/noto-sans-kr-regular.woff2') format('woff2'),
+    url('/fonts/woff/noto-sans-kr-regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -46,8 +46,8 @@
 @font-face {
   font-family: 'Noto Sans KR';
   src:
-    url('/fonts/noto-sans-kr-v38-korean-bold.woff2') format('woff2'),
-    url('/fonts/noto-sans-kr-v38-korean-bold.woff') format('woff');
+    url('/fonts/woff2/noto-sans-kr-bold.woff2') format('woff2'),
+    url('/fonts/woff/noto-sans-kr-bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
