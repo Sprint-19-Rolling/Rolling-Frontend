@@ -190,3 +190,8 @@
 @utility ff-nanum-sonpyeonji {
   font-family: var(--font-nanum-sonpyeonji);
 }
+
+/* shadow 유틸리티 */
+@utility shadow-basic {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+}
