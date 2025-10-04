@@ -1,32 +1,19 @@
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/style';
 
-const dropdownContainerVariants = cva('bg-white shadow', {
-  variants: {
-    size: {
-      basic: 'rounded-lg border border-gray-200 shadow-md max-h-[220px]',
-      share: 'rounded w-[138px]',
+const dropdownContainerVariants = cva(
+  'py-2.5 bg-white shadow rounded-lg border border-gray-200',
+  {
+    variants: {
+      size: {
+        basic: 'max-h-[220px]',
+        share: 'w-[138px]',
+      },
     },
-  },
-  defaultVariants: {
-    size: 'basic',
-  },
-});
-
-const listVariants = cva('flex flex-col gap-0', {
-  variants: {
-    size: {
-      basic: 'gap-0',
-      share: '',
+    defaultVariants: {
+      size: 'basic',
     },
-  },
-  defaultVariants: {
-    size: 'basic',
-  },
-});
-
-const itemVariants = cva(
-  'cursor-pointer text-gray-900 h-[50px] px-[16px] py-[12px] hover:bg-gray-100'
+  }
 );
 
 /**
@@ -54,13 +41,13 @@ const itemVariants = cva(
 const BasicDropdown = ({ items, onSelect, className = '', size = 'basic' }) => {
   return (
     <div className={cn(dropdownContainerVariants({ size }), className)}>
-      <ul className={cn(listVariants({ size }))}>
+      <ul className="flex flex-col">
         {items.map((item) => {
           return (
             <li
               key={item}
               onClick={() => onSelect?.(item)}
-              className={cn(itemVariants({ size }))}>
+              className="h-[50px] cursor-pointer px-4 py-3 text-gray-900 hover:bg-gray-100">
               {item}
             </li>
           );
