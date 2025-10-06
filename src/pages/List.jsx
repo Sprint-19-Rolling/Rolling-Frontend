@@ -1,4 +1,5 @@
 import LinkButton from '@/components/common/button/LinkButton';
+import ToggleSwitch from '@/components/common/button/Toggle';
 
 const List = () => {
   return (
@@ -16,6 +17,8 @@ const List = () => {
       <LinkButton to="/post/13955" size={40}>
         post 테스트용 3
       </LinkButton>
+      테스트용
+      <ToggleSwitch />
     </div>
   );
 };
