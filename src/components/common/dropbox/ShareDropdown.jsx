@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
 import BasicDropdown from '@/components/common/dropbox/BasicDropdown';
+import { SHARE_DROPDOWN_ITEMS } from '@/constants/share';
 import { useClickOutside } from '@/hooks/useClickOutside';
 
 /**
@@ -26,8 +27,6 @@ const ShareDropdown = ({ onShareSelect }) => {
 
   useClickOutside(ref, () => setIsOpen(false));
 
-  const shareItems = ['카카오톡 공유', 'URL 공유'];
-
   const handleSelect = (item) => {
     onShareSelect(item);
     setIsOpen(false);
@@ -44,7 +43,7 @@ const ShareDropdown = ({ onShareSelect }) => {
       </Button>
       {isOpen && (
         <BasicDropdown
-          items={shareItems}
+          items={SHARE_DROPDOWN_ITEMS}
           onSelect={handleSelect}
           size="share"
           className="absolute right-0 top-full mt-2"
