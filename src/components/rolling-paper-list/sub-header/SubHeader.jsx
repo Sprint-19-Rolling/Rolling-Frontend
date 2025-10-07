@@ -2,6 +2,7 @@ import ShareDropdown from '@/components/common/dropbox/ShareDropdown';
 import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import EmojiPickerButton from '@/components/rolling-paper-list/sub-header/EmojiPickerButton';
 import EmojiSummary from '@/components/rolling-paper-list/sub-header/EmojiSummary';
+import { SHARE_OPTION_KAKAO, SHARE_OPTION_URL } from '@/constants/share';
 import useError from '@/hooks/useError';
 import useReactions from '@/hooks/useReactions';
 import useRecipientHeaderData from '@/hooks/useRecipientHeaderData';
@@ -17,18 +18,6 @@ const SubHeader = ({ recipientId }) => {
     loading: reactionsLoading,
     pageSize,
   } = useReactions(recipientId);
-
-  if (error) {
-    return null;
-  }
-
-  if (loading || !recipientData) {
-    return (
-      <div className="wrapper-px h-17 flex items-center justify-start bg-white">
-        <div className={cn('content card-skeleton-style w-full p-5')} />
-      </div>
-    );
-  }
 
   const handleEmojiUpdate = (reaction) => {
     // topReacions 객체 낙관적 업데이트
@@ -81,6 +70,37 @@ const SubHeader = ({ recipientId }) => {
     });
   };
 
+  const handleShareSelect = async (item) => {
+    if (item === SHARE_OPTION_KAKAO) {
+      // TODO: 카카오 공유 기능 구현 필요
+      // TODO: 토스트 메세지 연결 필요
+    } else if (item === SHARE_OPTION_URL) {
+      const currentUrl = window.location.href;
+      try {
+        await navigator.clipboard.writeText(currentUrl);
+        // TODO: 토스트 메세지 연결 필요 (URL 복사 성공)
+        // 토스트 메세지 연결 시 console.log 제거
+        console.log('URL이 복사 되었습니다.', currentUrl);
+      } catch (err) {
+        // TODO: 토스트 메세지 연결 필요 (URL 복사 실패)
+        // 토스트 메세지 연결 시 console.error 제거
+        console.error('클립보드 복사 실패: ', err);
+      }
+    }
+  };
+
+  if (error) {
+    return null;
+  }
+
+  if (loading || !recipientData) {
+    return (
+      <div className="wrapper-px h-17 flex items-center justify-start bg-white">
+        <div className={cn('content card-skeleton-style w-full p-5')} />
+      </div>
+    );
+  }
+
   const { name, recentMessages, messageCount, topReactions } = recipientData;
 
   return (
@@ -123,7 +143,7 @@ const SubHeader = ({ recipientId }) => {
               onSuccess={handleEmojiUpdate}
             />
             <div className="divider-style" />
-            <ShareDropdown />
+            <ShareDropdown onShareSelect={handleShareSelect} />
           </div>
         </div>
       </div>
