@@ -1,19 +1,30 @@
-// ProfileGroup.jsx
-// 프로필 그룹 컴포넌트
-import PropTypes from 'prop-types';
 import ProfileImage from './ProfileImage';
 
-const ProfileGroup = ({ participants }) => {
-  const visible = participants.slice(0, 3);
-  const hiddenCount = participants.length - visible.length;
+/**
+ * @typedef {Object} MessageParticipant
+ * @property {number} id
+ * @property {string} profileImageURL
+ */
+
+/**
+ * 메시지 작성자의 프로필 이미지를 그룹 형태로 표시하고,
+ * 숨겨진 참가자 수를 표시하는 컴포넌트입니다.
+ * @component
+ * @param {object} props
+ * @param {Array<MessageParticipant>} props.recentMessages - 화면에 표시할 최근 메시지 작성자 목록 (최대 3개)
+ * @param {number} props.messageCount - 롤링페이퍼에 작성된 전체 메시지 개수
+ * @returns {JSX.Element} Profile Group 컴포넌트
+ */
+const ProfileGroup = ({ recentMessages, messageCount }) => {
+  const hiddenCount = messageCount - recentMessages.length;
 
   return (
     <div className="flex items-center">
-      {visible.map((url) => {
+      {recentMessages.map((item) => {
         return (
           <ProfileImage
-            key={url}
-            src={url}
+            key={item.id}
+            src={item.profileImageURL}
             size="small"
             borderColor="white"
             isSelected={false}
@@ -30,10 +41,6 @@ const ProfileGroup = ({ participants }) => {
       )}
     </div>
   );
-};
-
-ProfileGroup.propTypes = {
-  participants: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ProfileGroup;

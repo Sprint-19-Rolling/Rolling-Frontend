@@ -75,7 +75,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   };
 
   // 초기 로딩 상태일 때 skeleton UI 보여짐
-  if (loading) {
+  if (loading && !isFetching) {
     return (
       <div className="card-grid-style">
         {MESSAGE_LIST_SKELETON_ARRAY.map((_, index) => {
