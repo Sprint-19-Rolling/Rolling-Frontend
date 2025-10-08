@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { teamApi } from '@/apis/axios';
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
 import MessageList from '@/components/rolling-paper-list/MessageList';
@@ -12,10 +13,20 @@ const PostDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setPostData({ id: id });
-      setIsLoading(false);
-    }, 100);
+    const fetchPostData = async () => {
+      try {
+        const response = await teamApi.get(`/recipients/${id}/`);
+        setPostData(response.data);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('롤링페이퍼 데이터를 불러오지 못했습니다.', error);
+        setPostData(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPostData();
   }, [id]);
 
   if (isLoading) {
@@ -45,7 +56,6 @@ const PostDetail = () => {
           <MessageList recipientId={id} />
         </div>
       </main>
-
       <Footer />
     </>
   );
