@@ -1,4 +1,3 @@
-/* 1. 딤처리 배경 */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -9,14 +8,12 @@
   z-index: 1000;
 }
 
-/* 2. 모달 컨테이너 (흰색 영역) */
 .modal-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  /* 공통 크기/스타일 */
   width: 90%;
   max-width: 600px;
   min-height: 300px;
@@ -24,7 +21,6 @@
   border-radius: 16px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
 
-  /* 내부 배치 */
   display: flex;
   flex-direction: column;
   padding: 20px;
