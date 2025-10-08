@@ -51,8 +51,34 @@ const MessageCard = ({
   const sanitizedContent = useMemo(
     () =>
       DOMPurify.sanitize(content, {
-        ALLOWED_TAGS: ['img'],
-        ALLOWED_ATTR: ['src', 'alt'],
+        // ✅ 일반적인 텍스트 서식 태그들을 허용
+        ALLOWED_TAGS: [
+          'p',
+          'br',
+          'strong',
+          'b',
+          'em',
+          'i',
+          'u',
+          's',
+          'h1',
+          'h2',
+          'h3',
+          'h4',
+          'h5',
+          'h6',
+          'ul',
+          'ol',
+          'li',
+          'a',
+          'img',
+          'span',
+          'div',
+          'blockquote',
+          'code',
+          'pre',
+        ],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style'],
       }),
     [content]
   );
