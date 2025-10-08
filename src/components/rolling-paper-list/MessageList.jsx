@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Error from '@/components/common/Error';
+import Modal from '@/components/common/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
@@ -21,6 +22,9 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     useMessages(recipientId);
 
   const observerRef = useRef(null);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
 
   useEffect(() => {
     if (loading) {
@@ -52,8 +56,14 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   }, [nextUrl, fetchMore, loading, isFetching]);
 
   const handleMessageCardClick = (messageData) => {
-    // TODO: 모달 구현 로직 추가 필요
+    setSelectedMessage(messageData);
+    setIsOpenModal(true);
     console.log('메세지 카드 클릭했을 때 모달이 보여집니다.', messageData);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+    setSelectedMessage(null);
   };
 
   const handleMessageCardDelete = async (messageId) => {
@@ -81,36 +91,52 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   }
 
   return (
-    <div className="card-grid-style">
-      <AddMessageCardButton id={recipientId} />
-      {messages.length > 0 &&
-        messages.map((item) => {
-          return (
-            <MessageCard
-              key={item.id}
-              sender={item.sender}
-              profileImageURL={item.profileImageURL}
-              relationship={item.relationship}
-              createdAt={item.createdAt}
-              content={item.content}
-              font={item.font}
-              onClick={() => handleMessageCardClick(item)}
-              {...(isEditPage
-                ? {
-                    edit: true,
-                    onDelete: () => handleMessageCardDelete(item.id),
-                  }
-                : {})}
-            />
-          );
-        })}
-      <div ref={observerRef} className="h-2" />
-      {isFetching && (
-        <div className="p-2 text-center text-gray-900">
-          📝 롤링페이퍼 메세지를 불러오는 중...
-        </div>
+    <>
+      <div className="card-grid-style">
+        <AddMessageCardButton id={recipientId} />
+        {messages.length > 0 &&
+          messages.map((item) => {
+            return (
+              <MessageCard
+                key={item.id}
+                sender={item.sender}
+                profileImageURL={item.profileImageURL}
+                relationship={item.relationship}
+                createdAt={item.createdAt}
+                content={item.content}
+                font={item.font}
+                onClick={() => handleMessageCardClick(item)}
+                {...(isEditPage
+                  ? {
+                      edit: true,
+                      onDelete: () => handleMessageCardDelete(item.id),
+                    }
+                  : {})}
+              />
+            );
+          })}
+        <div ref={observerRef} className="h-2" />
+        {isFetching && (
+          <div className="p-2 text-center text-gray-900">
+            📝 롤링페이퍼 메세지를 불러오는 중...
+          </div>
+        )}
+      </div>
+
+      {/* 모달 추가 */}
+      {isOpenModal && selectedMessage && (
+        <Modal
+          isOpen={isOpenModal}
+          onClose={handleCloseModal}
+          contentHtml={selectedMessage.content}
+          sender={selectedMessage.sender}
+          role={selectedMessage.relationship}
+          profileImgUrl={selectedMessage.profileImageURL}
+          createdAt={selectedMessage.createdAt}
+          font={selectedMessage.font}
+        />
       )}
-    </div>
+    </>
   );
 };
 
