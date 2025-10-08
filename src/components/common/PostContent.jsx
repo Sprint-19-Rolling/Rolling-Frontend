@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify';
 import { useMemo } from 'react';
+import SANITIZE_CONFIG from '@/utils/sanitizeConfig';
 
 const textStyle = (font) => {
   let fontClass;
@@ -27,36 +28,7 @@ const textStyle = (font) => {
  */
 function PostContent({ htmlContent, font }) {
   const cleanHtml = useMemo(
-    () =>
-      DOMPurify.sanitize(htmlContent, {
-        ALLOWED_TAGS: [
-          'p',
-          'br',
-          'strong',
-          'b',
-          'em',
-          'i',
-          'u',
-          's',
-          'h1',
-          'h2',
-          'h3',
-          'h4',
-          'h5',
-          'h6',
-          'ul',
-          'ol',
-          'li',
-          'a',
-          'img',
-          'span',
-          'div',
-          'blockquote',
-          'code',
-          'pre',
-        ],
-        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style'],
-      }),
+    () => DOMPurify.sanitize(htmlContent, SANITIZE_CONFIG),
     [htmlContent]
   );
 
