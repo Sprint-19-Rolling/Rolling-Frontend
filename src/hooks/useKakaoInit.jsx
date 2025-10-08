@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
+import { KAKAO_JAVASCRIPT_KEY } from '@/constants/share';
 
 const useKakaoInit = () => {
-  const KAKAO_JAVASCRIPT_KEY = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
-
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
       window.Kakao.init(KAKAO_JAVASCRIPT_KEY);
     }
-  }, [KAKAO_JAVASCRIPT_KEY]);
+  }, []);
 };
 
 export default useKakaoInit;
