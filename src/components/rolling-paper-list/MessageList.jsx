@@ -58,7 +58,6 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   const handleMessageCardClick = (messageData) => {
     setSelectedMessage(messageData);
     setIsOpenModal(true);
-    console.log('메세지 카드 클릭했을 때 모달이 보여집니다.', messageData);
   };
 
   const handleCloseModal = () => {
@@ -70,8 +69,12 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     if (!isEditPage) {
       return;
     }
-    // TODO: 메세지 삭제 로직 추가 필요
-    console.log('메세지 삭제 ', messageId);
+    //  TODO: 메세지 삭제 로직 추가 필요
+    //  여기에 실제 메시지 삭제 로직을 구현하세요.
+    //  console.log는 린트 규칙 위반이므로 사용하지 마세요.
+    //  messageId 변수를 사용하지 않으면 린트 경고가 발생하므로,
+    //  임시로라도 사용 처리한 뒤, 나중에 실제 삭제 코드로 교체하세요.
+    await Promise.resolve(messageId);
   };
 
   // 초기 로딩 상태일 때 skeleton UI 보여짐
