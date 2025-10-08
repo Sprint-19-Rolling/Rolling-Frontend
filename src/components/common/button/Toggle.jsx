@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Button from '@/components/common/button/Button';
 import { cn } from '@/utils/style';
 
 /**
@@ -26,7 +25,7 @@ const ToggleSwitch = () => {
   };
 
   return (
-    <Button
+    <button
       onClick={handleClick}
       theme={null}
       className={cn(
@@ -36,12 +35,12 @@ const ToggleSwitch = () => {
       <div className="relative aspect-[1] h-[26px] w-[26px] rounded-full bg-white" />
       <div
         className={cn(
-          'absolute left-2.5 top-[calc(50%-10px)] flex h-5 items-center justify-center whitespace-nowrap text-sm font-bold leading-5',
-          isEditMode ? 'text-white' : 'scale-x-[-1] text-[#999999]'
+          'font-14-bold absolute left-2.5 top-[calc(50%-10px)] flex h-5 items-center justify-center whitespace-nowrap text-sm',
+          isEditMode ? 'text-white' : 'scale-x-[-1] text-gray-400'
         )}>
         {isEditMode ? '편집' : '기본'}
       </div>
-    </Button>
+    </button>
   );
 };
 
