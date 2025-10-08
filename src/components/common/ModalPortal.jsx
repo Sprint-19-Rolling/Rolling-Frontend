@@ -4,10 +4,11 @@ import { createPortal } from 'react-dom';
 function ModalPortal({ children }) {
   const [container] = useState(() => document.createElement('div'));
 
-  const modalRoot = document.getElementById('modal-root');
-
   useEffect(() => {
+    const modalRoot = document.getElementById('modal-root');
+
     if (!modalRoot) {
+      // eslint-disable-next-line no-console
       console.error('#modal-root element not found in index.html');
       return;
     }
@@ -17,7 +18,7 @@ function ModalPortal({ children }) {
     return () => {
       modalRoot.removeChild(container);
     };
-  }, [container, modalRoot]);
+  }, [container]);
 
   return createPortal(children, container);
 }
