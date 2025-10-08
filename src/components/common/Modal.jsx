@@ -1,4 +1,5 @@
 import '@/style/base/modal.css';
+import { useEffect } from 'react';
 import Button from '@/components/common/button/Button';
 import ModalHeader from '@/components/common/ModalHeader';
 import PostContent from '@/components/common/PostContent';
@@ -17,9 +18,23 @@ function Modal({
   createdAt,
   font,
 }) {
-  if (!isOpen) {
-    return null;
-  }
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   return (
     <ModalPortal>
