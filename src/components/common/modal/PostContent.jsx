@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
 import { useMemo } from 'react';
-import SANITIZE_CONFIG from '@/constants/sanitizeConfig';
+import { SANITIZE_CONFIG } from '@/constants/sanitizeConfig';
 
 const FONT_CLASSES = {
   Pretendard: 'font-sans',
