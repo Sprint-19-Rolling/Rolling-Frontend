@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Error from '@/components/common/Error';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/common/modal/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
