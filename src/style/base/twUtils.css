@@ -44,3 +44,34 @@
 @utility divider-style {
   @apply h-7 border-l border-gray-200;
 }
+
+/* toast-animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@utility animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+@utility animate-fadeOut {
+  animation: fadeOut 0.2s ease-out forwards;
+}
