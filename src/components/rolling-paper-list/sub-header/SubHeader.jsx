@@ -1,14 +1,30 @@
+import { useLocation } from 'react-router';
 import ShareDropdown from '@/components/common/dropbox/ShareDropdown';
 import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import EmojiPickerButton from '@/components/rolling-paper-list/sub-header/EmojiPickerButton';
 import EmojiSummary from '@/components/rolling-paper-list/sub-header/EmojiSummary';
+import {
+  KAKAO_TEMPLATE_ID,
+  SHARE_OPTION_KAKAO,
+  SHARE_OPTION_URL,
+} from '@/constants/share';
 import useError from '@/hooks/useError';
 import useReactions from '@/hooks/useReactions';
 import useRecipientHeaderData from '@/hooks/useRecipientHeaderData';
 import { cn } from '@/utils/style';
 
+/**
+ * 롤링페이퍼 상세 페이지의 상단 고정 헤더(SubHeader) 컴포넌트입니다.
+ * 수신자 정보 표시, 이모지 반응 요약/추가, 공유 드롭다운 등 핵심 인터랙션을 제공합니다.
+ * @component
+ * @param {object} props - 컴포넌트의 props
+ * @param {string} props.recipientId - 수신자 정보를 가져올 롤링페이퍼 ID
+ * @returns {JSX.Element | null} 로딩 중 (스켈레톤 UI), 에러 상황 (null)을 반환
+ */
+
 const SubHeader = ({ recipientId }) => {
   const { error } = useError();
+  const { pathname } = useLocation();
   const { recipientData, setRecipientData, loading } =
     useRecipientHeaderData(recipientId);
   const {
@@ -29,6 +45,9 @@ const SubHeader = ({ recipientId }) => {
       </div>
     );
   }
+
+  const { name, recentMessages, messageCount, topReactions, reactionCount } =
+    recipientData;
 
   const handleEmojiUpdate = (reaction) => {
     // topReacions 객체 낙관적 업데이트
@@ -81,7 +100,50 @@ const SubHeader = ({ recipientId }) => {
     });
   };
 
-  const { name, recentMessages, messageCount, topReactions } = recipientData;
+  const handleShareSelect = async (item) => {
+    switch (item) {
+      case SHARE_OPTION_KAKAO: {
+        if (window.Kakao?.isInitialized()) {
+          try {
+            window.Kakao.Share.sendCustom({
+              templateId: Number(KAKAO_TEMPLATE_ID),
+              templateArgs: {
+                PATH: pathname.slice(1),
+                NAME: name,
+                MESSAGE_COUNT: messageCount,
+                REACTION_COUNT: reactionCount,
+              },
+            });
+          } catch (err) {
+            // TODO: 토스트 메세지 연결 필요 showToast('공유 기능에 오류가 발생했습니다.', 'error');
+            // 토스트 메세지 연결 시 console.error 제거
+            console.error('카카오톡 공유 호출 실패:', err);
+          }
+        } else {
+          // TODO: 토스트 메세지 연결 필요 showToast('공유 기능을 사용할 수 없습니다.', 'warning');
+          // 토스트 메세지 연결 시 console.warn 제거
+          console.warn('카카오 SDK가 준비되지 않았습니다.');
+        }
+        break;
+      }
+      case SHARE_OPTION_URL: {
+        const currentUrl = window.location.href;
+        try {
+          await navigator.clipboard.writeText(currentUrl);
+          // TODO: 토스트 메세지 연결 필요 (URL 복사 성공)
+          // 토스트 메세지 연결 시 console.log 제거
+          console.log('URL이 복사 되었습니다.', currentUrl);
+        } catch (err) {
+          // TODO: 토스트 메세지 연결 필요 (URL 복사 실패)
+          // 토스트 메세지 연결 시 console.error 제거
+          console.error('클립보드 복사 실패: ', err);
+        }
+        break;
+      }
+      default:
+        console.warn(`알 수 없는 공유 옵션입니다: ${item}`);
+    }
+  };
 
   return (
     <div className="sm:wrapper-px border-divider sticky left-0 top-[65px] z-50 border-b bg-white">
@@ -123,7 +185,7 @@ const SubHeader = ({ recipientId }) => {
               onSuccess={handleEmojiUpdate}
             />
             <div className="divider-style" />
-            <ShareDropdown />
+            <ShareDropdown onShareSelect={handleShareSelect} />
           </div>
         </div>
       </div>

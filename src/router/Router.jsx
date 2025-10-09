@@ -1,5 +1,6 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import MainLayout from '@/components/common/MainLayout';
+import { Routes, Route, BrowserRouter } from 'react-router';
+import MainLayout from '@/components/common/layout/MainLayout';
+import PostLayout from '@/components/common/layout/PostLayout';
 import List from '@/pages/List';
 import Main from '@/pages/Main';
 import Post from '@/pages/Post';
@@ -19,8 +20,10 @@ const Router = () => {
             <Route path=":id/message" element={<PostMessage />} />
           </Route>
         </Route>
-        <Route path="/post/:id" element={<PostDetail />} />
-        <Route path="/post/:id/edit" element={<PostEdit />} />
+        <Route element={<PostLayout />}>
+          <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/post/:id/edit" element={<PostEdit />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
