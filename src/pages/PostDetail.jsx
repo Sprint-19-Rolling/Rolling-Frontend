@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { teamApi } from '@/apis/axios';
+import { Link } from 'react-router';
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
 import MessageList from '@/components/rolling-paper-list/MessageList';
@@ -9,49 +8,15 @@ import SubHeader from '@/components/rolling-paper-list/sub-header/SubHeader';
 const PostDetail = () => {
   const { id } = useParams();
 
-  const [postData, setPostData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPostData = async () => {
-      try {
-        const response = await teamApi.get(`/recipients/${id}/`);
-        setPostData(response.data);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('롤링페이퍼 데이터를 불러오지 못했습니다.', error);
-        setPostData(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPostData();
-  }, [id]);
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-[50dvh] items-center justify-center">
-        <p>로딩 중입니다...</p>
-      </div>
-    );
-  }
-
-  if (!postData) {
-    return (
-      <div className="flex min-h-[50dvh] items-center justify-center">
-        <p>데이터를 로드할 수 없습니다.</p>
-      </div>
-    );
-  }
-
   return (
     <>
       <Header />
       <SubHeader recipientId={id} />
-      {/* TODO: !아래 main 태그 배경 컴포넌트로 변경 필요! */}
+      {/* TODO: 아래 main 태그 배경 컴포넌트를 변경 필요 */}
       <main className="bg-beige-200 wrapper-px min-h-[calc(100dvh-297px)] w-full">
         <div className="content pt-15 pb-25">
+          {/* TODO: 토글 버튼 추가 필요 */}
+          <Link to={`/post/${id}/edit`}>토글 버튼 자리</Link>
           {/* MessageList - 각 메시지 카드 클릭 시 모달이 자동으로 열림 */}
           <MessageList recipientId={id} />
         </div>
