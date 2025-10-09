@@ -5,7 +5,7 @@ import { cn } from '@/utils/style';
 
 const ICON_MAP = {
   success: <icons.CompletedIcon className="text-green-500" />,
-  error: <icons.AlertIcon className="text-red-500" />,
+  error: <icons.ErrorIcon className="text-red-500" />,
 };
 
 const toastStyles = cva(
