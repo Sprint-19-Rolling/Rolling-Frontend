@@ -16,11 +16,7 @@ const tabButton = {
 /**
  * @typedef {Object} TabButtonBoxProps
  * @property {'color'|'image'} [initialTab]
- * @property {(data: { type: 'color'|'image', value: string } | null) => void} [onSelectChange]
- */
-
-/**
- * TabButtonBox 컴포넌트
+ * @property {(data: { color: string|null, image: string|null }) => void} [onSelectChange]
  */
 const TabButtonBox = ({ initialTab = 'color', onSelectChange }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
@@ -36,9 +32,13 @@ const TabButtonBox = ({ initialTab = 'color', onSelectChange }) => {
 
   useEffect(() => {
     if (onSelectChange) {
-      onSelectChange(
-        selected ? { type: selected.type, value: selected.value } : null
-      );
+      if (!selected) {
+        onSelectChange({ color: 'beige', image: null });
+      } else if (selected.type === 'color') {
+        onSelectChange({ color: selected.value, image: null });
+      } else {
+        onSelectChange({ color: 'beige', image: selected.value });
+      }
     }
   }, [selected, onSelectChange]);
 
@@ -61,6 +61,7 @@ const TabButtonBox = ({ initialTab = 'color', onSelectChange }) => {
         })}
       </div>
 
+      {/* 콘텐츠 영역 */}
       <div className="mt-10">
         <TabContents
           activeTab={activeTab}
