@@ -1,10 +1,24 @@
-import { useEffect } from 'react';
+import { cva } from 'class-variance-authority';
+import { useEffect, useState } from 'react';
 import icons from '@/assets/icons/icons';
+import { cn } from '@/utils/style';
 
 const ICON_MAP = {
   success: <icons.CompletedIcon className="text-green-500" />,
   error: <icons.AlertIcon className="text-red-500" />,
 };
+
+const toastStyles = cva(
+  'px-7.5 flex h-[64px] w-[calc(100%-40px)] items-center gap-3 rounded-lg bg-black/80 sm:w-[524px]',
+  {
+    variants: {
+      state: {
+        enter: 'animate-fadeIn',
+        leave: 'animate-fadeOut',
+      },
+    },
+  }
+);
 
 /**
  * Toast 메시지 컴포넌트입니다.
@@ -19,14 +33,25 @@ const ICON_MAP = {
  * @returns {JSX.Element} 토스트 UI 컴포넌트
  */
 const Toast = ({ id, type = 'success', message, onClose }) => {
+  const [isLeaving, setIsLeaving] = useState(false);
+
   useEffect(() => {
-    const timer = setTimeout(() => onClose(id), 3000);
+    const timer = setTimeout(() => setIsLeaving(true), 3000);
     return () => clearTimeout(timer);
-  }, [id, onClose]);
+  }, [id]);
+
+  useEffect(() => {
+    if (isLeaving) {
+      const timer = setTimeout(() => onClose(id), 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isLeaving, id, onClose]);
 
   return (
-    <div className="px-7.5 fixed bottom-[88px] left-1/2 flex h-[64px] w-[calc(100%-40px)] -translate-x-1/2 items-center gap-3 rounded-lg bg-black/80 sm:bottom-[70px] sm:w-[524px]">
-      {ICON_MAP[type]}
+    <div className={cn(toastStyles({ state: isLeaving ? 'leave' : 'enter' }))}>
+      <span role="img" aria-label={type}>
+        {ICON_MAP[type]}
+      </span>
       <span className="font-16-regular flex-auto text-white">{message}</span>
       <button
         aria-label="토스트 메세지 닫기"
