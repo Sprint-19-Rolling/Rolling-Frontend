@@ -1,4 +1,4 @@
-const SANITIZE_CONFIG = {
+export const SANITIZE_CONFIG = {
   ALLOWED_TAGS: [
     'p',
     'br',
@@ -27,8 +27,6 @@ const SANITIZE_CONFIG = {
   ],
   ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style'],
 };
-
-export default SANITIZE_CONFIG;
 
 export const SANITIZE_CONFIG_MESSAGECARD = {
   ALLOWED_TAGS: ['img'],
