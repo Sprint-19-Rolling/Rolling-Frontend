@@ -101,41 +101,47 @@ const SubHeader = ({ recipientId }) => {
   };
 
   const handleShareSelect = async (item) => {
-    const currentUrl = window.location.href;
-
-    if (item === SHARE_OPTION_KAKAO) {
-      if (window.Kakao && window.Kakao.isInitialized()) {
-        try {
-          window.Kakao.Share.sendCustom({
-            templateId: Number(KAKAO_TEMPLATE_ID),
-            templateArgs: {
-              PATH: pathname.slice(1),
-              NAME: name,
-              MESSAGE_COUNT: messageCount,
-              REACTION_COUNT: reactionCount,
-            },
-          });
-        } catch (err) {
-          // TODO: 토스트 메세지 연결 필요 showToast('공유 기능에 오류가 발생했습니다.', 'error');
-          // 토스트 메세지 연결 시 console.error 제거
-          console.error('카카오톡 공유 호출 실패:', err);
+    switch (item) {
+      case SHARE_OPTION_KAKAO: {
+        if (window.Kakao?.isInitialized()) {
+          try {
+            window.Kakao.Share.sendCustom({
+              templateId: Number(KAKAO_TEMPLATE_ID),
+              templateArgs: {
+                PATH: pathname.slice(1),
+                NAME: name,
+                MESSAGE_COUNT: messageCount,
+                REACTION_COUNT: reactionCount,
+              },
+            });
+          } catch (err) {
+            // TODO: 토스트 메세지 연결 필요 showToast('공유 기능에 오류가 발생했습니다.', 'error');
+            // 토스트 메세지 연결 시 console.error 제거
+            console.error('카카오톡 공유 호출 실패:', err);
+          }
+        } else {
+          // TODO: 토스트 메세지 연결 필요 showToast('공유 기능을 사용할 수 없습니다.', 'warning');
+          // 토스트 메세지 연결 시 console.warn 제거
+          console.warn('카카오 SDK가 준비되지 않았습니다.');
         }
-      } else {
-        // TODO: 토스트 메세지 연결 필요 showToast('공유 기능을 사용할 수 없습니다.', 'warning');
-        // 토스트 메세지 연결 시 console.warn 제거
-        console.warn('카카오 SDK가 준비되지 않았습니다.');
+        break;
       }
-    } else if (item === SHARE_OPTION_URL) {
-      try {
-        await navigator.clipboard.writeText(currentUrl);
-        // TODO: 토스트 메세지 연결 필요 (URL 복사 성공)
-        // 토스트 메세지 연결 시 console.log 제거
-        console.log('URL이 복사 되었습니다.', currentUrl);
-      } catch (err) {
-        // TODO: 토스트 메세지 연결 필요 (URL 복사 실패)
-        // 토스트 메세지 연결 시 console.error 제거
-        console.error('클립보드 복사 실패: ', err);
+      case SHARE_OPTION_URL: {
+        const currentUrl = window.location.href;
+        try {
+          await navigator.clipboard.writeText(currentUrl);
+          // TODO: 토스트 메세지 연결 필요 (URL 복사 성공)
+          // 토스트 메세지 연결 시 console.log 제거
+          console.log('URL이 복사 되었습니다.', currentUrl);
+        } catch (err) {
+          // TODO: 토스트 메세지 연결 필요 (URL 복사 실패)
+          // 토스트 메세지 연결 시 console.error 제거
+          console.error('클립보드 복사 실패: ', err);
+        }
+        break;
       }
+      default:
+        console.warn(`알 수 없는 공유 옵션입니다: ${item}`);
     }
   };
 
