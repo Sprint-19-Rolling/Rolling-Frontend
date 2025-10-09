@@ -12,11 +12,10 @@ const PostLayout = () => {
     <>
       <Header />
       <SubHeader recipientId={id} />
-      {/* TODO: !아래 main 태그 배경 컴포넌트로 변경 필요! */}
       <ListBackground
         backgroundImageURL={recipientData?.backgroundImageURL}
-        backgroundColor={recipientData?.backgroundColor}
-        className="bg-beige-200 wrapper-px min-h-[calc(100dvh-297px)] w-full">
+        backgroundColor={recipientData?.backgroundColor ?? 'beige'}
+        className="wrapper-px min-h-[calc(100dvh-297px)] w-full">
         <div className="content pt-15 pb-25">
           <Outlet />
         </div>

@@ -1,14 +1,17 @@
+// src/components/post/TabContents.jsx
 import { api } from '@/apis/axios';
 import useDataFetch from '@/hooks/useDataFetch';
 import { cn } from '@/utils/style';
 import SelectItem from './TabSelectItem';
 
-const colorChips = [
-  'bg-beige-200',
-  'bg-purple-200',
-  'bg-blue-200',
-  'bg-green-200',
-];
+const colorChips = ['beige', 'purple', 'blue', 'green'];
+
+const colorClassMap = {
+  beige: 'bg-beige-200',
+  purple: 'bg-purple-200',
+  blue: 'bg-blue-200',
+  green: 'bg-green-200',
+};
 
 /**
  * @typedef {Object} ImageData
@@ -19,7 +22,7 @@ const colorChips = [
 /**
  * @typedef {Object} TabContentsProps
  * @property {'color'|'image'} activeTab
- * @property {{ type: 'color'|'image', value: string, index: number } | null} selected
+ * @property {{ type: 'color'|'image', value: string } | null} selected
  * @property {(type: 'color'|'image', index: number, value: string) => void} onSelect
  */
 
@@ -48,6 +51,7 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 md:mx-auto md:w-[720px]">
+      {/* 컬러칩 렌더링 */}
       {activeTab === 'color' &&
         colorChips.map((color, idx) => {
           return (
@@ -57,11 +61,12 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
                 selected?.type === 'color' && selected?.value === color
               }
               onClick={() => onSelect('color', idx, color)}
-              className={color}
+              className={colorClassMap[color]}
             />
           );
         })}
 
+      {/* 이미지 렌더링 */}
       {activeTab === 'image' &&
         imageUrls?.map((img, idx) => {
           return (

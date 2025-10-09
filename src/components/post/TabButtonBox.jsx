@@ -1,3 +1,4 @@
+// src/components/post/TabButtonBox.jsx
 import { useState, useEffect } from 'react';
 import { cn } from '@/utils/style';
 import TabContents from './TabContents';
@@ -31,14 +32,22 @@ const TabButtonBox = ({ initialTab = 'color', onSelectChange }) => {
   };
 
   useEffect(() => {
-    if (onSelectChange) {
-      if (!selected) {
-        onSelectChange({ color: 'beige', image: null });
-      } else if (selected.type === 'color') {
-        onSelectChange({ color: selected.value, image: null });
-      } else {
-        onSelectChange({ color: 'beige', image: selected.value });
-      }
+    if (!onSelectChange) {
+      return;
+    }
+
+    if (!selected) {
+      // 선택이 없으면 기본값만
+      onSelectChange({ color: 'beige', image: null });
+    } else if (selected.type === 'color') {
+      // 컬러 선택 시
+      onSelectChange({ color: selected.value, image: null });
+    } else if (selected.type === 'image') {
+      // 이미지 선택 시 기존 컬러 유지
+      onSelectChange((prev) => ({
+        color: prev?.color ?? 'beige',
+        image: selected.value,
+      }));
     }
   }, [selected, onSelectChange]);
 

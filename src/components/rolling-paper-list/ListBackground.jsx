@@ -4,9 +4,10 @@
  * 배경을 적용해 콘텐츠를 감싸는 Wrapper 컴포넌트
  * @param {Object} props
  * @param {string} [props.backgroundImageURL] - 배경 이미지 URL
- * @param {string} [props.backgroundColor] - 배경 색상
+ * @param {string} [props.backgroundColor] - 배경 색상(beige|purple|blue|green)
  * @param {React.ReactNode} props.children - 내부 콘텐츠
  */
+
 export default function ListBackground({
   backgroundImageURL,
   backgroundColor,
@@ -18,8 +19,13 @@ export default function ListBackground({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }
-    : { backgroundColor };
-
+    : backgroundColor
+      ? {
+          backgroundColor: `var(--color-${backgroundColor}-200)`,
+        }
+      : {
+          backgroundColor: `var(--color-beige-200)`, // 기본값
+        };
   return (
     <div className="relative min-h-[400px] w-full p-4" style={backgroundStyle}>
       {children}
