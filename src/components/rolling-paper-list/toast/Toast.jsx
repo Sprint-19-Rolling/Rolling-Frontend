@@ -1,12 +1,12 @@
 import { cva } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
 import icons from '@/assets/icons/icons';
+import {
+  AUTO_CLOSE_DELAY,
+  FADE_OUT_DURATION,
+  ICON_MAP,
+} from '@/constants/toast';
 import { cn } from '@/utils/style';
-
-const ICON_MAP = {
-  success: <icons.CompletedIcon className="text-green-500" />,
-  error: <icons.ErrorIcon className="text-red-500" />,
-};
 
 const toastStyles = cva(
   'px-7.5 flex h-[64px] w-[calc(100%-40px)] items-center gap-3 rounded-lg bg-black/80 sm:w-[524px]',
@@ -36,13 +36,13 @@ const Toast = ({ id, type = 'success', message, onClose }) => {
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLeaving(true), 3000);
+    const timer = setTimeout(() => setIsLeaving(true), AUTO_CLOSE_DELAY);
     return () => clearTimeout(timer);
   }, [id]);
 
   useEffect(() => {
     if (isLeaving) {
-      const timer = setTimeout(() => onClose(id), 200);
+      const timer = setTimeout(() => onClose(id), FADE_OUT_DURATION);
       return () => clearTimeout(timer);
     }
   }, [isLeaving, id, onClose]);
