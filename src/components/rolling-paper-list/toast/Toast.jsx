@@ -38,7 +38,7 @@ const Toast = ({ id, type = 'success', message, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => setIsLeaving(true), AUTO_CLOSE_DELAY);
     return () => clearTimeout(timer);
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     if (isLeaving) {
