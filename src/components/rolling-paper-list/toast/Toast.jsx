@@ -16,6 +16,10 @@ const toastStyles = cva(
         enter: 'animate-fadeIn',
         leave: 'animate-fadeOut',
       },
+      type: {
+        success: 'text-green-500',
+        error: 'text-error',
+      },
     },
   }
 );
@@ -34,6 +38,7 @@ const toastStyles = cva(
  */
 const Toast = ({ id, type = 'success', message, onClose }) => {
   const [isLeaving, setIsLeaving] = useState(false);
+  const Icon = ICON_MAP[type];
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLeaving(true), AUTO_CLOSE_DELAY);
@@ -48,9 +53,12 @@ const Toast = ({ id, type = 'success', message, onClose }) => {
   }, [isLeaving, id, onClose]);
 
   return (
-    <div className={cn(toastStyles({ state: isLeaving ? 'leave' : 'enter' }))}>
+    <div
+      className={cn(
+        toastStyles({ state: isLeaving ? 'leave' : 'enter', type })
+      )}>
       <span role="img" aria-label={type}>
-        {ICON_MAP[type]}
+        <Icon />
       </span>
       <span className="font-16-regular flex-auto text-white">{message}</span>
       <button

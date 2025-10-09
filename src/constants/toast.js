@@ -22,9 +22,9 @@ export const FADE_OUT_DURATION = 200;
 
 /**
  * 토스트 유형별 아이콘 매핑 객체
- * @type {{ success: JSX.Element, error: JSX.Element }}
+ * @type {{ success: React.ComponentType, error: React.ComponentType }}
  */
 export const ICON_MAP = {
-  success: <icons.CompletedIcon className="text-green-500" />,
-  error: <icons.ErrorIcon className="text-red-500" />,
+  success: icons.CompletedIcon,
+  error: icons.ErrorIcon,
 };
