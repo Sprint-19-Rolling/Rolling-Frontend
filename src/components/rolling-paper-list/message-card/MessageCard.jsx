@@ -22,14 +22,20 @@ const textStyle = cva(
   }
 );
 
-/**
- * 🎴 롤링페이퍼 목록에서 사용되는 메시지 카드 컴포넌트입니다.
- * 클릭 시 해당 메시지의 상세 모달이 열립니다.
- *
- * - 카드 내부에서는 텍스트 일부만 미리보기로 보여주며,
- *   이미지(img) 태그만 예외적으로 표시되도록 설정했습니다.
- * - HTML 본문 전체는 모달 내부(PostContent)에서 렌더링됩니다.
+/** 롤링페이퍼 목록에서 사용되는 메시지 카드 컴포넌트입니다.
+ * 클릭 시 해당 메시지의 상세 모달을 띄웁니다.
+ * @param {object} props * @param {string} props.sender - 메시지 작성자의 이름
+ * @param {string} props.profileImageURL - 작성자의 프로필 이미지 URL
+ * @param {string} props.relationship - 작성자와 받는 사람의 관계
+ * @param {string} props.createdAt - 메시지가 작성된 날짜
+ * @param {string} props.content - 메시지의 본문 내용
+ * @param {'Pretendard'|'Noto Sans'|'나눔명조'|'나눔손글씨 손편지체'} props.font - 메시지 내용에 적용할 폰트 변수
+ * @param {function} props.onClick - 카드를 클릭했을 때 실행될 핸들러 함수 (모달 열기)
+ * @param {boolean} [props.edit=false] - true일 경우 카드 우측 상단에 삭제 버튼을 표시 (편집 모드 시 옵션)
+ * @param {function} [props.onDelete] - 삭제 버튼 클릭 시 실행될 핸들러 함수 (편집 모드 시 옵션)
+ * @returns {JSX.Element}
  */
+
 const MessageCard = ({
   sender,
   profileImageURL,
@@ -41,24 +47,18 @@ const MessageCard = ({
   edit = false,
   onDelete,
 }) => {
-  // 메시지 본문을 안전하게 정제 (img 태그만 허용)
   const sanitizedContent = useMemo(
     () => DOMPurify.sanitize(content, SANITIZE_CONFIG_MESSAGECARD),
     [content]
   );
 
-  // 키보드 접근성 (Enter 또는 Space로 클릭 동작)
   const handleKeyDown = (e) => {
-    if (edit) {
-      return;
-    } // 편집 모드에서는 클릭 방지
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onClick?.();
     }
   };
 
-  // 삭제 버튼 클릭 시 상위 클릭 이벤트 전파 방지 후 onDelete 실행
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     onDelete?.();
@@ -70,13 +70,12 @@ const MessageCard = ({
       tabIndex={0}
       className={cn(
         'card-style relative flex-col items-start gap-4 p-6 pt-7 transition',
-        !edit && 'cursor-pointer hover:shadow-lg active:scale-[0.99]'
+        'cursor-pointer hover:shadow-lg active:scale-[0.99]'
       )}
-      onClick={!edit ? onClick : undefined} // 편집 모드에서는 클릭 차단
+      onClick={onClick}
       onKeyDown={handleKeyDown}
       aria-label={`${sender}님의 메시지 보기`}
       title={`${sender}님의 메시지 보기`}>
-      {/* 작성자 정보 */}
       <AuthorInfo
         sender={sender}
         profileImageURL={profileImageURL}
@@ -84,7 +83,6 @@ const MessageCard = ({
         className="pb-3.75 border-b border-gray-200"
       />
 
-      {/* 편집 모드 시 삭제 버튼 표시 */}
       {edit && (
         <Button
           theme="icon"
@@ -97,13 +95,11 @@ const MessageCard = ({
         </Button>
       )}
 
-      {/* 메시지 내용 (텍스트 일부 + 이미지 허용) */}
       <div
         className={cn(textStyle({ font }))}
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
 
-      {/* 작성 날짜 */}
       <DateText className="mt-auto" createdAt={createdAt} />
     </div>
   );
