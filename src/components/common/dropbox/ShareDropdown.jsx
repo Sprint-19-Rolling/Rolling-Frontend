@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
 import BasicDropdown from '@/components/common/dropbox/BasicDropdown';
+import { SHARE_DROPDOWN_ITEMS } from '@/constants/share';
 import { useClickOutside } from '@/hooks/useClickOutside';
 
 /**
@@ -12,10 +13,11 @@ import { useClickOutside } from '@/hooks/useClickOutside';
  * 드롭다운은 버튼의 오른쪽 테두리에 정렬되어 표시됩니다.
  *
  * @component
+ * @param {function(string): void} props.onShareSelect - 항목 선택 시 호출될 콜백 함수
  * @returns {JSX.Element} 공유 버튼과 드롭다운 메뉴를 포함한 컴포넌트
  */
 
-const ShareDropdown = () => {
+const ShareDropdown = ({ onShareSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
 
@@ -25,14 +27,8 @@ const ShareDropdown = () => {
 
   useClickOutside(ref, () => setIsOpen(false));
 
-  const shareItems = ['카카오톡 공유', 'URL 공유'];
-
   const handleSelect = (item) => {
-    if (item === '카카오톡 공유') {
-      alert('카카오톡 공유기능 구현 필요');
-    } else if (item === 'URL 공유') {
-      alert('URL 공유 기능 구현 필요');
-    }
+    onShareSelect(item);
     setIsOpen(false);
   };
 
@@ -47,7 +43,7 @@ const ShareDropdown = () => {
       </Button>
       {isOpen && (
         <BasicDropdown
-          items={shareItems}
+          items={SHARE_DROPDOWN_ITEMS}
           onSelect={handleSelect}
           size="share"
           className="absolute right-0 top-full mt-2"

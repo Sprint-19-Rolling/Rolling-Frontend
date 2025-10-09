@@ -1,9 +1,8 @@
-import { useParams } from 'react-router';
-import { Link } from 'react-router';
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
+import { Link, useParams } from 'react-router';
 import MessageList from '@/components/rolling-paper-list/MessageList';
-import SubHeader from '@/components/rolling-paper-list/sub-header/SubHeader';
+
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -22,6 +21,13 @@ const PostDetail = () => {
         </div>
       </main>
       <Footer />
+
+      {/* TODO: 토글 버튼 추가 필요 */}
+      <div className="mb-4 flex h-10 items-center">
+        <Link to={`/post/${id}/edit`}>토글 버튼 자리</Link>
+      </div>
+      <MessageList recipientId={id} />
+
     </>
   );
 };
