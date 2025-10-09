@@ -1,4 +1,6 @@
 import { Link, useParams } from 'react-router';
+import Footer from '@/components/common/Footer';
+import Header from '@/components/common/Header';
 import MessageList from '@/components/rolling-paper-list/MessageList';
 
 const PostDetail = () => {
