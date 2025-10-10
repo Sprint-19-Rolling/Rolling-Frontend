@@ -24,7 +24,8 @@ const textStyle = cva(
 
 /** 롤링페이퍼 목록에서 사용되는 메시지 카드 컴포넌트입니다.
  * 클릭 시 해당 메시지의 상세 모달을 띄웁니다.
- * @param {object} props * @param {string} props.sender - 메시지 작성자의 이름
+ * @param {object} props
+ * @param {string} props.sender - 메시지 작성자의 이름
  * @param {string} props.profileImageURL - 작성자의 프로필 이미지 URL
  * @param {string} props.relationship - 작성자와 받는 사람의 관계
  * @param {string} props.createdAt - 메시지가 작성된 날짜
