@@ -1,5 +1,5 @@
 import LinkButton from '@/components/common/button/LinkButton';
-import ToggleSwitch from '@/components/common/button/Toggle';
+import ToggleSwitch from '@/components/rolling-paper-list/ToggleSwitch';
 
 const List = () => {
   return (
