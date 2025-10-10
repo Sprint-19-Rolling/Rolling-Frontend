@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { cn } from '@/utils/style';
 
 /**
@@ -23,7 +23,7 @@ const ToggleSwitch = ({ isEditMode, to }) => {
       <div className="relative aspect-[1] h-[26px] w-[26px] rounded-full bg-white" />
       <div
         className={cn(
-          'font-14-bold absolute left-2.5 top-[calc(50%-10px)] flex h-5 items-center justify-center whitespace-nowrap text-sm',
+          'font-14-bold absolute left-2.5 top-[calc(50%-10px)] flex h-5 items-center justify-center whitespace-nowrap',
           isEditMode ? 'text-white' : 'scale-x-[-1] text-gray-400'
         )}>
         {isEditMode ? '편집' : '기본'}
