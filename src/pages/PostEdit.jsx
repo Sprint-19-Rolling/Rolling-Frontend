@@ -1,24 +1,29 @@
-import { Link, useParams } from 'react-router';
-import Footer from '@/components/common/Footer';
-import Header from '@/components/common/Header';
+import { useParams } from 'react-router';
+import Button from '@/components/common/button/Button';
 import MessageList from '@/components/rolling-paper-list/MessageList';
-import SubHeader from '@/components/rolling-paper-list/sub-header/SubHeader';
+import ToggleSwitch from '@/components/rolling-paper-list/ToggleSwitch';
 
 const PostEdit = () => {
   const { id } = useParams();
+
+  const handleDeleteRollingPaper = () => {
+    // TODO: 롤링페이퍼 삭제 기능 구현
+    console.log('롤링페이퍼 삭제');
+  };
+
   return (
     <>
-      <Header />
-      <SubHeader recipientId={id} />
-      {/* TODO: !아래 main 태그 배경 컴포넌트로 변경 필요! */}
-      <main className="bg-beige-200 wrapper-px min-h-[calc(100dvh-297px)] w-full">
-        <div className="content pt-15 pb-25">
-          {/* TODO: 토글 버튼 추가 필요 */}
-          <Link to={`/post/${id}`}>토글 버튼 자리</Link>
-          <MessageList recipientId={id} isEditPage />
-        </div>
-      </main>
-      <Footer />
+      <div className="mb-4 flex items-center justify-between">
+        <ToggleSwitch to={`/post/${id}`} isEditMode />
+        {/* TODO: 삭제 버튼 반응형 구현 필요 */}
+        <Button
+          size={40}
+          className="w-[92px]"
+          onClick={handleDeleteRollingPaper}>
+          삭제하기
+        </Button>
+      </div>
+      <MessageList recipientId={id} isEditPage />
     </>
   );
 };
