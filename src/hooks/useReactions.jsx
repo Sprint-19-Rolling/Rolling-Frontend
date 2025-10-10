@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { teamApi } from '@/apis/axios';
+import { getReactions } from '@/apis/reaction';
 import useDataFetch from '@/hooks/useDataFetch';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
 
@@ -7,15 +7,7 @@ const useReactions = (recipientId) => {
   const pageSize = useResponsiveSize();
 
   const fetcher = useCallback(
-    async (signal) => {
-      const limit = pageSize;
-      const res = await teamApi.get(
-        `recipients/${recipientId}/reactions/?limit=${limit}&offset=0`,
-        { signal }
-      );
-
-      return res.data.results;
-    },
+    (signal) => getReactions(recipientId, pageSize, signal),
     [recipientId, pageSize]
   );
 
