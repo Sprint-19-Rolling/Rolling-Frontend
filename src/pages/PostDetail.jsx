@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router';
 import MessageList from '@/components/rolling-paper-list/MessageList';
-
 const PostDetail = () => {
   const { id } = useParams();
   return (
@@ -13,5 +12,4 @@ const PostDetail = () => {
     </>
   );
 };
-
 export default PostDetail;
