@@ -29,9 +29,42 @@
 |1|2|3|4|5|
 
 ## 🧑‍💻 기술 스택
-### 개발
-### 🙆‍♀️ 협업
+
+### 라이브러리
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/react_router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"> <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"> <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white"> <img src="https://img.shields.io/badge/react_quill-2F2F2F?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/emoji_picker_react-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+- `React` → UI 라이브러리
+- `React Router` → 클라이언트 라우팅
+- `Axios` → HTTP 요청
+- `Tailwind CSS` → 유틸리티 기반 CSS
+- `React Quill New` → 리치 텍스트 에디터
+- `emoji-picker-react` → 이모지 선택 UI
+
+### 빌드 & 개발 도구
+<img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"> <img src="https://img.shields.io/badge/vite_plugin_react-646CFF?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/vite_plugin_svgr-FF6347?style=for-the-badge&logo=react&logoColor=white">
+- `Vite` → 프론트엔드 빌드 도구
+- `@vitejs/plugin-react` → Vite React 지원 플러그인
+- `vite-plugin-svgr` → SVG를 React 컴포넌트로 변환
+
+### 코드 품질 & 포맷팅
+<img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white"> <img src="https://img.shields.io/badge/husky-000000?style=for-the-badge&logo=husky&logoColor=white"> <img src="https://img.shields.io/badge/lintstaged-4B32C3?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/commitlint-FF0000?style=for-the-badge&logo=git&logoColor=white">
+- `ESLint` → 코드 린트
+- `Prettier` → 코드 포맷팅
+- `Husky` → 커밋 전 린트/포맷 자동화
+- `lint-staged` → 커밋 전 파일 단위 린트
+- `Commitlint` → 커밋 메시지 컨벤션 검사
+
+### 배포 & CI/CD
+<img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"> <img src="https://img.shields.io/badge/github_actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white">
+- `Vercel` → 프론트엔드 배포
+- `GitHub Actions` → Preview 링크 자동 생성 및 배포 워크플로우 구현
+
+### 협업 도구
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+- `GitHub` → 코드 버전 관리, 위키 문서화, 이슈 트래킹
+- `Notion` → 문서화 및 일정 관리
+- `Figma` → UI/UX 디자인
+- `Discord` → 팀 커뮤니케이션
+
 
 ## ✨ 주요 기능
 
