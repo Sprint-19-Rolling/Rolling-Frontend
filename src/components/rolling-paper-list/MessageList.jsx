@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Error from '@/components/common/Error';
+import Modal from '@/components/common/modal/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
@@ -21,6 +22,9 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     useMessages(recipientId);
 
   const observerRef = useRef(null);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
 
   useEffect(() => {
     if (loading) {
@@ -52,16 +56,25 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   }, [nextUrl, fetchMore, loading, isFetching]);
 
   const handleMessageCardClick = (messageData) => {
-    // TODO: 모달 구현 로직 추가 필요
-    console.log('메세지 카드 클릭했을 때 모달이 보여집니다.', messageData);
+    setSelectedMessage(messageData);
+    setIsOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+    setSelectedMessage(null);
   };
 
   const handleMessageCardDelete = async (messageId) => {
     if (!isEditPage) {
       return;
     }
-    // TODO: 메세지 삭제 로직 추가 필요
-    console.log('메세지 삭제 ', messageId);
+    //  TODO: 메세지 삭제 로직 추가 필요
+    //  여기에 실제 메시지 삭제 로직을 구현하세요.
+    //  console.log는 린트 규칙 위반이므로 사용하지 마세요.
+    //  messageId 변수를 사용하지 않으면 린트 경고가 발생하므로,
+    //  임시로라도 사용 처리한 뒤, 나중에 실제 삭제 코드로 교체하세요.
+    await Promise.resolve(messageId);
   };
 
   // 초기 로딩 상태일 때 skeleton UI 보여짐
@@ -81,36 +94,52 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   }
 
   return (
-    <div className="card-grid-style">
-      <AddMessageCardButton id={recipientId} />
-      {messages.length > 0 &&
-        messages.map((item) => {
-          return (
-            <MessageCard
-              key={item.id}
-              sender={item.sender}
-              profileImageURL={item.profileImageURL}
-              relationship={item.relationship}
-              createdAt={item.createdAt}
-              content={item.content}
-              font={item.font}
-              onClick={() => handleMessageCardClick(item)}
-              {...(isEditPage
-                ? {
-                    edit: true,
-                    onDelete: () => handleMessageCardDelete(item.id),
-                  }
-                : {})}
-            />
-          );
-        })}
-      <div ref={observerRef} className="h-2" />
-      {isFetching && (
-        <div className="p-2 text-center text-gray-900">
-          📝 롤링페이퍼 메세지를 불러오는 중...
-        </div>
+    <>
+      <div className="card-grid-style">
+        {!isEditPage && <AddMessageCardButton id={recipientId} />}
+        {messages.length > 0 &&
+          messages.map((item) => {
+            return (
+              <MessageCard
+                key={item.id}
+                sender={item.sender}
+                profileImageURL={item.profileImageURL}
+                relationship={item.relationship}
+                createdAt={item.createdAt}
+                content={item.content}
+                font={item.font}
+                onClick={() => handleMessageCardClick(item)}
+                {...(isEditPage
+                  ? {
+                      edit: true,
+                      onDelete: () => handleMessageCardDelete(item.id),
+                    }
+                  : {})}
+              />
+            );
+          })}
+        <div ref={observerRef} className="h-2" />
+        {isFetching && (
+          <div className="p-2 text-center text-gray-900">
+            📝 롤링페이퍼 메세지를 불러오는 중...
+          </div>
+        )}
+      </div>
+
+      {/* 모달 추가 */}
+      {isOpenModal && selectedMessage && (
+        <Modal
+          isOpen={isOpenModal}
+          onClose={handleCloseModal}
+          contentHtml={selectedMessage.content}
+          sender={selectedMessage.sender}
+          role={selectedMessage.relationship}
+          profileImgUrl={selectedMessage.profileImageURL}
+          createdAt={selectedMessage.createdAt}
+          font={selectedMessage.font}
+        />
       )}
-    </div>
+    </>
   );
 };
 
