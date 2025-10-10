@@ -16,7 +16,7 @@
 - `팀 소통 및 일정 관리`: 코어타임에 Discord로 모여서 작업 + GitHub 이슈로 진행 상황 트래킹
 
 ## 💁 팀원 소개
-| <img src="https://avatars.githubusercontent.com/u/117738875?v=4" width="500"/> | <img src="https://github.com/user-attachments/assets/74129372-3384-4e2d-bb9f-5923b4d153ff" width="500"/> | <img src="https://avatars.githubusercontent.com/u/221239670?v=4" width="500"/> | <img src="https://avatars.githubusercontent.com/u/217933138?v=4" width="500"/> | <img src="https://avatars.githubusercontent.com/u/221279400?v=4" width="500"/> |
+| <img src="https://avatars.githubusercontent.com/u/117738875?v=4" width="150"/> | <img src="https://avatars.githubusercontent.com/u/118894968?v=4" width="150"/> | <img src="https://avatars.githubusercontent.com/u/96235994?v=4" width="150"/> | <img src="https://avatars.githubusercontent.com/u/117933138?v=4" width="150"/> | <img src="https://avatars.githubusercontent.com/u/121279400?v=4" width="150"/> |
 | :---: | :---: | :---: | :---: | :---: |
 | [이아름](https://github.com/aahreum) | [양은지](https://github.com/eunji0124) | [최희락](https://github.com/Greensod-96) | [차혁](https://github.com/heoc0523) | [선기훈](https://github.com/seongihun) |
 | 팀장 `FE` | 팀원 `FE` | 팀원 `FE` | 팀원 `FE` | 팀원 `FE` |
