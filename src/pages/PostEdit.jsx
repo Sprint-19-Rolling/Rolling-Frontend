@@ -1,6 +1,7 @@
-import { Link, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Button from '@/components/common/button/Button';
 import MessageList from '@/components/rolling-paper-list/MessageList';
+import ToggleSwitch from '@/components/rolling-paper-list/ToggleSwitch';
 
 const PostEdit = () => {
   const { id } = useParams();
@@ -12,9 +13,8 @@ const PostEdit = () => {
 
   return (
     <>
-      {/* TODO: 토글 버튼 추가 필요 */}
       <div className="mb-4 flex items-center justify-between">
-        <Link to={`/post/${id}`}>토글 버튼 자리</Link>
+        <ToggleSwitch to={`/post/${id}`} isEditMode />
         {/* TODO: 삭제 버튼 반응형 구현 필요 */}
         <Button
           size={40}
