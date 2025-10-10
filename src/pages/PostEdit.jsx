@@ -18,7 +18,6 @@ const PostEdit = () => {
 
     try {
       await teamApi.delete(`recipients/${id}/`);
-      alert('롤링페이퍼가 삭제되었습니다.');
       showToast('롤링페이퍼가 삭제되었습니다.', 'success');
       navigate('/');
     } catch (error) {
