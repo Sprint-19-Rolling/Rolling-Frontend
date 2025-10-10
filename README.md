@@ -83,7 +83,7 @@
 ### 롤링페이퍼 메세지 등록 페이지
 
 ## 👀 플로우 차트
-<img width="auto" height="auto" alt="user" src="https://github.com/user-attachments/assets/ec375ab1-991f-4c80-9492-37d8e9b4ff64" />
+<img width="auto" height="auto" alt="서비스 플로우 차트" src="https://github.com/user-attachments/assets/ec375ab1-991f-4c80-9492-37d8e9b4ff64" />
 
 ## 🔗 Link
 - [🚀 배포 사이트](https://rolling-7team.vercel.app/)
