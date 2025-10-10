@@ -37,3 +37,4 @@ export const getRecipientData = async (recipientId, signal) => {
     backgroundColor,
   };
 };
+export const deleteRecipient = (id) => teamApi.delete(`recipients/${id}/`);
