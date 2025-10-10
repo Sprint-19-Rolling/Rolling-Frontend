@@ -2,13 +2,12 @@ import { useNavigate, useParams } from 'react-router';
 import { deleteRecipient } from '@/apis/recipients';
 import Button from '@/components/common/button/Button';
 import MessageList from '@/components/rolling-paper-list/MessageList';
-import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
 import ToggleSwitch from '@/components/rolling-paper-list/ToggleSwitch';
 import useToast from '@/hooks/useToast';
 
 const PostEdit = () => {
   const { id } = useParams();
-  const { toasts, showToast, removeToast } = useToast();
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const handleDeleteRollingPaper = async () => {
@@ -20,8 +19,9 @@ const PostEdit = () => {
       await deleteRecipient(id);
       showToast('롤링페이퍼가 삭제되었습니다.', 'success');
       navigate('/');
-    } catch {
-      showToast('삭제에 실패했습니다. 다시 시도해주세요.');
+    } catch (error) {
+      console.error('롤링페이퍼 삭제 실패:', error);
+      showToast('삭제에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
 
@@ -52,7 +52,6 @@ const PostEdit = () => {
           삭제하기
         </Button>
       </div>
-      <ToastContainer toasts={toasts} removeToast={removeToast} />
     </>
   );
 };
