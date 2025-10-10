@@ -30,7 +30,6 @@ const PostEdit = () => {
       {/* 상단 영역 (PC에서만 보여짐) */}
       <div className="mb-4 flex items-center justify-between">
         <ToggleSwitch to={`/post/${id}`} isEditMode />
-
         {/* PC용 삭제 버튼 (고정 X, 상단 오른쪽 위치) */}
         <Button
           size={40}
