@@ -96,7 +96,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   return (
     <>
       <div className="card-grid-style">
-        <AddMessageCardButton id={recipientId} />
+        {!isEditPage && <AddMessageCardButton id={recipientId} />}
         {messages.length > 0 &&
           messages.map((item) => {
             return (
