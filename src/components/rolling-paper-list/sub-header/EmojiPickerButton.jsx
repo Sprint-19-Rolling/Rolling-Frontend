@@ -1,6 +1,6 @@
 import EmojiPicker from 'emoji-picker-react';
 import { useRef, useState } from 'react';
-import { teamApi } from '@/apis/axios';
+import { postReaction } from '@/apis/reactions';
 import icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
 import { useClickOutside } from '@/hooks/useClickOutside';
@@ -25,17 +25,9 @@ const EmojiPickerButton = ({ recipientId, onSuccess }) => {
   };
 
   const postEmojiAsync = async (emojiData) => {
-    const data = {
-      emoji: emojiData.emoji,
-      type: 'increase',
-    };
-
     try {
-      const res = await teamApi.post(
-        `recipients/${recipientId}/reactions/`,
-        data
-      );
-      onSuccess?.(res.data);
+      const updatedReactions = await postReaction(recipientId, emojiData.emoji);
+      onSuccess?.(updatedReactions);
     } catch (err) {
       setError({
         status: err.response?.status || 500,
