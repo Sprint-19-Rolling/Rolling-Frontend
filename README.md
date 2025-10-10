@@ -70,7 +70,7 @@
 ### 메인 페이지
 |PC|Tablet|Mobile|
 | :---: | :---: | :---: |
-|<img width="2456" height="2062" alt="screencapture-localhost-5173-2025-10-10-19_05_24 1" src="https://github.com/user-attachments/assets/c0945b67-9839-44f7-ad24-c5c7b94f0f3c" />|![Oct-10-2025 19-08-12](https://github.com/user-attachments/assets/74299324-6b41-4ee5-85b6-73451db682de)|![Oct-10-2025 19-09-04](https://github.com/user-attachments/assets/960064a4-af33-4585-b768-009b161072ff)|
+|<img width="100%" alt="Rolling 서비스 메인 페이지 PC 화면" src="https://github.com/user-attachments/assets/c0945b67-9839-44f7-ad24-c5c7b94f0f3c" />|<img width="100%" alt="Rolling 서비스 메인 페이지 Tablet 화면" src="https://github.com/user-attachments/assets/74299324-6b41-4ee5-85b6-73451db682de" />|<img width="100%" alt="Rolling 서비스 메인 페이지 Mobile 화면" src="https://github.com/user-attachments/assets/960064a4-af33-4585-b768-009b161072ff" />|
 
 ### 리스트 페이지
 
