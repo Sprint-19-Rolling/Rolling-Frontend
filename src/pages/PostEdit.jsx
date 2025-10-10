@@ -41,27 +41,14 @@ const PostEdit = () => {
       {/* 메시지 리스트 */}
       <MessageList recipientId={id} isEditPage />
 
-      {/* 모바일 전용 하단 고정 버튼 */}
-      <div className="fixed bottom-6 left-1/2 z-50 h-[56px] w-[320px] -translate-x-1/2 sm:hidden">
-        <div className="flex justify-center">
-          <Button
-            size={56}
-            className="h-[56px] w-[320px] rounded-xl text-white"
-            onClick={handleDeleteRollingPaper}>
-            삭제하기
-          </Button>
-        </div>
-      </div>
-      {/* 태블릿 전용 하단 고정 버튼 */}
-      <div className="fixed bottom-6 left-1/2 z-50 hidden h-[55px] w-[720px] -translate-x-1/2 justify-center px-4 sm:flex lg:hidden">
-        <div className="flex h-[55px] w-[720px] items-center justify-center gap-2.5 overflow-hidden rounded-xl px-[91px] py-3.5">
-          <Button
-            size={56}
-            className="h-[55px] w-[720px] text-lg font-bold text-white"
-            onClick={handleDeleteRollingPaper}>
-            삭제하기
-          </Button>
-        </div>
+      {/* 모바일 및 태블릿 전용 하단 고정 버튼 */}
+      <div className="fixed bottom-6 left-1/2 z-50 w-[320px] -translate-x-1/2 sm:w-[720px] sm:px-4 lg:hidden">
+        <Button
+          size={56}
+          className="h-[56px] w-full rounded-xl text-white sm:h-[55px] sm:text-lg sm:font-bold"
+          onClick={handleDeleteRollingPaper}>
+          삭제하기
+        </Button>
       </div>
     </>
   );
