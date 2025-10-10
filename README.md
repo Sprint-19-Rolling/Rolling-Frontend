@@ -23,9 +23,14 @@
 
 
 ## 📋 역할 분배
-
+|이아름|양은지|최희락|차혁|선기훈|
+| :---: | :---: | :---: | :---: | :---: |
+|1|2|3|4|5|
 
 ## 🧑‍💻 기술 스택
+### 개발
+### 🙆‍♀️ 협업
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
 
 ## ✨ 주요 기능
 
