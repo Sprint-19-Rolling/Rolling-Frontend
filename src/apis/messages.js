@@ -24,3 +24,11 @@ export const getMoreMessages = async (nextUrl) => {
   const res = await teamApi.get(nextUrl);
   return { results: res.data.results, nextUrl: res.data.next };
 };
+
+/**
+ * 특정 메시지를 삭제하는 API
+ * @param {string} messageId - 삭제할 메시지의 ID
+ * @returns {Promise<void>}
+ */
+export const deleteMessage = (messageId) =>
+  teamApi.delete(`messages/${messageId}/`);
