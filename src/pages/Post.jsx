@@ -48,6 +48,8 @@ const Post = () => {
     }
   };
 
+  console.log('backgroundData 값', backgroundData);
+
   return (
     <div className="mx-auto">
       <label
@@ -63,23 +65,8 @@ const Post = () => {
       />
 
       <TabButtonBox
-        selectedColor={backgroundData.backgroundColor} // Enum 값
-        selectedImage={backgroundData.backgroundImageURL}
-        onSelectChange={(type, _, value) => {
-          if (type === 'color') {
-            // 컬러 선택: 배경에 바로 적용 , API용 Enum 값 저장
-            setBackgroundData({
-              backgroundColor: value,
-              backgroundImageURL: null,
-            });
-          } else if (type === 'image') {
-            // 이미지 선택: 이미지 URL 저장, 배경색은 API용 기본값 유지
-            setBackgroundData((prev) => ({
-              backgroundColor: prev.backgroundColor || 'beige',
-              backgroundImageURL: value,
-            }));
-          }
-        }}
+        backgroundData={backgroundData}
+        setBackgroundData={setBackgroundData}
       />
 
       <Button

@@ -1,5 +1,5 @@
 // src/components/post/TabButtonBox.jsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { cn } from '@/utils/style';
 import TabContents from './TabContents';
 
@@ -19,37 +19,44 @@ const tabButton = {
  * @property {'color'|'image'} [initialTab]
  * @property {(data: { color: string|null, image: string|null }) => void} [onSelectChange]
  */
-const TabButtonBox = ({ initialTab = 'color', onSelectChange }) => {
-  const [activeTab, setActiveTab] = useState(initialTab);
-  const [selected, setSelected] = useState(null);
+const TabButtonBox = ({ backgroundData, setBackgroundData }) => {
+  const [activeTab, setActiveTab] = useState('color');
 
-  const handleSelect = (type, index, value) => {
-    if (selected?.type === type && selected?.index === index) {
-      setSelected(null);
-    } else {
-      setSelected({ type, index, value });
+  const handleSelect = (type, _index, value) => {
+    if (type === 'color') {
+      // 같은 색을 클릭하면 기본값으로 리셋
+      if (backgroundData.backgroundColor === value) {
+        setBackgroundData({
+          backgroundColor: 'beige',
+          backgroundImageURL: null,
+        });
+      } else {
+        setBackgroundData({
+          backgroundColor: value,
+          backgroundImageURL: null,
+        });
+      }
+    } else if (type === 'image') {
+      // 같은 이미지를 클릭하면 해제
+      if (backgroundData.backgroundImageURL === value) {
+        setBackgroundData({
+          backgroundColor: backgroundData.backgroundColor ?? 'beige',
+          backgroundImageURL: null,
+        });
+      } else {
+        setBackgroundData({
+          backgroundColor: backgroundData.backgroundColor ?? 'beige',
+          backgroundImageURL: value,
+        });
+      }
     }
   };
 
-  useEffect(() => {
-    if (!onSelectChange) {
-      return;
-    }
-
-    if (!selected) {
-      // 선택이 없으면 기본값만
-      onSelectChange({ color: 'beige', image: null });
-    } else if (selected.type === 'color') {
-      // 컬러 선택 시
-      onSelectChange({ color: selected.value, image: null });
-    } else if (selected.type === 'image') {
-      // 이미지 선택 시 기존 컬러 유지
-      onSelectChange((prev) => ({
-        color: prev?.color ?? 'beige',
-        image: selected.value,
-      }));
-    }
-  }, [selected, onSelectChange]);
+  // 현재 선택 상태 계산
+  const selected = backgroundData.backgroundImageURL
+    ? { type: 'image', value: backgroundData.backgroundImageURL }
+    : { type: 'color', value: backgroundData.backgroundColor };
+  console.log('선택된 값', selected);
 
   return (
     <div className="mx-auto w-full max-w-[720px] py-10">
