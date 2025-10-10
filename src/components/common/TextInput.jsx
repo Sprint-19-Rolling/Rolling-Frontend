@@ -1,9 +1,8 @@
 import { cva } from 'class-variance-authority';
-import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
 
 const inputWrapper = cva(
-  'flex w-full items-center gap-2.5 rounded-lg border-2 bg-white px-3 py-3 focus-within:outline-none active:outline-none',
+  'flex w-full items-center gap-2.5 rounded-lg border-1 bg-white px-3 py-3 focus-within:outline-none active:outline-none',
   {
     variants: {
       error: {
@@ -18,6 +17,21 @@ const inputWrapper = cva(
   }
 );
 
+/**
+ * 텍스트 입력 컴포넌트
+ *
+ * @param {Object} props
+ * @param {string} props.name - input name
+ * @param {string} [props.type='text'] - input type
+ * @param {string} [props.placeholder] - placeholder text
+ * @param {string} props.value - input value
+ * @param {(value: string) => void} props.onChange - 값 변경 콜백
+ * @param {() => void} [props.onBlur] - blur 이벤트 콜백
+ * @param {boolean} [props.error=false] - 에러 여부
+ * @param {string} [props.errorMessage] - 에러 메시지
+ * @param {string} [props.className] - 추가 클래스
+ * @param {boolean} [props.disabled=false] - 비활성화 여부
+ */
 const TextInput = ({
   name,
   type = 'text',
@@ -31,6 +45,9 @@ const TextInput = ({
   disabled = false,
   ...props
 }) => {
+  // DOM에 필요 없는 커스텀 props 제거
+  const { validate: _validate, ...restProps } = props;
+
   return (
     <div className="w-full">
       <div className={inputWrapper({ error })}>
@@ -47,7 +64,7 @@ const TextInput = ({
             'font-16-regular flex-1 bg-transparent text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
             className
           )}
-          {...props}
+          {...restProps} // validate 제거된 나머지 props만 전달
         />
       </div>
       {error && errorMessage && (
@@ -55,19 +72,6 @@ const TextInput = ({
       )}
     </div>
   );
-};
-
-TextInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func,
-  error: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
 };
 
 export default TextInput;

@@ -11,7 +11,7 @@ import {
 } from '@/constants/share';
 import useError from '@/hooks/useError';
 import useReactions from '@/hooks/useReactions';
-import useRecipientHeaderData from '@/hooks/useRecipientHeaderData';
+import useRecipientData from '@/hooks/useRecipientData';
 import useToast from '@/hooks/useToast';
 import { cn } from '@/utils/style';
 
@@ -28,7 +28,7 @@ const SubHeader = ({ recipientId }) => {
   const { error } = useError();
   const { pathname } = useLocation();
   const { recipientData, setRecipientData, loading } =
-    useRecipientHeaderData(recipientId);
+    useRecipientData(recipientId);
   const {
     reactions,
     setReactions,
