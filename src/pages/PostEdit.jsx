@@ -30,8 +30,11 @@ const PostEdit = () => {
   return (
     <>
       {/* 상단 영역 (PC에서만 보여짐) */}
+      {/* 상단 영역 (PC에서만 보여짐) */}
       <div className="mb-4 flex items-center justify-between">
         <ToggleSwitch to={`/post/${id}`} isEditMode />
+
+        {/* PC용 삭제 버튼 (고정 X, 상단 오른쪽 위치) */}
 
         {/* PC용 삭제 버튼 (고정 X, 상단 오른쪽 위치) */}
         <Button
@@ -41,6 +44,8 @@ const PostEdit = () => {
           삭제하기
         </Button>
       </div>
+
+      {/* 메시지 리스트 */}
 
       {/* 메시지 리스트 */}
       <MessageList recipientId={id} isEditPage />
