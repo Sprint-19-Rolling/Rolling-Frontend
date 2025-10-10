@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { teamApi } from '@/apis/axios';
 import Button from '@/components/common/button/Button';
 import TextInput from '@/components/common/TextInput';
 import TabButtonBox from '@/components/post/TabButtonBox';
 import { useInput } from '@/hooks/useInput';
+
+const TEAM_ID = '19-7';
 
 const Post = () => {
   const navigate = useNavigate();
@@ -13,12 +15,36 @@ const Post = () => {
     customErrorMessage: '이름을 입력해 주세요',
   });
 
-  // API 전송용 Enum 값 + 선택된 이미지 URL
   const [backgroundData, setBackgroundData] = useState({
-    backgroundColor: 'beige', // 기본값: API 전송용
+    backgroundColor: 'beige', // API enum 기본값
     backgroundImageURL: null,
   });
   const [loading, setLoading] = useState(false);
+
+  // useCallback으로 메모이제이션 (리렌더링 최적화)
+  const handleSelectChange = useCallback((selection) => {
+    if (!selection) {
+      setBackgroundData({
+        backgroundColor: 'beige',
+        backgroundImageURL: null,
+      });
+      return;
+    }
+
+    if (selection.type === 'color') {
+      // 컬러 선택: 이미지는 null로 초기화
+      setBackgroundData({
+        backgroundColor: selection.value, // enum 값 (예: 'beige', 'blue' 등)
+        backgroundImageURL: null,
+      });
+    } else if (selection.type === 'image') {
+      // 이미지 선택: 멘토님 가이드대로 기본 컬러 설정
+      setBackgroundData({
+        backgroundColor: 'beige', // API 필수값이므로 기본값 유지
+        backgroundImageURL: selection.value,
+      });
+    }
+  }, []);
 
   const handleCreate = async () => {
     const isValid = toInput.validate();
@@ -30,10 +56,10 @@ const Post = () => {
 
     try {
       const data = {
-        team: '19-7', // 고정 값
+        team: TEAM_ID,
         name: toInput.value,
-        backgroundColor: backgroundData.backgroundColor, // Enum 값 전송
-        backgroundImageURL: backgroundData.backgroundImageURL, // 선택 이미지
+        backgroundColor: backgroundData.backgroundColor,
+        backgroundImageURL: backgroundData.backgroundImageURL,
       };
 
       const res = await teamApi.post('recipients/', data);
@@ -42,16 +68,13 @@ const Post = () => {
       navigate(`/post/${newPostId}`);
     } catch (err) {
       console.error('글 생성 실패', err);
-      alert('글 생성 실패: 입력값과 API 연결을 확인해주세요.');
     } finally {
       setLoading(false);
     }
   };
 
-  console.log('backgroundData 값', backgroundData);
-
   return (
-    <div className="mx-auto">
+    <div className="mx-auto min-h-screen w-full max-w-[720px] py-[50px] md:py-[60px]">
       <label
         htmlFor="To"
         className="font-20-bold md:font-24-bold text-gray-900">
@@ -64,10 +87,7 @@ const Post = () => {
         {...toInput}
       />
 
-      <TabButtonBox
-        backgroundData={backgroundData}
-        setBackgroundData={setBackgroundData}
-      />
+      <TabButtonBox onSelectChange={handleSelectChange} />
 
       <Button
         type="button"
@@ -75,7 +95,7 @@ const Post = () => {
         theme="primary"
         size={40}
         full="always"
-        className="mt-6 w-full"
+        className="font-18-bold h-[56px] w-full"
         disabled={loading}>
         {loading ? '생성 중...' : '생성하기'}
       </Button>

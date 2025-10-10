@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/style';
 
 const inputWrapper = cva(
-  'flex w-full items-center gap-2.5 rounded-lg border-2 bg-white px-3 py-3 focus-within:outline-none active:outline-none',
+  'flex w-full items-center gap-2.5 rounded-lg border-1 bg-white px-3 py-3 focus-within:outline-none active:outline-none',
   {
     variants: {
       error: {

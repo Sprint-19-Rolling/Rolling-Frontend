@@ -1,5 +1,6 @@
 // src/components/post/TabButtonBox.jsx
 import { useState } from 'react';
+import Title from '@/components/common/Title';
 import { cn } from '@/utils/style';
 import TabContents from './TabContents';
 
@@ -15,52 +16,54 @@ const tabButton = {
 };
 
 /**
+ * @typedef {Object} Selection
+ * @property {'color'|'image'} type
+ * @property {string} value
+ *
  * @typedef {Object} TabButtonBoxProps
  * @property {'color'|'image'} [initialTab]
- * @property {(data: { color: string|null, image: string|null }) => void} [onSelectChange]
+ * @property {(selection: Selection|null) => void} onSelectChange
  */
-const TabButtonBox = ({ backgroundData, setBackgroundData }) => {
+const TabButtonBox = ({ onSelectChange }) => {
   const [activeTab, setActiveTab] = useState('color');
+  const [selected, setSelected] = useState({
+    type: 'color',
+    value: 'beige',
+  });
 
   const handleSelect = (type, _index, value) => {
     if (type === 'color') {
       // 같은 색을 클릭하면 기본값으로 리셋
-      if (backgroundData.backgroundColor === value) {
-        setBackgroundData({
-          backgroundColor: 'beige',
-          backgroundImageURL: null,
-        });
+      if (selected.type === 'color' && selected.value === value) {
+        const newSelection = { type: 'color', value: 'beige' };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
       } else {
-        setBackgroundData({
-          backgroundColor: value,
-          backgroundImageURL: null,
-        });
+        const newSelection = { type: 'color', value };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
       }
     } else if (type === 'image') {
-      // 같은 이미지를 클릭하면 해제
-      if (backgroundData.backgroundImageURL === value) {
-        setBackgroundData({
-          backgroundColor: backgroundData.backgroundColor ?? 'beige',
-          backgroundImageURL: null,
-        });
+      // 같은 이미지를 클릭하면 해제 (기본 컬러로)
+      if (selected.type === 'image' && selected.value === value) {
+        const newSelection = { type: 'color', value: 'beige' };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
       } else {
-        setBackgroundData({
-          backgroundColor: backgroundData.backgroundColor ?? 'beige',
-          backgroundImageURL: value,
-        });
+        const newSelection = { type: 'image', value };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
       }
     }
   };
 
-  // 현재 선택 상태 계산
-  const selected = backgroundData.backgroundImageURL
-    ? { type: 'image', value: backgroundData.backgroundImageURL }
-    : { type: 'color', value: backgroundData.backgroundColor };
-  console.log('선택된 값', selected);
-
   return (
     <div className="mx-auto w-full max-w-[720px] py-10">
-      <div className="flex w-fit justify-center rounded-lg bg-gray-100">
+      <Title>배경화면을 선택해 주세요.</Title>
+      <p className="font-16-regular color-gray-500 mt-1">
+        컬러를 선택하거나, 이미지를 선택할 수 있습니다.
+      </p>
+      <div className="mt-6 flex w-fit justify-center rounded-lg bg-gray-100">
         {tabs.map(({ key, label }) => {
           return (
             <button
