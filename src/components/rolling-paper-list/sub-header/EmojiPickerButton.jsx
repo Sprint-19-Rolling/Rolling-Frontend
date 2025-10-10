@@ -1,6 +1,6 @@
 import EmojiPicker from 'emoji-picker-react';
 import { useRef, useState } from 'react';
-import { postReaction } from '@/apis/reaction';
+import { postReaction } from '@/apis/reactions';
 import icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
 import { useClickOutside } from '@/hooks/useClickOutside';

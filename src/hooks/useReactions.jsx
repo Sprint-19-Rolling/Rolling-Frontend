@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { getReactions } from '@/apis/reaction';
+import { getReactions } from '@/apis/reactions';
 import useDataFetch from '@/hooks/useDataFetch';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
 
