@@ -5,9 +5,11 @@ import Modal from '@/components/common/modal/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
+import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
 import { MESSAGE_LIST_SKELETON_ARRAY } from '@/constants/rollingPaperList';
 import useError from '@/hooks/useError';
 import useMessages from '@/hooks/useMessages';
+import useToast from '@/hooks/useToast';
 /**
  * 특정 롤링페이퍼 ID에 해당하는 메시지 목록을 표시하고 관리하는 리스트 컴포넌트입니다.
  * @param {object} props
@@ -17,6 +19,7 @@ import useMessages from '@/hooks/useMessages';
  */
 
 const MessageList = ({ recipientId, isEditPage = false }) => {
+  const { toasts, showToast, removeToast } = useToast();
   const { error } = useError();
   const { messages, loading, isFetching, nextUrl, fetchMore, setMessages } =
     useMessages(recipientId);
@@ -77,23 +80,19 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     try {
       await deleteMessage(messageId);
 
-      // 메시지 삭제 후 상태 업데이트
       if (setMessages) {
-        setMessages((prev) => prev.filter((msg) => msg.id !== messageId));
+        setMessages((prev) => ({
+          ...prev,
+          results: prev.results.filter((msg) => msg.id !== messageId),
+        }));
       }
 
-      alert('메시지가 삭제되었습니다.');
+      showToast('메시지가 삭제되었습니다.');
     } catch {
-      alert('메시지 삭제에 실패했습니다. 다시 시도해주세요.');
+      showToast('메시지 삭제에 실패했습니다. 다시 시도해주세요.');
     }
   };
-  //  TODO: 메세지 삭제 로직 추가 필요
-  //  여기에 실제 메시지 삭제 로직을 구현하세요.
-  //  console.log는 린트 규칙 위반이므로 사용하지 마세요.
-  //  messageId 변수를 사용하지 않으면 린트 경고가 발생하므로,
-  //  임시로라도 사용 처리한 뒤, 나중에 실제 삭제 코드로 교체하세요.
 
-  // 초기 로딩 상태일 때 skeleton UI 보여짐
   if (loading && !isFetching) {
     return (
       <div className="card-grid-style">
@@ -155,6 +154,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
           font={selectedMessage.font}
         />
       )}
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
     </>
   );
 };
