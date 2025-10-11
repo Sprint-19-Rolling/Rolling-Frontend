@@ -11,7 +11,7 @@ const Main = () => {
         })}
       </div>
       <div className="fixed bottom-0 left-0 right-0 flex w-full justify-center bg-white px-5 py-6 sm:px-6 md:static">
-        <LinkButton to={'/list'} size={56} full="tablet">
+        <LinkButton to={'/list'} size={56} full="mobile">
           구경해보기
         </LinkButton>
       </div>
