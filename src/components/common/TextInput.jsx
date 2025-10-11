@@ -17,36 +17,20 @@ const inputWrapper = cva(
   }
 );
 
-/**
- * 텍스트 입력 컴포넌트
- *
- * @param {Object} props
- * @param {string} props.name - input name
- * @param {string} [props.type='text'] - input type
- * @param {string} [props.placeholder] - placeholder text
- * @param {string} props.value - input value
- * @param {(value: string) => void} props.onChange - 값 변경 콜백
- * @param {() => void} [props.onBlur] - blur 이벤트 콜백
- * @param {boolean} [props.error=false] - 에러 여부
- * @param {string} [props.errorMessage] - 에러 메시지
- * @param {string} [props.className] - 추가 클래스
- * @param {boolean} [props.disabled=false] - 비활성화 여부
- */
-const TextInput = ({
-  name,
-  type = 'text',
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  error = false,
-  errorMessage,
-  className = '',
-  disabled = false,
-  ...props
-}) => {
-  // DOM에 필요 없는 커스텀 props 제거
-  const { validate: _validate, ...restProps } = props;
+const TextInput = (props) => {
+  const {
+    name,
+    type = 'text',
+    placeholder,
+    value,
+    onChange,
+    onBlur,
+    error = false,
+    errorMessage,
+    className = '',
+    disabled = false,
+    ...restProps
+  } = props;
 
   return (
     <div className="w-full">
@@ -64,7 +48,7 @@ const TextInput = ({
             'font-16-regular flex-1 bg-transparent text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
             className
           )}
-          {...restProps} // validate 제거된 나머지 props만 전달
+          {...restProps}
         />
       </div>
       {error && errorMessage && (
@@ -72,6 +56,19 @@ const TextInput = ({
       )}
     </div>
   );
+};
+
+TextInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default TextInput;
