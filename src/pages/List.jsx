@@ -1,21 +1,23 @@
 import LinkButton from '@/components/common/button/LinkButton';
+import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
+import Title from '@/components/common/Title';
 
 const List = () => {
   return (
-    // 🔥 post/:id vercel 체크용으로 추가한 버튼입니다. 삭제하셔도 됩니다!!
-    <div className="flex gap-4 pt-8">
-      <p>무한 스크롤 확인용</p>
-      <LinkButton to="/post/13916" size={40}>
-        post 테스트용 1
-      </LinkButton>
-      <p>빈 데이터 확인용</p>
-      <LinkButton to="/post/13926" size={40}>
-        post 테스트용 2
-      </LinkButton>
-      <p>에러 확인용</p>
-      <LinkButton to="/post/13955" size={40}>
-        post 테스트용 3
-      </LinkButton>
+    <div className="py-15 flex flex-col gap-12">
+      <div>
+        <Title>인기 롤링 페이퍼 🔥</Title>
+        {/* TODO: 롤링페이퍼 인기순 리스트 적용하기 */}
+      </div>
+      <div>
+        <Title>최근에 만든 롤링 페이퍼 ⭐️️</Title>
+        {/* TODO: 롤링페이퍼 최신순 리스트 적용하기 */}
+      </div>
+      <FloatingButtonContainer>
+        <LinkButton to={'/post'} size={56} full="mobile">
+          나도 만들어보기
+        </LinkButton>
+      </FloatingButtonContainer>
     </div>
   );
 };
