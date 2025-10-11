@@ -30,7 +30,6 @@ const TextInput = (props) => {
     errorMessage,
     className = '',
     disabled = false,
-    validate: _validate,
     ...restProps
   } = props;
 
@@ -71,7 +70,6 @@ TextInput.propTypes = {
   errorMessage: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  validate: PropTypes.func,
 };
 
 export default TextInput;
