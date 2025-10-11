@@ -30,7 +30,18 @@
 
 ### 이아름
 
-컴포넌트 구현
+**UI**
+
+- 
+
+**기능**
+
+- 
+
+**기타**
+
+- GitHub Wiki 문서화
+- READEME 작성
 
 ### 양은지
 
@@ -109,10 +120,7 @@
  ┣ 📂.github                    # GitHub 이슈 및 PR 템플릿 관리
  ┣ 📂.husky                     # Git Hook 설정 (pre-commit, commit-msg)
  ┣ 📂.vscode                    # VSCode 개발 환경 설정 (확장, 스니펫, 설정 등)
- ┣ 📂public
- ┃ ┣ 📂fonts                    # 웹폰트 리소스
- ┃ ┣ 📜favicon.svg              # 브라우저 탭 아이콘
- ┃ ┗ 📜og-img.jpg               # 오픈그래프용 대표 이미지
+ ┣ 📂public                     # 웹폰트 리소스, 브라우저 탭 아이콘, 오픈그래프용 대표 이미지
  ┣ 📂src
  ┃ ┣ 📂apis                     # API 요청 모듈
  ┃ ┣ 📂assets                   # 정적 리소스
