@@ -41,10 +41,19 @@ export const fetchProfileImages = async () => {
  * @returns {Promise<Object>} API 응답
  */
 export const createMessage = async (recipient_id, messageData) => {
+  const payload = {
+    sender: messageData.sender,
+    profileImageURL: messageData.profileImageURL,
+    relationship: messageData.relationship,
+    content: messageData.content,
+    font: messageData.font,
+  };
+
   const response = await axios.post(
     `${API_BASE_URL}/${TEAM_ID}/recipients/${recipient_id}/messages/`,
-    messageData,
+    payload,
     { headers: { 'Content-Type': 'application/json' } }
   );
+
   return response;
 };
