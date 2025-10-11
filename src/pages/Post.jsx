@@ -68,7 +68,7 @@ const Post = () => {
         backgroundImageURL: backgroundData.backgroundImageURL,
       };
 
-      const res = await teamApi.post('recipients-ㅎ/', data);
+      const res = await teamApi.post('recipients/', data);
       const newPostId = res.data.id;
       navigate(`/post/${newPostId}`);
     } catch (err) {
