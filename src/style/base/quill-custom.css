@@ -570,3 +570,11 @@ div.ql-snow .ql-picker-options .ql-picker-item.ql-selected {
 .ql-snow .ql-picker.ql-background .ql-picker-item[data-value='#3d1466'] {
   background-color: #3d1466 !important;
 }
+
+.ql-toolbar .ql-formats:nth-child(6) {
+  margin-right: 1px !important;
+}
+
+.ql-toolbar .ql-formats:nth-child(7) {
+  margin-right: 1px !important;
+}
