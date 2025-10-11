@@ -1,19 +1,14 @@
+// src/components/post/TabButtonBox.jsx
 import { useState } from 'react';
+import Title from '@/components/common/Title';
 import { cn } from '@/utils/style';
 import TabContents from './TabContents';
 
-/**
- * 탭 구성 정보
- * @type {{ key: 'color'|'image', label: string }[]}
- */
 const tabs = [
   { key: 'color', label: '컬러' },
   { key: 'image', label: '이미지' },
 ];
 
-/**
- * 탭 버튼 스타일 정의
- */
 const tabButton = {
   base: 'flex items-center justify-center font-16-bold transition-all duration-200 rounded-md h-10 w-[118px] md:w-[122px]',
   active: 'border-2 border-purple-600 text-purple-700 bg-white',
@@ -21,51 +16,54 @@ const tabButton = {
 };
 
 /**
- * TabButtonBox 컴포넌트 props 정의
+ * @typedef {Object} Selection
+ * @property {'color'|'image'} type
+ * @property {string} value
+ *
  * @typedef {Object} TabButtonBoxProps
- * @property {'color'|'image'} [initialTab='color'] - 초기 활성화 탭
+ * @property {'color'|'image'} [initialTab]
+ * @property {(selection: Selection|null) => void} onSelectChange
  */
+const TabButtonBox = ({ onSelectChange }) => {
+  const [activeTab, setActiveTab] = useState('color');
+  const [selected, setSelected] = useState({
+    type: 'color',
+    value: 'beige',
+  });
 
-/**
- * 탭 버튼과 해당 탭 콘텐츠(TabContents)를 렌더링하는 컴포넌트
- *
- * @param {TabButtonBoxProps} props
- * @returns {JSX.Element}
- *
- * @example
- * <TabButtonBox initialTab="image" />
- */
-const TabButtonBox = ({ initialTab = 'color' }) => {
-  /**
-   * 현재 활성화된 탭 상태
-   * @type {'color'|'image'}
-   */
-  const [activeTab, setActiveTab] = useState(initialTab);
-
-  /**
-   * 선택된 요소 상태
-   * @type {{ type: 'color'|'image', index: number, value: string } | null}
-   */
-  const [selected, setSelected] = useState(null);
-
-  /**
-   * 항목 선택 핸들러
-   * @param {'color'|'image'} type - 선택 항목 타입
-   * @param {number} index - 선택 항목 인덱스
-   * @param {string} value - 선택 항목 값 (컬러 클래스 또는 이미지 URL)
-   */
-  const handleSelect = (type, index, value) => {
-    if (selected?.type === type && selected?.index === index) {
-      setSelected(null); // 다시 클릭하면 선택 해제
-    } else {
-      setSelected({ type, index, value }); // 새로운 선택
+  const handleSelect = (type, _index, value) => {
+    if (type === 'color') {
+      // 같은 색을 클릭하면 기본값으로 리셋
+      if (selected.type === 'color' && selected.value === value) {
+        const newSelection = { type: 'color', value: 'beige' };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
+      } else {
+        const newSelection = { type: 'color', value };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
+      }
+    } else if (type === 'image') {
+      // 같은 이미지를 클릭하면 해제 (기본 컬러로)
+      if (selected.type === 'image' && selected.value === value) {
+        const newSelection = { type: 'color', value: 'beige' };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
+      } else {
+        const newSelection = { type: 'image', value };
+        setSelected(newSelection);
+        onSelectChange(newSelection);
+      }
     }
   };
 
   return (
     <div className="mx-auto w-full max-w-[720px] py-10">
-      {/* 탭 버튼 그룹 */}
-      <div className="flex w-fit justify-center rounded-lg bg-gray-100">
+      <Title>배경화면을 선택해 주세요.</Title>
+      <p className="font-16-regular color-gray-500 mt-1">
+        컬러를 선택하거나, 이미지를 선택할 수 있습니다.
+      </p>
+      <div className="mt-6 flex w-fit justify-center rounded-lg bg-gray-100">
         {tabs.map(({ key, label }) => {
           return (
             <button
@@ -82,7 +80,7 @@ const TabButtonBox = ({ initialTab = 'color' }) => {
         })}
       </div>
 
-      {/* 선택된 탭 콘텐츠 */}
+      {/* 콘텐츠 영역 */}
       <div className="mt-10">
         <TabContents
           activeTab={activeTab}
