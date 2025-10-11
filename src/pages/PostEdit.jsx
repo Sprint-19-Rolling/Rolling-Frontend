@@ -19,8 +19,7 @@ const PostEdit = () => {
       await deleteRecipient(id);
       showToast('롤링페이퍼가 삭제되었습니다.', 'success');
       navigate('/');
-    } catch (error) {
-      console.error('롤링페이퍼 삭제 실패:', error);
+    } catch {
       showToast('삭제에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
@@ -38,10 +37,8 @@ const PostEdit = () => {
           삭제하기
         </Button>
       </div>
-
       {/* 메시지 리스트 */}
       <MessageList recipientId={id} isEditPage />
-
       {/* 모바일 및 태블릿 전용 하단 고정 버튼 */}
       <div className="fixed bottom-6 left-1/2 z-50 w-[calc(100%-40px)] -translate-x-1/2 sm:w-[720px] sm:px-4 lg:hidden">
         <Button
