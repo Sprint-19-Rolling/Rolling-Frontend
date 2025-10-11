@@ -1,6 +1,6 @@
 // src/components/post/TabContents.jsx
 import { useState } from 'react';
-import { getBackgroundImages } from '@/apis/recipients';
+import { getBackgroundImages } from '@/apis/backgroundImages';
 import useDataFetch from '@/hooks/useDataFetch';
 import useError from '@/hooks/useError';
 import { cn } from '@/utils/style';
