@@ -3,7 +3,6 @@ import Modal from '@/components/common/modal/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
-import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
 import { MESSAGE_LIST_SKELETON_ARRAY } from '@/constants/rollingPaperList';
 import useMessages from '@/hooks/useMessages';
 import useToast from '@/hooks/useToast';
@@ -84,8 +83,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
       } else {
         showToast('메시지 삭제에 실패했습니다. 다시 시도해주세요.', 'error');
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       showToast(
         '삭제 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
         'error'
