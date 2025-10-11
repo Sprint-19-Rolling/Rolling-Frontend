@@ -73,7 +73,10 @@ const Post = () => {
       navigate(`/post/${newPostId}`);
     } catch (err) {
       console.error('글 생성 실패', err);
-      setError(err);
+      setError({
+        status: err.response?.status || 500,
+        message: err.response?.data?.message || '글 생성 중 오류가 발생했어요.',
+      });
       showToast(
         '글 생성 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
         'error'
