@@ -18,19 +18,22 @@ const inputWrapper = cva(
   }
 );
 
-const TextInput = ({
-  name,
-  type = 'text',
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  error = false,
-  errorMessage,
-  className = '',
-  disabled = false,
-  ...props
-}) => {
+const TextInput = (props) => {
+  const {
+    name,
+    type = 'text',
+    placeholder,
+    value,
+    onChange,
+    onBlur,
+    error = false,
+    errorMessage,
+    className = '',
+    disabled = false,
+    validate: _validate,
+    ...restProps
+  } = props;
+
   return (
     <div className="w-full">
       <div className={inputWrapper({ error })}>
@@ -47,7 +50,7 @@ const TextInput = ({
             'font-16-regular flex-1 bg-transparent text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
             className
           )}
-          {...props}
+          {...restProps}
         />
       </div>
       {error && errorMessage && (
@@ -68,6 +71,7 @@ TextInput.propTypes = {
   errorMessage: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  validate: PropTypes.func,
 };
 
 export default TextInput;
