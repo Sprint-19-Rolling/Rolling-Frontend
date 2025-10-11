@@ -1,4 +1,28 @@
-import { teamApi } from '@/apis/axios';
+import { api, teamApi } from '@/apis/axios';
+import { TEAM_ID } from '@/constants/teamId';
+
+/**
+ * 특정 팀의 모든 수신자 목록을 가져오는 API
+ * @param {AbortSignal} [signal]
+ * @returns {Promise<Array>}
+ */
+export const getRecipientsByTeam = async (signal) => {
+  const res = await teamApi.get(`teams/${TEAM_ID}/recipients/`, { signal });
+  return res.data;
+};
+
+/**
+ * 새로운 수신자를 생성하는 API 호출 함수
+ * @param {Object} data - 생성할 수신자 정보
+ * @param {string} data.name - 수신자 이름
+ * @param {string} [data.backgroundColor] - 배경 색상 (선택)
+ * @param {string} [data.backgroundImageURL] - 배경 이미지 URL (선택)
+ * @returns {Promise<Object>} 생성된 수신자 정보
+ */
+export const createRecipient = async (data) => {
+  const res = await teamApi.post(`teams/${TEAM_ID}/recipients/`, data);
+  return res.data;
+};
 
 /**
  * 해당하는 수신자 ID의 상세 데이터를 가져오는 API 호출 함수
@@ -44,3 +68,18 @@ export const getRecipientData = async (recipientId, signal) => {
  * @returns {Promise<void>} 삭제 성공 시 아무 값도 반환하지 않습니다.
  */
 export const deleteRecipient = (id) => teamApi.delete(`recipients/${id}/`);
+
+/**
+ * 배경 이미지 목록을 불러옵니다.
+ * react-image-gallery 라이브러리에 맞는 포맷으로 변환합니다.
+ * @param {AbortSignal} [signal] - 요청 취소용 AbortSignal
+ * @returns {Promise<Array<{ original: string, thumbnail: string }>>} - 이미지 갤러리용 포맷
+ */
+export const getBackgroundImages = async (signal) => {
+  const res = await api.get('/background-images/', { signal });
+  const originals = res.data.imageUrls || [];
+  return originals.map((url) => ({
+    original: url,
+    thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
+  }));
+};

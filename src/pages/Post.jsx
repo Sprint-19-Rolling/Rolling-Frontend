@@ -1,14 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router';
-import { teamApi } from '@/apis/axios';
+import { createRecipient } from '@/apis/recipients';
 import Button from '@/components/common/button/Button';
 import TextInput from '@/components/common/TextInput';
 import TabButtonBox from '@/components/post/TabButtonBox';
 import useError from '@/hooks/useError';
 import { useInput } from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
-
-const TEAM_ID = '19-7';
 
 const Post = () => {
   const navigate = useNavigate();
@@ -60,15 +58,12 @@ const Post = () => {
     setLoading(true);
 
     try {
-      const data = {
-        team: TEAM_ID,
+      const res = await createRecipient({
         name: toInput.value,
         backgroundColor: backgroundData.backgroundColor,
         backgroundImageURL: backgroundData.backgroundImageURL,
-      };
-
-      const res = await teamApi.post('recipients/', data);
-      const newPostId = res.data.id;
+      });
+      const newPostId = res.id;
       navigate(`/post/${newPostId}`);
     } catch (err) {
       console.error('글 생성 실패', err);
