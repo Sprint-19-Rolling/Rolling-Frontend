@@ -1,16 +1,6 @@
 import { teamApi } from '@/apis/axios';
 
 /**
- * 특정 팀의 모든 수신자 목록을 가져오는 API
- * @param {AbortSignal} [signal]
- * @returns {Promise<Array>}
- */
-export const getRecipientsByTeam = async (signal) => {
-  const res = await teamApi.get(`/recipients/`, { signal });
-  return res.data;
-};
-
-/**
  * 새로운 수신자를 생성하는 API 호출 함수
  * @param {Object} data - 생성할 수신자 정보
  * @param {string} data.name - 수신자 이름
