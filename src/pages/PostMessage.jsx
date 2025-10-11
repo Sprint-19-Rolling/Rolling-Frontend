@@ -106,10 +106,10 @@ const PostMessage = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-[5px] sm:justify-start">
                 {profileImages.length > 0 ? (
-                  profileImages.map((url, index) => {
+                  profileImages.map((url) => {
                     return (
                       <ProfileImage
-                        key={index}
+                        key={url}
                         src={url}
                         size="medium"
                         isSelected={profileImageURL === url}
