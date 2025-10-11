@@ -4,9 +4,11 @@ import Modal from '@/components/common/modal/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
+import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
 import { MESSAGE_LIST_SKELETON_ARRAY } from '@/constants/rollingPaperList';
 import useError from '@/hooks/useError';
 import useMessages from '@/hooks/useMessages';
+import useToast from '@/hooks/useToast';
 
 /**
  * 특정 롤링페이퍼 ID에 해당하는 메시지 목록을 표시하고 관리하는 리스트 컴포넌트입니다.
@@ -15,17 +17,23 @@ import useMessages from '@/hooks/useMessages';
  * @param {boolean} [props.isEditPage=false] - 현재 페이지가 편집 모드인지 여부
  * @returns {JSX.Element}
  */
-
 const MessageList = ({ recipientId, isEditPage = false }) => {
+  const { toasts, showToast, removeToast } = useToast();
   const { error } = useError();
-  const { messages, loading, isFetching, nextUrl, fetchMore } =
-    useMessages(recipientId);
+  const {
+    messages,
+    loading,
+    isFetching,
+    nextUrl,
+    fetchMore,
+    deleteMessageById,
+  } = useMessages(recipientId);
 
   const observerRef = useRef(null);
-
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
 
+  // 무한 스크롤
   useEffect(() => {
     if (loading) {
       return;
@@ -37,13 +45,10 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
           fetchMore();
         }
       },
-      {
-        threshold: 1.0,
-      }
+      { threshold: 1.0 }
     );
 
     const target = observerRef.current;
-
     if (target) {
       observer.observe(target);
     }
@@ -69,15 +74,28 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     if (!isEditPage) {
       return;
     }
-    //  TODO: 메세지 삭제 로직 추가 필요
-    //  여기에 실제 메시지 삭제 로직을 구현하세요.
-    //  console.log는 린트 규칙 위반이므로 사용하지 마세요.
-    //  messageId 변수를 사용하지 않으면 린트 경고가 발생하므로,
-    //  임시로라도 사용 처리한 뒤, 나중에 실제 삭제 코드로 교체하세요.
-    await Promise.resolve(messageId);
+
+    const confirmDelete = window.confirm('정말 이 메시지를 삭제하시겠습니까?');
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      const success = await deleteMessageById(messageId);
+      if (success) {
+        showToast('메시지가 삭제되었습니다.', 'success');
+      } else {
+        showToast('메시지 삭제에 실패했습니다. 다시 시도해주세요.', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast(
+        '삭제 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        'error'
+      );
+    }
   };
 
-  // 초기 로딩 상태일 때 skeleton UI 보여짐
   if (loading && !isFetching) {
     return (
       <div className="card-grid-style">
@@ -88,7 +106,6 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     );
   }
 
-  // 에러 났을 때 에러 메세지 화면에 보여짐
   if (error) {
     return <Error />;
   }
@@ -118,15 +135,15 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
               />
             );
           })}
+
         <div ref={observerRef} className="h-2" />
         {isFetching && (
           <div className="p-2 text-center text-gray-900">
-            📝 롤링페이퍼 메세지를 불러오는 중...
+            📝 롤링페이퍼 메시지를 불러오는 중...
           </div>
         )}
       </div>
 
-      {/* 모달 추가 */}
       {isOpenModal && selectedMessage && (
         <Modal
           isOpen={isOpenModal}
@@ -139,6 +156,8 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
           font={selectedMessage.font}
         />
       )}
+
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
     </>
   );
 };

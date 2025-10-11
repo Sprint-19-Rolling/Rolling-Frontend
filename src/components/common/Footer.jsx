@@ -1,8 +1,15 @@
-import PropTypes from 'prop-types';
 import logo from '@/assets/logo/logo';
 import { FOOTER_LINKS, TEAM_MEMBERS } from '@/constants/footer';
 import { cn } from '@/utils/style';
 
+/**
+ * 애플리케이션의 푸터 영역 컴포넌트입니다.
+ * 팀 정보, 팀원 목록, 관련 링크를 표시합니다.
+ * @component
+ * @param {object} props - 컴포넌트의 props
+ * @param {string} [props.className] - 푸터 요소에 적용할 추가적인 Tailwind CSS 클래스
+ * @returns {JSX.Element} 푸터 컴포넌트
+ */
 const Footer = ({ className }) => {
   return (
     <footer
@@ -45,10 +52,6 @@ const Footer = ({ className }) => {
       </div>
     </footer>
   );
-};
-
-Footer.propTypes = {
-  className: PropTypes.string,
 };
 
 export default Footer;
