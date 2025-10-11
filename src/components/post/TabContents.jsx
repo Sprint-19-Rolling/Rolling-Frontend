@@ -44,7 +44,11 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
         thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
       }));
     } catch (err) {
-      setError(err);
+      setError({
+        status: err.response?.status || 500,
+        message:
+          err.response?.data?.message || '이미지를 불러오는 데 실패했습니다.',
+      });
       throw err;
     }
   };
@@ -115,7 +119,10 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
                       ...prev,
                       [img.original]: true,
                     }));
-                    setError(new Error(`이미지 로드 실패: ${img.original}`));
+                    setError({
+                      status: 404,
+                      message: `이미지 로드 실패: ${img.original}`,
+                    });
                   }}
                 />
               ) : (
