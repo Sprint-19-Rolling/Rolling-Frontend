@@ -1,130 +1,107 @@
-import { useEffect, useState } from 'react';
-import { api } from '@/apis/axios.js';
+// src/components/post/TabContents.jsx
+import { api } from '@/apis/axios';
+import useDataFetch from '@/hooks/useDataFetch';
+import useError from '@/hooks/useError';
 import { cn } from '@/utils/style';
 import SelectItem from './TabSelectItem';
 
-/**
- * 색상 선택용 TailwindCSS 클래스 배열
- * @type {string[]}
- */
-const colorChips = [
-  'bg-beige-200',
-  'bg-purple-200',
-  'bg-blue-200',
-  'bg-green-200',
-];
+const colorChips = ['beige', 'purple', 'blue', 'green'];
+
+const colorClassMap = {
+  beige: 'bg-beige-200',
+  purple: 'bg-purple-200',
+  blue: 'bg-blue-200',
+  green: 'bg-green-200',
+};
 
 /**
- * 이미지 데이터 객체 타입
  * @typedef {Object} ImageData
- * @property {string} original - 원본 이미지 URL
- * @property {string} thumbnail - 썸네일 이미지 URL (200x200)
+ * @property {string} original
+ * @property {string} thumbnail
  */
 
 /**
- * TabContents 컴포넌트 props 정의
  * @typedef {Object} TabContentsProps
- * @property {'color'|'image'} activeTab - 현재 활성화된 탭
- * @property {{ type: 'color'|'image', index: number } | null} selected - 현재 선택된 항목 정보
- * @property {(type: 'color'|'image', index: number, value: string) => void} onSelect - 항목 선택 시 호출되는 콜백
+ * @property {'color'|'image'} activeTab
+ * @property {{ type: 'color'|'image', value: string } | null} selected
+ * @property {(type: 'color'|'image', index: number, value: string) => void} onSelect
  */
 
 /**
- * 탭에 따라 색상 또는 이미지 선택 UI를 렌더링하는 컴포넌트
- *
  * @param {TabContentsProps} props
- * @returns {JSX.Element}
- *
- * @example
- * <TabContents
- *   activeTab="color"
- *   selected={{ type: 'color', index: 0 }}
- *   onSelect={(type, idx, value) => console.log(type, idx, value)}
- * />
  */
 const TabContents = ({ activeTab, selected, onSelect }) => {
-  /**
-   * API에서 가져온 이미지 URL 목록
-   * @type {ImageData[]}
-   */
-  const [imageUrls, setImageUrls] = useState([]);
-
-  /** 로딩 상태 */
-  const [loading, setLoading] = useState(false);
-
-  /** 에러 상태 */
-  const [error, setError] = useState(null);
-
-  // 이미지 탭 활성화 시 API 호출
-  useEffect(() => {
-    if (activeTab === 'image' && imageUrls.length === 0) {
-      const controller = new AbortController();
-      setLoading(true);
-      setError(null);
-
-      api
-        .get('/background-images/', { signal: controller.signal })
-        .then((res) => {
-          const originals = res.data.imageUrls || [];
-          const mapped = originals.map((url) => ({
-            original: url,
-            thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'), // 썸네일 변환
-          }));
-          setImageUrls(mapped);
-        })
-        .catch((err) => {
-          if (err.name !== 'CanceledError') {
-            console.error('이미지 API 호출 실패:', err);
-            setError('이미지를 불러오는 데 실패했습니다.');
-          }
-        })
-        .finally(() => setLoading(false));
-
-      return () => controller.abort(); // 컴포넌트 언마운트 시 요청 취소
+  const { setError } = useError();
+  const fetchImages = async (signal) => {
+    try {
+      const res = await api.get('/background-images/', { signal });
+      const originals = res.data.imageUrls || [];
+      return originals.map((url) => ({
+        original: url,
+        thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
+      }));
+    } catch (err) {
+      setError(err); // 전역 에러 상태에 전달
+      throw err; // useDataFetch에서도 error 상태로 잡히도록
     }
-  }, [activeTab]);
+  };
 
-  if (activeTab === 'image' && loading) {
-    return <div className="py-20 text-center">이미지 불러오는 중...</div>;
-  }
+  const shouldFetch = activeTab === 'image';
+  const {
+    data: imageUrls,
+    loading,
+    error,
+  } = useDataFetch(shouldFetch ? fetchImages : async () => null, [activeTab]);
 
-  if (error) {
-    return <div className="py-20 text-center text-red-500">{error}</div>;
+  if (activeTab === 'image') {
+    if (loading) {
+      return <div className="py-20 text-center">이미지 불러오는 중...</div>;
+    }
+
+    if (error) {
+      return (
+        <div className="py-20 text-center text-red-500">
+          이미지 로딩 실패: {error.message || '알 수 없는 오류'}
+        </div>
+      );
+    }
   }
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 md:mx-auto md:w-[720px]">
+      {/* 컬러칩 렌더링 */}
       {activeTab === 'color' &&
         colorChips.map((color, idx) => {
-          const isSelected =
-            selected?.type === 'color' && selected?.index === idx;
-
           return (
             <SelectItem
               key={`color-${idx}`}
-              isSelected={isSelected}
+              isSelected={
+                selected?.type === 'color' && selected?.value === color
+              }
               onClick={() => onSelect('color', idx, color)}
-              className={color}
+              className={colorClassMap[color]}
             />
           );
         })}
 
+      {/* 이미지 렌더링 */}
       {activeTab === 'image' &&
-        imageUrls.map((img, idx) => {
-          const isSelected =
-            selected?.type === 'image' && selected?.index === idx;
-
+        imageUrls?.map((img, idx) => {
           return (
             <SelectItem
-              key={`image-${idx}`}
-              isSelected={isSelected}
+              key={img.original}
+              isSelected={
+                selected?.type === 'image' && selected?.value === img.original
+              }
               onClick={() => onSelect('image', idx, img.original)}>
               <img
                 src={img.thumbnail}
                 alt={`배경 이미지-${idx}`}
                 className={cn(
                   'h-full w-full object-cover transition-opacity duration-200',
-                  isSelected ? 'opacity-70' : 'opacity-100'
+                  selected?.value === img.original
+                    ? 'opacity-70'
+                    : 'opacity-100'
                 )}
                 loading="lazy"
               />
