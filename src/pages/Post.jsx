@@ -4,7 +4,6 @@ import { teamApi } from '@/apis/axios';
 import Button from '@/components/common/button/Button';
 import TextInput from '@/components/common/TextInput';
 import TabButtonBox from '@/components/post/TabButtonBox';
-import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
 import useError from '@/hooks/useError';
 import { useInput } from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
@@ -14,7 +13,7 @@ const TEAM_ID = '19-7';
 const Post = () => {
   const navigate = useNavigate();
   const { setError } = useError();
-  const { toasts, showToast, removeToast } = useToast();
+  const { showToast } = useToast();
 
   const toInput = useInput({
     label: '받는 사람',
@@ -112,7 +111,6 @@ const Post = () => {
         disabled={loading}>
         {loading ? '생성 중...' : '생성하기'}
       </Button>
-      <ToastContainer toasts={toasts} removeToast={removeToast} />
     </div>
   );
 };
