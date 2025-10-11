@@ -1,4 +1,5 @@
 import LinkButton from '@/components/common/button/LinkButton';
+import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import ServiceIntro from '@/components/main/ServiceIntro';
 import { SERVICE_INTRO_DATA } from '@/constants/main';
 
@@ -10,11 +11,11 @@ const Main = () => {
           return <ServiceIntro key={item.introTag} {...item} />;
         })}
       </div>
-      <div className="fixed bottom-0 left-0 right-0 flex w-full justify-center bg-white px-5 py-6 sm:px-6 md:static">
+      <FloatingButtonContainer>
         <LinkButton to={'/list'} size={56} full="mobile">
           구경해보기
         </LinkButton>
-      </div>
+      </FloatingButtonContainer>
     </div>
   );
 };
