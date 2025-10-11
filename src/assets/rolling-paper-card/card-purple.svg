@@ -1,0 +1,11 @@
+<svg className="absolute bottom-0 right-0" xmlns="http://www.w3.org/2000/svg" width="142" height="142" viewBox="0 0 142 142" fill="none">
+  <g clip-path="url(#clip0_45149_2634)">
+    <rect y="6" width="336" height="169" rx="84.5" fill="#DCB9FF" fill-opacity="0.4"
+    />
+  </g>
+  <defs>
+    <clipPath id="clip0_45149_2634">
+      <rect width="142" height="142" fill="white" />
+    </clipPath>
+  </defs>
+</svg>
