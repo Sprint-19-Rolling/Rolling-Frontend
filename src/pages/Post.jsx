@@ -4,12 +4,18 @@ import { teamApi } from '@/apis/axios';
 import Button from '@/components/common/button/Button';
 import TextInput from '@/components/common/TextInput';
 import TabButtonBox from '@/components/post/TabButtonBox';
+import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
+import useError from '@/hooks/useError';
 import { useInput } from '@/hooks/useInput';
+import useToast from '@/hooks/useToast';
 
 const TEAM_ID = '19-7';
 
 const Post = () => {
   const navigate = useNavigate();
+  const { setError } = useError();
+  const { toasts, showToast, removeToast } = useToast();
+
   const toInput = useInput({
     label: '받는 사람',
     customErrorMessage: '이름을 입력해 주세요',
@@ -62,12 +68,16 @@ const Post = () => {
         backgroundImageURL: backgroundData.backgroundImageURL,
       };
 
-      const res = await teamApi.post('recipients/', data);
+      const res = await teamApi.post('recipients-ㅎ/', data);
       const newPostId = res.data.id;
-
       navigate(`/post/${newPostId}`);
     } catch (err) {
       console.error('글 생성 실패', err);
+      setError(err);
+      showToast(
+        '글 생성 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
+        'error'
+      );
     } finally {
       setLoading(false);
     }
@@ -99,6 +109,7 @@ const Post = () => {
         disabled={loading}>
         {loading ? '생성 중...' : '생성하기'}
       </Button>
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
     </div>
   );
 };

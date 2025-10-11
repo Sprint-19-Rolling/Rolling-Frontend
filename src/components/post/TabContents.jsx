@@ -1,4 +1,5 @@
 // src/components/post/TabContents.jsx
+import { useState } from 'react';
 import { api } from '@/apis/axios';
 import useDataFetch from '@/hooks/useDataFetch';
 import useError from '@/hooks/useError';
@@ -32,6 +33,8 @@ const colorClassMap = {
  */
 const TabContents = ({ activeTab, selected, onSelect }) => {
   const { setError } = useError();
+  const [failedImages, setFailedImages] = useState({});
+
   const fetchImages = async (signal) => {
     try {
       const res = await api.get('/background-images/', { signal });
@@ -41,8 +44,8 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
         thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
       }));
     } catch (err) {
-      setError(err); // 전역 에러 상태에 전달
-      throw err; // useDataFetch에서도 error 상태로 잡히도록
+      setError(err);
+      throw err;
     }
   };
 
@@ -87,24 +90,39 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
       {/* 이미지 렌더링 */}
       {activeTab === 'image' &&
         imageUrls?.map((img, idx) => {
+          const isFailed = failedImages[img.original];
           return (
             <SelectItem
               key={img.original}
               isSelected={
                 selected?.type === 'image' && selected?.value === img.original
               }
-              onClick={() => onSelect('image', idx, img.original)}>
-              <img
-                src={img.thumbnail}
-                alt={`배경 이미지-${idx}`}
-                className={cn(
-                  'h-full w-full object-cover transition-opacity duration-200',
-                  selected?.value === img.original
-                    ? 'opacity-70'
-                    : 'opacity-100'
-                )}
-                loading="lazy"
-              />
+              onClick={() => onSelect('image', idx, img.original)}
+              className={cn(isFailed ? 'bg-gray-100' : '')}>
+              {!isFailed ? (
+                <img
+                  src={img.thumbnail}
+                  alt={`배경 이미지-${idx}`}
+                  className={cn(
+                    'h-full w-full object-cover transition-opacity duration-200',
+                    selected?.value === img.original
+                      ? 'opacity-70'
+                      : 'opacity-100'
+                  )}
+                  loading="lazy"
+                  onError={() => {
+                    setFailedImages((prev) => ({
+                      ...prev,
+                      [img.original]: true,
+                    }));
+                    setError(new Error(`이미지 로드 실패: ${img.original}`));
+                  }}
+                />
+              ) : (
+                <span className="text-sm font-medium text-gray-500">
+                  이미지 로드 실패
+                </span>
+              )}
             </SelectItem>
           );
         })}
