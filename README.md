@@ -41,7 +41,7 @@
 **기타**
 
 - GitHub Wiki 문서화
-- READEME 작성
+- README 작성
 
 ### 양은지
 
