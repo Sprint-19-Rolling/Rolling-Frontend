@@ -7,7 +7,7 @@ import { api } from '@/apis/axios';
  * @returns {Promise<Array<{ original: string, thumbnail: string }>>} - 이미지 갤러리용 포맷
  */
 export const getBackgroundImages = async (signal) => {
-  const res = await api.get('/background-images/', { signal });
+  const res = await api.get('background-images/', { signal });
   const originals = res.data.imageUrls || [];
   return originals.map((url) => ({
     original: url,
