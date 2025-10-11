@@ -24,7 +24,6 @@ const Post = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  // useCallback으로 메모이제이션 (리렌더링 최적화)
   const handleSelectChange = useCallback((selection) => {
     if (!selection) {
       setBackgroundData({
@@ -41,7 +40,6 @@ const Post = () => {
         backgroundImageURL: null,
       });
     } else if (selection.type === 'image') {
-      // 이미지 선택: 멘토님 가이드대로 기본 컬러 설정
       setBackgroundData({
         backgroundColor: 'beige', // API 필수값이므로 기본값 유지
         backgroundImageURL: selection.value,

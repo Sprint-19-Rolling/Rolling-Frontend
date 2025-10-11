@@ -1,5 +1,4 @@
 import { teamApi } from '@/apis/axios';
-import { TEAM_ID } from '@/constants/teamId';
 
 /**
  * 특정 팀의 모든 수신자 목록을 가져오는 API
@@ -7,7 +6,7 @@ import { TEAM_ID } from '@/constants/teamId';
  * @returns {Promise<Array>}
  */
 export const getRecipientsByTeam = async (signal) => {
-  const res = await teamApi.get(`teams/${TEAM_ID}/recipients/`, { signal });
+  const res = await teamApi.get(`/recipients/`, { signal });
   return res.data;
 };
 
@@ -20,7 +19,7 @@ export const getRecipientsByTeam = async (signal) => {
  * @returns {Promise<Object>} 생성된 수신자 정보
  */
 export const createRecipient = async (data) => {
-  const res = await teamApi.post(`teams/${TEAM_ID}/recipients/`, data);
+  const res = await teamApi.post(`/recipients/`, data);
   return res.data;
 };
 
@@ -67,4 +66,4 @@ export const getRecipientData = async (recipientId, signal) => {
  * @param {string} id - 삭제할 수신자의 ID
  * @returns {Promise<void>} 삭제 성공 시 아무 값도 반환하지 않습니다.
  */
-export const deleteRecipient = (id) => teamApi.delete(`recipients/${id}/`);
+export const deleteRecipient = (id) => teamApi.delete(`/recipients/${id}/`);
