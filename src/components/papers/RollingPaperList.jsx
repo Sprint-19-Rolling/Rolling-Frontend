@@ -9,11 +9,10 @@ const RollingPaperList = () => {
     const container = scrollRef.current;
     const scrollAmount = 320;
 
-    if (direction === 'left') {
-      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
   };
 
   const cardData = [
@@ -22,34 +21,36 @@ const RollingPaperList = () => {
       name: 'Sowon',
       bgColor: 'bg-purple-200',
       accentColor: 'bg-purple-300/40',
+      shapeType: 'pill', // 알약형
     },
     {
       id: 2,
       name: 'Yerin',
       bgColor: 'bg-orange-200',
       accentColor: 'bg-orange-300/40',
+      shapeType: 'square', // 둥근 사각형
     },
     {
       id: 3,
       name: 'Eunha',
       bgColor: 'bg-sky-200',
       accentColor: 'bg-sky-300/40',
+      shapeType: 'triangle', // 둥근 삼각형
     },
     {
       id: 4,
       name: 'SinB',
       bgColor: 'bg-green-200',
       accentColor: 'bg-green-300/30',
+      shapeType: 'pill', // 알약형
     },
   ];
 
   return (
     <div className="flex w-full justify-center bg-gray-50 py-10">
       <div className="relative flex max-w-[1272px] items-center">
-        {/* 왼쪽 화살표 */}
         <ArrowButton position="left" onClick={() => scroll('left')} />
 
-        {/* 카드 리스트 */}
         <div
           ref={scrollRef}
           className="no-scrollbar flex gap-8 overflow-x-auto scroll-smooth px-8">
@@ -67,12 +68,12 @@ const RollingPaperList = () => {
                 reactions={{ like: 20, love: 12, sad: 7 }}
                 bgColor={card.bgColor}
                 accentColor={card.accentColor}
+                shapeType={card.shapeType}
               />
             );
           })}
         </div>
 
-        {/* 오른쪽 화살표 */}
         <ArrowButton position="right" onClick={() => scroll('right')} />
       </div>
     </div>
