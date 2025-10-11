@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import useError from '@/hooks/useError';
+import useError from '@/hooks/useError.js';
 
 /**
  * 공통 데이터 fetching 훅입니다.

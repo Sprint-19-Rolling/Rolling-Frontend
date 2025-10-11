@@ -5,7 +5,7 @@ import Header from '@/components/common/Header';
 import ListBackground from '@/components/rolling-paper-list/ListBackground';
 import SubHeader from '@/components/rolling-paper-list/sub-header/SubHeader';
 import useError from '@/hooks/useError';
-import useRecipientData from '@/hooks/useRecipientData.jsx';
+import useRecipientData from '@/hooks/useRecipientData';
 
 const PostLayout = () => {
   const { id } = useParams();
