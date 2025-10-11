@@ -18,12 +18,11 @@ export const fetchProfileImages = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/profile-images/`);
     const urls = response.data.imageUrls || [];
-
     if (urls.length > 0) {
       return urls;
-    } else {
-      throw new Error('No images found');
     }
+    // API가 빈 배열을 반환하면 폴백 이미지를 사용합니다.
+    return FALLBACK_PROFILE_IMAGES;
   } catch (err) {
     console.error('❌ 프로필 이미지 불러오기 실패:', err);
     return FALLBACK_PROFILE_IMAGES;
