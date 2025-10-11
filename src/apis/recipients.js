@@ -1,6 +1,19 @@
 import { teamApi } from '@/apis/axios';
 
 /**
+ * 새로운 수신자를 생성하는 API 호출 함수
+ * @param {Object} data - 생성할 수신자 정보
+ * @param {string} data.name - 수신자 이름
+ * @param {string} [data.backgroundColor] - 배경 색상 (선택)
+ * @param {string} [data.backgroundImageURL] - 배경 이미지 URL (선택)
+ * @returns {Promise<Object>} 생성된 수신자 정보
+ */
+export const createRecipient = async (data) => {
+  const res = await teamApi.post(`recipients/`, data);
+  return res.data;
+};
+
+/**
  * 해당하는 수신자 ID의 상세 데이터를 가져오는 API 호출 함수
  * @param {string} recipientId - 롤링페이퍼 수신자의 ID
  * @param {AbortSignal} [signal] - 요청 취소용 AbortSignal

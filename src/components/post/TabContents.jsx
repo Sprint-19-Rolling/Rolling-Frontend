@@ -1,6 +1,6 @@
 // src/components/post/TabContents.jsx
 import { useState } from 'react';
-import { api } from '@/apis/axios';
+import { getBackgroundImages } from '@/apis/backgroundImages';
 import useDataFetch from '@/hooks/useDataFetch';
 import useError from '@/hooks/useError';
 import { cn } from '@/utils/style';
@@ -37,12 +37,7 @@ const TabContents = ({ activeTab, selected, onSelect }) => {
 
   const fetchImages = async (signal) => {
     try {
-      const res = await api.get('/background-images/', { signal });
-      const originals = res.data.imageUrls || [];
-      return originals.map((url) => ({
-        original: url,
-        thumbnail: url.replace(/\/\d+\/\d+$/, '/200/200'),
-      }));
+      return await getBackgroundImages(signal);
     } catch (err) {
       setError({
         status: err.response?.status || 500,

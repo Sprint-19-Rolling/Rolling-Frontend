@@ -1,14 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router';
-import { teamApi } from '@/apis/axios';
+import { createRecipient } from '@/apis/recipients';
 import Button from '@/components/common/button/Button';
 import TextInput from '@/components/common/TextInput';
 import TabButtonBox from '@/components/post/TabButtonBox';
 import useError from '@/hooks/useError';
 import { useInput } from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
-
-const TEAM_ID = '19-7';
 
 const Post = () => {
   const navigate = useNavigate();
@@ -26,7 +24,6 @@ const Post = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  // useCallback으로 메모이제이션 (리렌더링 최적화)
   const handleSelectChange = useCallback((selection) => {
     if (!selection) {
       setBackgroundData({
@@ -43,7 +40,6 @@ const Post = () => {
         backgroundImageURL: null,
       });
     } else if (selection.type === 'image') {
-      // 이미지 선택: 멘토님 가이드대로 기본 컬러 설정
       setBackgroundData({
         backgroundColor: 'beige', // API 필수값이므로 기본값 유지
         backgroundImageURL: selection.value,
@@ -60,15 +56,12 @@ const Post = () => {
     setLoading(true);
 
     try {
-      const data = {
-        team: TEAM_ID,
+      const res = await createRecipient({
         name: toInput.value,
         backgroundColor: backgroundData.backgroundColor,
         backgroundImageURL: backgroundData.backgroundImageURL,
-      };
-
-      const res = await teamApi.post('recipients/', data);
-      const newPostId = res.data.id;
+      });
+      const newPostId = res.id;
       navigate(`/post/${newPostId}`);
     } catch (err) {
       console.error('글 생성 실패', err);
