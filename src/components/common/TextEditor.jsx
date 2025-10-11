@@ -42,7 +42,7 @@ const QUILL_COLORS = [
 ];
 
 const Font = Quill.import('formats/font');
-Font.whitelist = ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'];
+Font.whitelist = ['Noto Sans', 'Pretendard', 'Nanum Myeongjo', 'Handletter'];
 Quill.register(Font, true);
 
 const useFontPersistence = (reactQuillRef) => {
@@ -187,11 +187,33 @@ const useChecklistToolbarManager = (reactQuillRef) => {
   }, [reactQuillRef]);
 };
 
-const TextEditor = ({ value, onChange }) => {
+const TextEditor = ({ value, onChange, onFontChange }) => {
   const reactQuillRef = useRef(null);
 
   useFontPersistence(reactQuillRef);
   useChecklistToolbarManager(reactQuillRef);
+
+  useEffect(() => {
+    const quill = reactQuillRef.current?.getEditor();
+    if (!quill || !onFontChange) {
+      return;
+    }
+
+    const handleSelectionChange = (range) => {
+      if (!range) {
+        return;
+      }
+      const format = quill.getFormat(range);
+      if (format.font) {
+        onFontChange(format.font);
+      } else {
+        onFontChange('Noto Sans'); // 기본값
+      }
+    };
+
+    quill.on('selection-change', handleSelectionChange);
+    return () => quill.off('selection-change', handleSelectionChange);
+  }, [onFontChange]);
 
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
@@ -203,7 +225,6 @@ const TextEditor = ({ value, onChange }) => {
 
     const getVisibleText = () => {
       const raw = root.textContent || '';
-
       return raw
         .replace(/[\u200B\uFEFF\u00A0]/g, '')
         .replace(/\n/g, '')
