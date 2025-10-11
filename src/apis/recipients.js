@@ -37,4 +37,10 @@ export const getRecipientData = async (recipientId, signal) => {
     backgroundColor,
   };
 };
+
+/**
+ * 특정 수신자를 삭제하는 API 호출 함수
+ * @param {string} id - 삭제할 수신자의 ID
+ * @returns {Promise<void>} 삭제 성공 시 아무 값도 반환하지 않습니다.
+ */
 export const deleteRecipient = (id) => teamApi.delete(`recipients/${id}/`);
