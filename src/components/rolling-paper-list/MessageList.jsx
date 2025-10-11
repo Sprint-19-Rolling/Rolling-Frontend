@@ -100,7 +100,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
     return (
       <div className="card-grid-style">
         {MESSAGE_LIST_SKELETON_ARRAY.map((_, index) => {
-          <MessageCardSkeleton key={index} />;
+          return <MessageCardSkeleton key={index} />;
         })}
       </div>
     );
@@ -115,19 +115,24 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
       <div className="card-grid-style">
         {!isEditPage && <AddMessageCardButton id={recipientId} />}
         {messages.map((item) => {
-          <MessageCard
-            key={item.id}
-            sender={item.sender}
-            profileImageURL={item.profileImageURL}
-            relationship={item.relationship}
-            createdAt={item.createdAt}
-            content={item.content}
-            font={item.font}
-            onClick={() => handleMessageCardClick(item)}
-            {...(isEditPage
-              ? { edit: true, onDelete: () => handleMessageCardDelete(item.id) }
-              : {})}
-          />;
+          return (
+            <MessageCard
+              key={item.id}
+              sender={item.sender}
+              profileImageURL={item.profileImageURL}
+              relationship={item.relationship}
+              createdAt={item.createdAt}
+              content={item.content}
+              font={item.font}
+              onClick={() => handleMessageCardClick(item)}
+              {...(isEditPage
+                ? {
+                    edit: true,
+                    onDelete: () => handleMessageCardDelete(item.id),
+                  }
+                : {})}
+            />
+          );
         })}
         <div ref={observerRef} className="h-2" />
         {isFetching && (
