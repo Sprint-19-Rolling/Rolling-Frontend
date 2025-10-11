@@ -69,8 +69,9 @@
 
 ### 빌드 & 개발 도구
 
-<img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"> <img src="https://img.shields.io/badge/vite_plugin_react-646CFF?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/vite_plugin_svgr-FF6347?style=for-the-badge&logo=react&logoColor=white">
+<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"> <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"> <img src="https://img.shields.io/badge/vite_plugin_react-646CFF?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/vite_plugin_svgr-FF6347?style=for-the-badge&logo=react&logoColor=white">
 
+- `npm` → 패키지 매니저
 - `Vite` → 프론트엔드 빌드 도구
 - `@vitejs/plugin-react` → Vite React 지원 플러그인
 - `vite-plugin-svgr` → SVG를 React 컴포넌트로 변환
@@ -144,21 +145,31 @@
 
 ## ✨ 페이지 소개
 
-### 메인 페이지
+### 🖥️ 메인 페이지
 
 |                                                                         PC                                                                          |                                                                         Tablet                                                                          |                                                                         Mobile                                                                          |
 | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img width="100%" alt="Rolling 서비스 메인 페이지 PC 화면" src="https://github.com/user-attachments/assets/c0945b67-9839-44f7-ad24-c5c7b94f0f3c" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Tablet 화면" src="https://github.com/user-attachments/assets/74299324-6b41-4ee5-85b6-73451db682de" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Mobile 화면" src="https://github.com/user-attachments/assets/960064a4-af33-4585-b768-009b161072ff" /> |
+| <img width="100%" alt="Rolling 서비스 메인 페이지 PC 화면" src="https://github.com/user-attachments/assets/c0945b67-9839-44f7-ad24-c5c7b94f0f3c" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Tablet 화면" src="https://github.com/user-attachments/assets/035aaf9b-0a5a-4168-8add-654775b8e0ca" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Mobile 화면" src="https://github.com/user-attachments/assets/79734a5f-dfaf-4ea4-8206-c1dbd21a8356" /> |
 
-### 리스트 페이지
+### 🖥️ 리스트 페이지
 
-### 롤링페이퍼 생성 페이지
+### 🖥️ 롤링페이퍼 생성 페이지
+**롤링페이퍼 생성하기**
+| 롤링페이퍼 생성 | 에러 처리 |
+| :---: | :---: |
+| <img width="100%" alt="롤링페이퍼 생성 성공" src="https://github.com/user-attachments/assets/8ab87ffd-ce3c-4113-9396-9d6cd232d551" /> | <img width="100%" alt="롤링페이퍼 생성 에러" src="https://github.com/user-attachments/assets/5e743b70-1bf7-45be-9f28-fcf474a7cec8" /> |
 
-### 롤링페이퍼 리스트 페이지
+**반응형**
 
-### 롤링페이퍼 리스트 편집 페이지
+|                                                                         PC                                                                          |                                                                         Tablet                                                                          |                                                                         Mobile                                                                          |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="100%" alt="롤링페이퍼 생성  PC 화면" src="https://github.com/user-attachments/assets/7ab7fe19-0260-481c-bc05-48811054a60b" /> | <img width="100%" alt="롤링페이퍼 생성 Tablet 화면" src="https://github.com/user-attachments/assets/44637d2c-3e62-451a-b7ba-cdd0906ed820" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="https://github.com/user-attachments/assets/01c59a7d-d00a-41c9-9b38-9eac30e858bc" /> |
 
-### 롤링페이퍼 메세지 등록 페이지
+### 🖥️ 롤링페이퍼 리스트 페이지
+
+### 🖥️ 롤링페이퍼 리스트 편집 페이지
+
+### 🖥️ 롤링페이퍼 메세지 등록 페이지
 
 ## 👀 플로우 차트
 
