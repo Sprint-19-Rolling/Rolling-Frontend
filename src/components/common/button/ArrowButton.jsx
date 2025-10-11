@@ -9,7 +9,7 @@ import { cn } from '@/utils/style';
 const buttonStyles = cva(
   `absolute top-1/2 z-20 hidden h-10 w-10 -translate-y-1/2 
    items-center justify-center rounded-full 
-   bg-white/70 backdrop-blur-md border border-white/40 
+   bg-white/70 backdrop-blur-md border border-[#DADCDF]
    shadow-md transition-all hover:bg-white hover:shadow-lg 
    md:flex`,
   {

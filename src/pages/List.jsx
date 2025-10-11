@@ -1,6 +1,7 @@
 import LinkButton from '@/components/common/button/LinkButton';
 import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import Title from '@/components/common/Title';
+import RollingPaperList from '@/components/papers/RollingPaperList';
 
 const List = () => {
   return (
@@ -11,7 +12,7 @@ const List = () => {
       </div>
       <div>
         <Title>최근에 만든 롤링 페이퍼 ⭐️️</Title>
-        {/* TODO: 롤링페이퍼 최신순 리스트 적용하기 */}
+        <RollingPaperList />
       </div>
       <FloatingButtonContainer>
         <LinkButton to={'/post'} size={56} full="mobile">
