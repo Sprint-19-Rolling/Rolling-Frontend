@@ -54,7 +54,7 @@ const useDataFetch = (fetcher, deps = []) => {
   return { data, setData, loading };
 };
 
-// 글꼴 리스트 상수 (표시용)
+// 글꼴 리스트 상수
 const FONT_OPTIONS = [
   'Noto Sans',
   'Pretendard',
@@ -62,7 +62,7 @@ const FONT_OPTIONS = [
   '나눔손글씨 손편지체',
 ];
 
-// 글꼴 매핑 (한글 → 영문 하이픈 형식)
+// 글꼴 매핑
 const FONT_MAP = {
   'Noto Sans': 'noto-sans',
   Pretendard: 'pretendard',
@@ -85,15 +85,13 @@ const PostMessage = () => {
       'https://rolling-api.vercel.app/profile-images/',
       { signal }
     );
-    return response.data.imageUrls; // imageUrls 배열 반환
+    return response.data.imageUrls;
   };
 
   const { data: profileImages, loading } = useDataFetch(fetchProfileImages, []);
 
-  // 선택된 프로필 이미지 URL 상태
   const [profileImageURL, setProfileImageURL] = useState('');
 
-  // profileImages가 바뀌면 기본 선택 이미지 설정
   useEffect(() => {
     if (
       Array.isArray(profileImages) &&
@@ -113,16 +111,14 @@ const PostMessage = () => {
 
   const [relationship, setRelationship] = useState('지인');
   const [content, setContent] = useState('');
-  const [font, setFont] = useState('Noto Sans'); // 서버 저장용 (원본 이름)
-  const [editorFont, setEditorFont] = useState('noto-sans'); // 에디터 표시용 (하이픈 형식)
-
+  const [font, setFont] = useState('Noto Sans'); // 서버 저장용
+  const [editorFont, setEditorFont] = useState('noto-sans'); // 에디터 표시용
   const [formError, setFormError] = useState('');
 
   const isContentEmpty =
     !content || content.replace(/<[^>]*>/g, '').trim() === '';
 
   const handleSubmit = async () => {
-    console.log('제출 시 font 값:', font); // 디버깅용
     setFormError('');
     setError('');
 
@@ -139,7 +135,7 @@ const PostMessage = () => {
       profileImageURL,
       relationship,
       content,
-      font, // 'Noto Sans', 'Pretendard' 등 원본 이름으로 저장
+      font,
     });
   };
 
@@ -150,12 +146,19 @@ const PostMessage = () => {
     !relationship ||
     isContentEmpty;
 
-  // 외부 드롭다운에서 글꼴 선택 시 처리
   const handleFontChange = (newFont) => {
-    console.log('선택된 폰트:', newFont); // 디버깅용
-    setFont(newFont); // 원본 이름 저장 (예: 'Noto Sans', 'Pretendard')
+    const isHyphenFormat =
+      newFont.includes('-') ||
+      ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'].includes(
+        newFont
+      );
 
-    // 에디터용 하이픈 형식으로 변환
+    if (isHyphenFormat) {
+      return;
+    }
+
+    setFont(newFont);
+
     const formattedFont =
       FONT_MAP[newFont] || newFont.replace(/\s+/g, '-').toLowerCase();
     setEditorFont(formattedFont);
