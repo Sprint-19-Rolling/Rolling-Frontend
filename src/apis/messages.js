@@ -34,50 +34,6 @@ export const getMoreMessages = async (nextUrl) => {
 };
 
 /**
- * 새로운 메시지를 생성하는 API 함수
- *
- * @async
- * @function createMessage
- * @param {string|number} recipient_id - 수신자 ID
- * @param {Object} messageData - 메시지 데이터
- * @param {string} messageData.sender - 발신자 이름
- * @param {string} messageData.profileImageURL - 프로필 이미지 URL
- * @param {string} messageData.relationship - 발신자와 수신자 관계
- * @param {string} messageData.content - 메시지 내용
- * @param {string} messageData.font - 폰트 이름
- * @param {Function} setError - 에러 메시지 상태를 업데이트하는 함수
- * @returns {Promise<Object>} API 응답 객체
- * @throws {Error} 메시지 전송 실패 시 에러를 발생시킵니다.
- */
-export const createMessage = async (recipient_id, messageData, setError) => {
-  const payload = {
-    team: '19-7',
-    recipient_id: Number(recipient_id),
-    sender: messageData.sender,
-    profileImageURL: messageData.profileImageURL,
-    relationship: messageData.relationship,
-    content: messageData.content,
-    font: messageData.font,
-  };
-
-  try {
-    console.log(payload);
-    const response = await teamApi.post(
-      `recipients/${recipient_id}/messages/`,
-      payload,
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-
-    setError(''); // 성공 시 에러 초기화
-    return response;
-  } catch (err) {
-    console.error('❌ 메시지 전송 실패:', err);
-    setError('메시지 전송에 실패했습니다. 다시 시도해주세요.');
-    throw err; // 에러를 다시 던져 호출한 곳에서 처리할 수 있게 함
-  }
-};
-
-/**
  * 특정 메시지를 삭제하는 API 함수
  *
  * @async
