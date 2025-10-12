@@ -1,4 +1,5 @@
 import { cva } from 'class-variance-authority';
+import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
 
 const inputWrapper = cva(
@@ -29,8 +30,18 @@ const TextInput = (props) => {
     errorMessage,
     className = '',
     disabled = false,
+    validate,
     ...restProps
   } = props;
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    onChange(newValue);
+
+    if (validate) {
+      validate(newValue);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -40,7 +51,7 @@ const TextInput = (props) => {
           name={name}
           type={type}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
           disabled={disabled}
@@ -69,6 +80,7 @@ TextInput.propTypes = {
   errorMessage: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  validate: PropTypes.func,
 };
 
 export default TextInput;
