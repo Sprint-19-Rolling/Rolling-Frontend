@@ -1,4 +1,4 @@
-import RollingPaperList from '@/components/papers/RollingPaperList';
+import RollingPaperList from '@/components/papers/RollingPaperDesktopList';
 import useRollingPaperData from '@/hooks/useRollingPaperData';
 
 const RecentSortedRollingPaper = () => {
