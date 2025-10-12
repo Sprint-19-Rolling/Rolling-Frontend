@@ -16,7 +16,7 @@ const ModalHeader = ({ sender, role, date, profileImgUrl }) => {
         <ProfileImage
           src={profileImgUrl}
           alt={`${sender}님의 프로필`}
-          size="large"
+          size="medium" // large → medium로 변경
           borderColor="gray"
         />
         <div className="flex flex-col">
