@@ -52,7 +52,7 @@ export const createMessage = async (recipient_id, messageData, setError) => {
     profileImageURL: messageData.profileImageURL,
     relationship: messageData.relationship,
     content: messageData.content,
-    font: 'Noto Sans',
+    font: messageData.font,
   };
 
   try {
