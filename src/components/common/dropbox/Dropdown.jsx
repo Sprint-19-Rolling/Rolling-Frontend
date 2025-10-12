@@ -63,12 +63,22 @@ const inputVariants = cva(
  * const isValid = dropdownRef.current?.validate();
  * const selected = dropdownRef.current?.getValue();
  */
+
+// 글꼴 이름별 font-family 매핑
+const fontMap = {
+  'noto sans': "'Noto Sans', sans-serif",
+  pretendard: "'Pretendard', sans-serif",
+  'nanum myeongjo': "'Nanum Myeongjo', serif",
+  handletter: "'Nanum Pen Script', cursive",
+};
+
 const Dropdown = forwardRef(
   (
     {
       items = DROPDOWN_ITEMS,
       placeholder = 'placeholder',
       onChange, //  부모로 선택값 전달용
+      className = '',
     },
     ref
   ) => {
@@ -112,7 +122,9 @@ const Dropdown = forwardRef(
     }));
 
     return (
-      <div className="relative w-full max-w-[320px]" ref={containerRef}>
+      <div
+        className={cn('relative w-full max-w-[320px]', className)}
+        ref={containerRef}>
         {/* 입력창 (선택 표시 및 클릭으로 드롭다운 열기) */}
         <input
           type="text"
@@ -126,6 +138,12 @@ const Dropdown = forwardRef(
               selected: !!selected,
             })
           )}
+          style={{
+            fontFamily:
+              fontMap[selected.toLowerCase()] ||
+              (items[0] && fontMap[items[0].toLowerCase()]) ||
+              'inherit',
+          }}
         />
 
         {/* ▼ 화살표 아이콘 */}
@@ -151,6 +169,7 @@ const Dropdown = forwardRef(
             items={items}
             onSelect={handleSelected}
             className="absolute left-0 top-full z-50 mt-2 max-h-[220px] w-full shadow-lg"
+            // 여기서 각 항목 글꼴 적용하려면 BasicDropdown에 스타일 적용 필요
           />
         )}
       </div>
