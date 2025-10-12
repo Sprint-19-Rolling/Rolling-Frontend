@@ -1,8 +1,21 @@
+import { cva } from 'class-variance-authority';
 import { Link } from 'react-router';
 import Card from '@/assets/rolling-paper-card/card';
 import EmojiBadge from '@/components/common/badge/EmojiBadge';
 import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import Title from '@/components/common/Title';
+import { cn } from '@/utils/style';
+
+const cardStyle = cva('relative overflow-hidden rolling-paper-card-style', {
+  variants: {
+    backgroundColor: {
+      beige: 'bg-beige-200',
+      purple: 'bg-purple-200',
+      blue: 'bg-blue-200',
+      green: 'bg-green-200',
+    },
+  },
+});
 
 const RollingPaperCard = ({
   id,
@@ -43,7 +56,7 @@ const RollingPaperCard = ({
   return (
     <Link
       to={`/post/${id}`}
-      className={`relative overflow-hidden bg-${backgroundColor}-200 rolling-paper-card-style`}
+      className={cn(cardStyle({ backgroundColor }))}
       style={backgroundImageURL && backgroundStyle}>
       {renderShape()}
       {/* 콘텐츠 */}
