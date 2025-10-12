@@ -39,7 +39,6 @@ const PostMessage = () => {
     );
 
     if (fontKey) {
-      console.log('Quill에 적용될 폰트:', fontKey);
       setSelectedFont(fontKey);
     }
   };
