@@ -113,7 +113,8 @@ const PostMessage = () => {
 
   const [relationship, setRelationship] = useState('지인');
   const [content, setContent] = useState('');
-  const [font, setFont] = useState('noto-sans'); // 하이픈 형식으로 초기화
+  const [font, setFont] = useState('Noto Sans'); // 서버 저장용 (원본 이름)
+  const [editorFont, setEditorFont] = useState('noto-sans'); // 에디터 표시용 (하이픈 형식)
 
   const [formError, setFormError] = useState('');
 
@@ -121,6 +122,7 @@ const PostMessage = () => {
     !content || content.replace(/<[^>]*>/g, '').trim() === '';
 
   const handleSubmit = async () => {
+    console.log('제출 시 font 값:', font); // 디버깅용
     setFormError('');
     setError('');
 
@@ -137,7 +139,7 @@ const PostMessage = () => {
       profileImageURL,
       relationship,
       content,
-      font,
+      font, // 'Noto Sans', 'Pretendard' 등 원본 이름으로 저장
     });
   };
 
@@ -150,9 +152,13 @@ const PostMessage = () => {
 
   // 외부 드롭다운에서 글꼴 선택 시 처리
   const handleFontChange = (newFont) => {
+    console.log('선택된 폰트:', newFont); // 디버깅용
+    setFont(newFont); // 원본 이름 저장 (예: 'Noto Sans', 'Pretendard')
+
+    // 에디터용 하이픈 형식으로 변환
     const formattedFont =
       FONT_MAP[newFont] || newFont.replace(/\s+/g, '-').toLowerCase();
-    setFont(formattedFont);
+    setEditorFont(formattedFont);
   };
 
   return (
@@ -236,7 +242,7 @@ const PostMessage = () => {
           <TextEditor
             value={content}
             onChange={setContent}
-            font={font}
+            font={editorFont}
             onFontChange={handleFontChange}
             className="w-full"
           />
