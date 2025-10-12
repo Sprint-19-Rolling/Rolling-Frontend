@@ -11,17 +11,17 @@ import useToast from '@/hooks/useToast';
 export const useMessageSubmit = (recipient_id) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(''); // 에러 메시지 상태 관리
 
   // 🔥 useToast를 호출해야 훅의 return 값을 가져올 수 있음!
   const { showToast } = useToast();
 
   const handleSubmit = async (messageData) => {
-    setError('');
+    setError(''); // 에러 초기화
     setIsSubmitting(true);
 
     try {
-      const response = await createMessage(recipient_id, messageData);
+      const response = await createMessage(recipient_id, messageData, setError); // setError 전달
 
       if (response.status === 201) {
         showToast('메시지가 성공적으로 생성되었습니다!', 'success');
@@ -42,6 +42,6 @@ export const useMessageSubmit = (recipient_id) => {
     handleSubmit,
     isSubmitting,
     error,
-    setError,
+    setError, // setError 반환
   };
 };
