@@ -3,7 +3,7 @@ import RollingPaperCard from '@/components/papers/rolling-paper-card/RollingPape
 import RollingPaperCardSkeleton from '@/components/papers/rolling-paper-card/RollingPaperCardSkeleton';
 import { LIST_LIMIT_ARRAY } from '@/constants/list';
 
-const RollingPaperList = ({ data, loading, onPageChange }) => {
+const RollingPaperList = ({ data, loading, onNext, onPrev }) => {
   if (loading || !data) {
     return (
       <div className="rolling-paper-list-style">
@@ -16,12 +16,10 @@ const RollingPaperList = ({ data, loading, onPageChange }) => {
 
   return (
     <div className="rolling-paper-list-style relative">
-      {data.previous && (
-        <ArrowButton
-          position="left"
-          onClick={() => onPageChange(data.previous)}
-        />
-      )}
+      {/* 왼쪽 화살표 */}
+      {data.previous && <ArrowButton position="left" onClick={onPrev} />}
+
+      {/* 카드 리스트 */}
       {data.results.length > 0 ? (
         data.results.map((card) => {
           return (
@@ -43,9 +41,8 @@ const RollingPaperList = ({ data, loading, onPageChange }) => {
         </div>
       )}
 
-      {data.next && (
-        <ArrowButton position="right" onClick={() => onPageChange(data.next)} />
-      )}
+      {/* 오른쪽 화살표 */}
+      {data.next && <ArrowButton position="right" onClick={onNext} />}
     </div>
   );
 };

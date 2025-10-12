@@ -54,22 +54,21 @@ export const getRecipientData = async (recipientId, signal) => {
 
 /**
  * 롤링페이퍼 리스트 데이터를 가져오는 API
+ * @param {Object} params - 요청 파라미터
+ * @param {number} [params.limit=LIST_LIMIT] - 요청할 데이터 개수
+ * @param {string} [params.sort] - 정렬 기준 ('like' | undefined)
+ * @param {string} [params.url] - 페이지네이션용 전체 URL
+ * @param {AbortSignal} [signal] - 요청 취소용 AbortSignal
+ * @returns {Promise<Object>} 롤링페이퍼 리스트 데이터
  */
 export const getRollingPaperData = async (
   { limit = LIST_LIMIT, sort, url },
   signal
 ) => {
-  let res;
-
-  if (url) {
-    res = await teamApi.get(url, { signal });
-  } else {
-    res = await teamApi.get(
-      `recipients/?limit=${limit}&offset=0${sort ? `&sort=${sort}` : ''}`,
-      { signal }
-    );
-  }
-
+  const endpoint = url
+    ? url
+    : `recipients/?limit=${limit}&offset=0${sort ? `&sort=${sort}` : ''}`;
+  const res = await teamApi.get(endpoint, { signal });
   return res.data;
 };
 
