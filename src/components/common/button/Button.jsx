@@ -29,11 +29,11 @@ const Button = ({
 }) => {
   return (
     <button
-      className={cn(buttonVariants({ theme, size, full, disabled }), className)}
+      className={cn(buttonVariants({ theme, size, full }), className)}
       type={type}
+      {...props}
       onClick={onClick}
-      disabled={disabled}
-      {...props}>
+      disabled={disabled}>
       {children}
     </button>
   );
