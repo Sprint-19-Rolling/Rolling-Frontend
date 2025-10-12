@@ -1,31 +1,31 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { createMessage } from '@/apis/messageApi';
+import { createMessage } from '@/apis/messages';
+import useError from '@/hooks/useError';
 import useToast from '@/hooks/useToast';
 
 /**
  * 메시지 제출을 관리하는 커스텀 훅
- * @param {string} recipient_id - 수신자 ID
- * @returns {Object} handleSubmit, isSubmitting, error
+ * @param {string} recipientId - 수신자 ID
+ * @returns {Object} handleSubmit, isSubmitting, error, setError
  */
-export const useMessageSubmit = (recipient_id) => {
+export const useMessageSubmit = (recipientId) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(''); // 에러 메시지 상태 관리
 
-  // 🔥 useToast를 호출해야 훅의 return 값을 가져올 수 있음!
+  const { error, setError } = useError();
   const { showToast } = useToast();
 
   const handleSubmit = async (messageData) => {
-    setError(''); // 에러 초기화
+    setError('');
     setIsSubmitting(true);
 
     try {
-      const response = await createMessage(recipient_id, messageData, setError); // setError 전달
+      const response = await createMessage(recipientId, messageData, setError);
 
       if (response.status === 201) {
         showToast('메시지가 성공적으로 생성되었습니다!', 'success');
-        navigate(`/post/${recipient_id}`);
+        navigate(`/post/${recipientId}`);
       } else {
         throw new Error(`Unexpected status: ${response.status}`);
       }
@@ -42,6 +42,6 @@ export const useMessageSubmit = (recipient_id) => {
     handleSubmit,
     isSubmitting,
     error,
-    setError, // setError 반환
+    setError,
   };
 };
