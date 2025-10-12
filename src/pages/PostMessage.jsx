@@ -7,7 +7,7 @@ import ProfileImage from '@/components/common/profile-image/ProfileImage';
 import TextEditor from '@/components/common/TextEditor';
 import TextInput from '@/components/common/TextInput';
 import Title from '@/components/common/Title';
-import { fontDisplayNames } from '@/constants/fontMap';
+import { fontMap, fontDisplayNames } from '@/constants/fontMap';
 import useDataFetch from '@/hooks/useDataFetch';
 import { useInput } from '@/hooks/useInput';
 import { useMessageSubmit } from '@/hooks/useMessageSubmit';
@@ -21,6 +21,7 @@ const PostMessage = () => {
     customErrorMessage: '이름을 입력해 주세요',
   });
 
+  // 프로필 이미지 fetch 함수
   const fetchProfileImages = async (signal) => {
     const response = await axios.get(
       'https://rolling-api.vercel.app/profile-images/',
@@ -35,8 +36,8 @@ const PostMessage = () => {
   const [relationship, setRelationship] = useState('지인');
   const [content, setContent] = useState('');
   const [font, setFont] = useState('noto-sans');
-  const [formError, setFormError] = useState('');
 
+  // 프로필 이미지 초기화
   useEffect(() => {
     if (
       Array.isArray(profileImages) &&
@@ -50,64 +51,63 @@ const PostMessage = () => {
   const {
     handleSubmit: submitMessage,
     isSubmitting,
-    error,
     setError,
   } = useMessageSubmit(recipient_id);
 
+  // 내용이 비어있는지 확인
   const isContentEmpty =
     !content || content.replace(/<[^>]*>/g, '').trim() === '';
 
-  const handleFontChange = (selectedDisplayName) => {
-    console.log('드롭다운에서 선택된 표시 이름:', selectedDisplayName);
+  const handleEditorFontChange = (quillFont) => {
+    console.log('에디터에서 감지된 폰트:', quillFont);
+    if (quillFont && fontMap[quillFont]) {
+      setFont(quillFont);
+    }
+  };
 
+  // 외부 드롭다운에서 폰트 변경 (표시 이름으로 전달됨)
+  const handleDropdownFontChange = (selectedDisplayName) => {
+    console.log('드롭다운에서 선택된 표시 이름:', selectedDisplayName);
+    // 표시 이름 → Quill 형식으로 역변환
     const fontKey = Object.keys(fontDisplayNames).find(
       (key) => fontDisplayNames[key] === selectedDisplayName
     );
-
     if (fontKey) {
       console.log('Quill에 적용될 폰트:', fontKey);
       setFont(fontKey);
     }
   };
 
+  // 폼 제출 핸들러
   const handleSubmit = async () => {
-    setFormError('');
     setError('');
-
     if (!fromInput.validate()) {
-      setFormError('이름을 입력해 주세요.');
       return;
     }
-
     if (isContentEmpty) {
-      setFormError('내용을 입력해주세요.');
       return;
     }
-
     if (!profileImageURL || profileImageURL.trim() === '') {
-      setFormError('프로필 이미지를 선택해주세요.');
       return;
     }
-
     if (!relationship || relationship.trim() === '') {
-      setFormError('상대와의 관계를 선택해주세요.');
       return;
     }
-
     if (!font || font.trim() === '') {
-      setFormError('폰트를 선택해주세요.');
       return;
     }
 
+    const fontValue = fontMap[font] || font;
     await submitMessage({
       sender: fromInput.value,
       profileImageURL,
       relationship,
       content,
-      font,
+      font: fontValue, // 'Noto Sans' 형식
     });
   };
 
+  // 생성하기 버튼 활성화 조건
   const isButtonDisabled =
     isSubmitting ||
     !fromInput.value ||
@@ -155,7 +155,6 @@ const PostMessage = () => {
                 className="mt-[7px]"
               />
             </div>
-
             <div className="mt-4 flex-grow sm:ml-[12px] sm:mt-0">
               <p className="mb-3 text-center text-base font-medium text-gray-600 sm:text-left">
                 프로필 이미지를 선택해주세요!
@@ -206,7 +205,7 @@ const PostMessage = () => {
             value={content}
             onChange={setContent}
             font={font}
-            onFontChange={handleFontChange}
+            onFontChange={handleEditorFontChange}
             className="w-full"
           />
         </div>
@@ -218,16 +217,10 @@ const PostMessage = () => {
             items={FONT_OPTIONS}
             selectedItem={currentFontDisplayName}
             placeholder="폰트를 선택하세요"
-            onChange={handleFontChange}
+            onChange={handleDropdownFontChange}
             className="w-full"
           />
         </div>
-
-        {/* 에러 메시지 */}
-        {formError && (
-          <p className="text-center text-sm text-red-500">{formError}</p>
-        )}
-        {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
         {/* 제출 버튼 */}
         <div className="flex justify-center">
