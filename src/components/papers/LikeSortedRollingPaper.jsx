@@ -1,8 +1,9 @@
 import RollingPaperDesktopList from '@/components/papers/paper-list/RollingPaperDesktopList';
+import RollingPaperMobileList from '@/components/papers/paper-list/RollingPaperMobileList';
 import useRollingPaperData from '@/hooks/useRollingPaperData';
 
-const LikeSortedRollingPaper = () => {
-  const { data, loading, goNext, goPrev } = useRollingPaperData('like');
+const RecentSortedRollingPaper = () => {
+  const { data, loading, goNext, goPrev } = useRollingPaperData();
 
   return (
     <>
@@ -12,8 +13,9 @@ const LikeSortedRollingPaper = () => {
         onNext={goNext}
         onPrev={goPrev}
       />
+      <RollingPaperMobileList data={data} loading={loading} />
     </>
   );
 };
 
-export default LikeSortedRollingPaper;
+export default RecentSortedRollingPaper;

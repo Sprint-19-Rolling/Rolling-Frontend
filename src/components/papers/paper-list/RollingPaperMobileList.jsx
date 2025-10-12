@@ -27,7 +27,7 @@ const RollingPaperMobileList = ({
     <>
       {loading || !data ? (
         // ⏳ 로딩 상태일 때 — 스켈레톤 카드
-        <div className="flex w-full gap-4 overflow-x-auto px-4 pb-3 lg:hidden">
+        <div className="scrollbar-hide flex w-full gap-4 overflow-x-auto lg:hidden">
           {LIST_LIMIT_ARRAY.map((_, idx) => {
             return <RollingPaperCardSkeleton key={idx} />;
           })}
@@ -36,7 +36,7 @@ const RollingPaperMobileList = ({
         // 📄 데이터 렌더링
         <div
           ref={scrollRef}
-          className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-3 lg:hidden">
+          className="scrollbar-hide flex w-full snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth lg:hidden">
           {data.results.length > 0 ? (
             <>
               {data.results.map((card) => {
