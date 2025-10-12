@@ -16,7 +16,7 @@ const useDataFetch = (fetcher, deps = []) => {
   useEffect(() => {
     const controller = new AbortController();
 
-    setData([]);
+    setData(null);
     setError(null);
     setLoading(true);
 
