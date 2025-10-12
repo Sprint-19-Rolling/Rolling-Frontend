@@ -51,6 +51,14 @@ export const getRecipientData = async (recipientId, signal) => {
   };
 };
 
+export const getRollingPaperData = async ({ limit = 4, sort }, signal) => {
+  const res = await teamApi.get(
+    `recipients/?limit=${limit}&offset=0${sort && `&sort=${sort}`}`,
+    { signal }
+  );
+  return res.data;
+};
+
 /**
  * 특정 수신자를 삭제하는 API 호출 함수
  * @param {string} id - 삭제할 수신자의 ID
