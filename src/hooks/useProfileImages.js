@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
-// 1. 여기서 'fetchProfileImages'로 이름을 변경했습니다.
-import { fetchProfileImages } from '@/apis/profileImages';
+import { getProfileImages } from '@/apis/profileImages';
 import useDataFetch from '@/hooks/useDataFetch';
 
 /**
@@ -9,11 +8,11 @@ import useDataFetch from '@/hooks/useDataFetch';
  * - 선택된 이미지 상태는 컴포넌트에서 별도로 관리하세요.
  */
 const useProfileImages = () => {
-  // 2. fetcher 내부에서 사용하는 함수 이름도 'fetchProfileImages'로 변경했습니다.
-  const fetcher = useCallback((signal) => fetchProfileImages(signal), []);
+  const fetcher = useCallback((signal) => getProfileImages(signal), []);
 
-  const { data, loading, error } = useDataFetch(fetcher, []);
+  const { data, loading } = useDataFetch(fetcher, []);
 
-  return { profileImages: data, loading, error };
+  return { loading, profileImages: data };
 };
+
 export default useProfileImages;
