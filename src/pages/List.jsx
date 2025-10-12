@@ -5,7 +5,6 @@ import Title from '@/components/common/Title';
 import LikeSortedRollingPaper from '@/components/papers/LikeSortedRollingPaper';
 import RecentSortedRollingPaper from '@/components/papers/RecentSortedRollingPaper';
 import useError from '@/hooks/useError';
-import { cn } from '@/utils/style';
 
 const List = () => {
   const { error } = useError();
@@ -16,12 +15,12 @@ const List = () => {
   }
 
   return (
-    <div className="py-15 mx-auto flex max-w-[1160px] flex-col gap-6">
+    <div className="md:py-15 mx-auto flex max-w-[1160px] flex-col gap-12 py-[50px]">
       <div className={listStyle}>
         <Title>인기 롤링 페이퍼 🔥</Title>
         <LikeSortedRollingPaper />
       </div>
-      <div className={cn(listStyle, 'mt-6')}>
+      <div className={listStyle}>
         <Title>최근에 만든 롤링 페이퍼 ⭐️️</Title>
         <RecentSortedRollingPaper />
       </div>

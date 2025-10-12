@@ -10,7 +10,7 @@
  */
 const FloatingButtonContainer = ({ children }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex w-full justify-center bg-white px-5 py-6 sm:px-6 md:static">
+    <div className="fixed bottom-0 left-0 right-0 flex w-full justify-center bg-white p-6 md:static md:p-0">
       {children}
     </div>
   );
