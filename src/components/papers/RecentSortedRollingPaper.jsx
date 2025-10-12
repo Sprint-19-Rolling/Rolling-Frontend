@@ -1,16 +1,18 @@
-import RollingPaperList from '@/components/papers/RollingPaperDesktopList';
+import RollingPaperDesktopList from '@/components/papers/paper-list/RollingPaperDesktopList';
 import useRollingPaperData from '@/hooks/useRollingPaperData';
 
 const RecentSortedRollingPaper = () => {
   const { data, loading, goNext, goPrev } = useRollingPaperData();
 
   return (
-    <RollingPaperList
-      data={data}
-      loading={loading}
-      onNext={goNext}
-      onPrev={goPrev}
-    />
+    <>
+      <RollingPaperDesktopList
+        data={data}
+        loading={loading}
+        onNext={goNext}
+        onPrev={goPrev}
+      />
+    </>
   );
 };
 
