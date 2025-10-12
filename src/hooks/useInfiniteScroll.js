@@ -39,7 +39,15 @@ const useInfiniteScroll = ({
 
     const rect = target.getBoundingClientRect();
     const rootHeight = rootRef?.current?.clientHeight || window.innerHeight;
-    if (rect.top < rootHeight && rect.bottom > 0 && hasNext && !isFetching) {
+    const rootWidth = rootRef?.current?.clientWidth || window.innerWidth;
+    if (
+      rect.top < rootHeight &&
+      rect.bottom > 0 &&
+      rect.left < rootWidth &&
+      rect.right > 0 &&
+      hasNext &&
+      !isFetching
+    ) {
       fetchMore();
     }
 
