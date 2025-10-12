@@ -9,12 +9,12 @@ import { cn } from '@/utils/style';
  * @param {React.ReactNode} props.children - 내부 콘텐츠
  * @param {string} [props.className] - 추가적인 Tailwind 클래스
  */
-export default function ListBackground({
+const ListBackground = ({
   backgroundImageURL,
   backgroundColor,
   children,
   className,
-}) {
+}) => {
   const backgroundStyle = backgroundImageURL
     ? {
         backgroundImage: `url(${backgroundImageURL})`,
@@ -28,9 +28,12 @@ export default function ListBackground({
       : {
           backgroundColor: `var(--color-beige-200)`, // 기본값
         };
+
   return (
     <main className={cn('relative', className)} style={backgroundStyle}>
       {children}
     </main>
   );
-}
+};
+
+export default ListBackground;

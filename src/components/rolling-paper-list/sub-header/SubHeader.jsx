@@ -3,7 +3,6 @@ import ShareDropdown from '@/components/common/dropbox/ShareDropdown';
 import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import EmojiPickerButton from '@/components/rolling-paper-list/sub-header/EmojiPickerButton';
 import EmojiSummary from '@/components/rolling-paper-list/sub-header/EmojiSummary';
-import ToastContainer from '@/components/rolling-paper-list/toast/ToastContainer';
 import {
   KAKAO_TEMPLATE_ID,
   SHARE_OPTION_KAKAO,
@@ -35,7 +34,7 @@ const SubHeader = ({ recipientId }) => {
     loading: reactionsLoading,
     pageSize,
   } = useReactions(recipientId);
-  const { toasts, showToast, removeToast } = useToast();
+  const { showToast } = useToast();
 
   if (error) {
     return null;
@@ -188,7 +187,6 @@ const SubHeader = ({ recipientId }) => {
           </div>
         </div>
       </div>
-      <ToastContainer toasts={toasts} removeToast={removeToast} />
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { getMessages, getMoreMessages } from '@/apis/messages';
+import { deleteMessage, getMessages, getMoreMessages } from '@/apis/messages';
 import useDataFetch from '@/hooks/useDataFetch';
 import useError from '@/hooks/useError';
 
@@ -32,6 +32,28 @@ const useMessages = (recipientId) => {
   const fetcher = async (signal) => getMessages(recipientId, signal);
   const { data, setData, loading } = useDataFetch(fetcher, [recipientId]);
 
+  const deleteMessageById = useCallback(
+    async (messageId) => {
+      // 낙관적 업데이트
+      setData((prev) => ({
+        ...prev,
+        results: prev.results.filter((msg) => msg.id !== messageId),
+      }));
+
+      try {
+        await deleteMessage(messageId);
+        return true;
+      } catch (err) {
+        setError({
+          status: err.response?.status || 500,
+          message: err.response?.data?.message || err.message,
+        });
+        return false;
+      }
+    },
+    [setData, setError]
+  );
+
   const fetchMore = useCallback(async () => {
     if (!data?.nextUrl || isFetching) {
       return;
@@ -60,6 +82,7 @@ const useMessages = (recipientId) => {
     isFetching,
     nextUrl: data?.nextUrl || null,
     fetchMore,
+    deleteMessageById,
   };
 };
 

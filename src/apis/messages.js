@@ -63,3 +63,11 @@ export const createMessage = async (recipient_id, messageData, setError) => {
     throw err; // 에러를 다시 던져서 호출한 곳에서 처리할 수 있게 함
   }
 };
+
+/**
+ * 특정 메시지를 삭제하는 API
+ * @param {string} messageId - 삭제할 메시지의 ID
+ * @returns {Promise<void>}
+ */
+export const deleteMessage = (messageId) =>
+  teamApi.delete(`messages/${messageId}/`);

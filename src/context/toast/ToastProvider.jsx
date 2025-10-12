@@ -1,14 +1,15 @@
 import { useCallback, useRef, useState } from 'react';
+import { ToastContext } from '@/context/toast/toastContext';
 
 /**
- * 토스트 메시지 목록을 생성, 표시 및 관리하는 커스텀 훅입니다.
- * @returns {{
- * toasts: Array<Object>,
- * showToast: function(message: string, type?: 'success' | 'error'),
- * removeToast: function(id: number)
- * }} - 현재 토스트 목록과 제어 함수를 반환합니다.
+ * 전역 토스트 메시지 목록을 관리하고 하위 컴포넌트에 Context를 통해 제공하는 프로바이더입니다.
+ * 토스트 메시지의 생성(showToast)과 제거(removeToast) 로직을 캡슐화하여 제공합니다.
+ * @component
+ * @param {object} props - 컴포넌트의 props
+ * @param {React.ReactNode} props.children - Context의 상태를 공유할 하위 React 요소들
+ * @returns {JSX.Element} Toast Context Provider 컴포넌트
  */
-const useToast = () => {
+const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
   const toastId = useRef(0);
 
@@ -31,7 +32,11 @@ const useToast = () => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
 
-  return { toasts, showToast, removeToast };
+  return (
+    <ToastContext value={{ toasts, showToast, removeToast }}>
+      {children}
+    </ToastContext>
+  );
 };
 
-export default useToast;
+export default ToastProvider;
