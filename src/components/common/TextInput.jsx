@@ -1,5 +1,4 @@
 import { cva } from 'class-variance-authority';
-import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
 
 const inputWrapper = cva(
@@ -17,7 +16,21 @@ const inputWrapper = cva(
     },
   }
 );
-
+/**
+ * 텍스트 입력 컴포넌트
+ *
+ * @param {Object} props
+ * @param {string} props.name - input name
+ * @param {string} [props.type='text'] - input type
+ * @param {string} [props.placeholder] - placeholder text
+ * @param {string} props.value - input value
+ * @param {(value: string) => void} props.onChange - 값 변경 콜백
+ * @param {() => void} [props.onBlur] - blur 이벤트 콜백
+ * @param {boolean} [props.error=false] - 에러 여부
+ * @param {string} [props.errorMessage] - 에러 메시지
+ * @param {string} [props.className] - 추가 클래스
+ * @param {boolean} [props.disabled=false] - 비활성화 여부
+ */
 const TextInput = (props) => {
   const {
     name,
@@ -67,20 +80,6 @@ const TextInput = (props) => {
       )}
     </div>
   );
-};
-
-TextInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func,
-  error: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  validate: PropTypes.func,
 };
 
 export default TextInput;
