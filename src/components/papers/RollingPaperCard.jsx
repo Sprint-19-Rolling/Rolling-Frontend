@@ -1,8 +1,11 @@
+import { Link } from 'react-router';
 import Card from '@/assets/rolling-paper-card/card';
 import EmojiBadge from '@/components/common/badge/EmojiBadge';
 import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
+import Title from '@/components/common/Title';
 
 const RollingPaperCard = ({
+  id,
   name,
   messageCount,
   recentMessages,
@@ -19,98 +22,64 @@ const RollingPaperCard = ({
 
     switch (backgroundColor) {
       case 'beige':
-        return (
-          <img
-            src={Card.Beige}
-            alt="beige card"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        );
+        return <Card.Beige />;
       case 'purple':
-        return (
-          <img
-            src={Card.Purple}
-            alt="purple card"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        );
+        return <Card.Purple />;
       case 'blue':
-        return (
-          <img
-            src={Card.Blue}
-            alt="blue card"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        );
+        return <Card.Blue />;
       case 'green':
-        return (
-          <img
-            src={Card.Green}
-            alt="green card"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        );
+        return <Card.Green />;
       default:
         return null;
     }
   };
 
+  const backgroundStyle = {
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${backgroundImageURL})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
+
   return (
-    <div
-      className="relative h-64 w-72 overflow-hidden rounded-2xl shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] outline outline-1 outline-offset-[-1px] outline-black/10"
-      style={
-        backgroundImageURL
-          ? {
-              backgroundImage: `url(${backgroundImageURL})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }
-          : {}
-      }>
-      {backgroundImageURL && <div className="absolute inset-0 bg-black/10" />}
+    <Link
+      to={`/post/${id}`}
+      className={`shadow-basic relative h-[260px] w-[275px] overflow-hidden rounded-2xl border border-black/10 bg-${backgroundColor}-200 pt-7.5 flex flex-col items-start justify-between px-6 pb-5`}
+      style={backgroundImageURL && backgroundStyle}>
       {renderShape()}
-
       {/* 콘텐츠 */}
-      <div className="absolute left-[24px] top-[30px] z-10 flex flex-col items-start gap-11">
-        <div className="flex flex-col items-start gap-3">
-          {name && (
-            <div className="font-['Pretendard'] text-2xl font-bold leading-9 text-neutral-900 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-              To. {name}
-            </div>
-          )}
-
-          {recentMessages && recentMessages.length > 0 && (
+      <div className="flex flex-col items-start gap-3">
+        <Title as="h3" className={backgroundImageURL && 'text-white'}>
+          To. {name}
+        </Title>
+        {recentMessages.length > 0 && (
+          <div className="ml-2">
             <ProfileGroup
               recentMessages={recentMessages}
               messageCount={messageCount}
             />
-          )}
-
-          {typeof messageCount === 'number' && (
-            <div className="font-['Pretendard'] text-base text-neutral-800">
-              <span className="font-bold">{messageCount}</span>명이 작성했어요!
-            </div>
-          )}
-        </div>
-
-        {topReactions && Object.keys(topReactions).length > 0 && (
-          <div className="flex flex-col items-start gap-4">
-            <div className="h-px w-56 bg-black/10" />
-            <div className="inline-flex items-start gap-2">
-              {topReactions.like && (
-                <EmojiBadge emoji="👍" count={topReactions.like} />
-              )}
-              {topReactions.love && (
-                <EmojiBadge emoji="😍" count={topReactions.love} />
-              )}
-              {topReactions.sad && (
-                <EmojiBadge emoji="😢" count={topReactions.sad} />
-              )}
-            </div>
           </div>
         )}
+        <span
+          className={`font-16-regular ${backgroundImageURL ? 'text-white' : 'text-gray-700'}`}>
+          <span className="font-bold">{messageCount}</span>명이 작성했어요!
+        </span>
       </div>
-    </div>
+      {topReactions.length > 0 && (
+        <div className="border-black/12 z-40 w-full border-t pt-4">
+          <div className="inline-flex items-start gap-2">
+            {topReactions.map((item) => {
+              return (
+                <EmojiBadge
+                  key={item.id}
+                  emoji={item.emoji}
+                  count={item.count}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </Link>
   );
 };
 
