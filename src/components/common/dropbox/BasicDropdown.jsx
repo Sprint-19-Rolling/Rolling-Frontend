@@ -1,4 +1,5 @@
 import { cva } from 'class-variance-authority';
+import { fontMap } from '@/constants/fontMap';
 import { cn } from '@/utils/style';
 
 const dropdownContainerVariants = cva(
@@ -29,6 +30,7 @@ const dropdownContainerVariants = cva(
  * @param {(value: string) => void} props.onSelect - 항목 선택 시 호출되는 콜백 함수
  * @param {string} [props.className] - 추가로 적용할 CSS 클래스명 (선택)
  * @param {'basic' | 'share'} [props.size='basic'] - 드롭다운 스타일 종류
+ * @param {Object} [props.fontMap] - 글꼴 이름과 font-family 매핑 객체 (선택)
  *
  * @example
  * <BasicDropdown
@@ -38,24 +40,28 @@ const dropdownContainerVariants = cva(
  * />
  */
 
-const fontMap = {
-  'noto sans': "'Noto Sans', sans-serif",
-  pretendard: "'Pretendard', sans-serif",
-  'nanum-myeongjo': "'Nanum Myeongjo', serif",
-  handletter: "'Nanum Pen Script', cursive",
-};
-
-const BasicDropdown = ({ items, onSelect, className = '', size = 'basic' }) => {
+const BasicDropdown = ({
+  items,
+  onSelect,
+  selected,
+  className = '',
+  size = 'basic',
+  fontMap: customFontMap = fontMap,
+}) => {
   return (
     <div className={cn(dropdownContainerVariants({ size }), className)}>
       <ul className="flex flex-col">
         {items.map((item) => {
-          const fontFamily = fontMap[item.toLowerCase()] || 'inherit';
+          const fontFamily = customFontMap[item.toLowerCase()] || 'inherit';
+          const isActive = item === selected;
           return (
             <li
               key={item}
               onClick={() => onSelect?.(item)}
-              className="h-[50px] cursor-pointer px-4 py-3 text-gray-900 hover:bg-gray-100"
+              className={cn(
+                'h-[50px] cursor-pointer px-4 py-3 text-gray-900 hover:bg-gray-100',
+                isActive && 'bg-gray-200 font-semibold'
+              )}
               style={{ fontFamily }}>
               {item}
             </li>
