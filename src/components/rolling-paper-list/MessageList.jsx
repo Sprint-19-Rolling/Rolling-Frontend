@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Modal from '@/components/common/modal/Modal';
 import AddMessageCardButton from '@/components/rolling-paper-list/message-card/AddMessageCardButton';
 import MessageCard from '@/components/rolling-paper-list/message-card/MessageCard';
 import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
 import { MESSAGE_LIST_SKELETON_ARRAY } from '@/constants/rollingPaperList';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import useMessages from '@/hooks/useMessages';
 import useToast from '@/hooks/useToast';
 
@@ -26,35 +27,17 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
   } = useMessages(recipientId);
 
   const observerRef = useRef(null);
+
+  useInfiniteScroll({
+    targetRef: observerRef,
+    hasNext: !!nextUrl,
+    loading,
+    isFetching,
+    fetchMore,
+  });
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
-
-  // 무한 스크롤
-  useEffect(() => {
-    if (loading) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && nextUrl && !isFetching) {
-          fetchMore();
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    const target = observerRef.current;
-    if (target) {
-      observer.observe(target);
-    }
-
-    return () => {
-      if (target) {
-        observer.unobserve(target);
-      }
-    };
-  }, [nextUrl, fetchMore, loading, isFetching]);
 
   const handleMessageCardClick = (messageData) => {
     setSelectedMessage(messageData);
