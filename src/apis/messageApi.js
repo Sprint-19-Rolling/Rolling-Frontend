@@ -1,7 +1,4 @@
-import axios from 'axios';
-
-const API_BASE_URL = 'https://rolling-api.vercel.app';
-const TEAM_ID = '19-7';
+import { api, teamApi } from '@/apis/axios';
 
 const FALLBACK_PROFILE_IMAGES = [
   'https://cdn.photosmile.co.kr/photosmile/images/default_profile_1.png',
@@ -14,17 +11,24 @@ const FALLBACK_PROFILE_IMAGES = [
  * 프로필 이미지 목록을 가져옵니다.
  * @returns {Promise<string[]>} 프로필 이미지 URL 배열
  */
-export const fetchProfileImages = async () => {
+export const fetchProfileImages = async (setError) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/profile-images/`);
+    const response = await api.get('profile-images/');
     const urls = response.data.imageUrls || [];
+
     if (urls.length > 0) {
+      setError(''); // 성공 시 에러 초기화
       return urls;
     }
-    // API가 빈 배열을 반환하면 폴백 이미지를 사용합니다.
+
+    // API가 빈 배열을 반환하면 폴백 이미지를 사용
+    setError(''); // 성공 시 에러 초기화
     return FALLBACK_PROFILE_IMAGES;
   } catch (err) {
     console.error('❌ 프로필 이미지 불러오기 실패:', err);
+    setError(
+      '프로필 이미지를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.'
+    );
     return FALLBACK_PROFILE_IMAGES;
   }
 };
@@ -40,20 +44,30 @@ export const fetchProfileImages = async () => {
  * @param {string} messageData.font - 폰트
  * @returns {Promise<Object>} API 응답
  */
-export const createMessage = async (recipient_id, messageData) => {
+export const createMessage = async (recipient_id, messageData, setError) => {
   const payload = {
+    team: '19-7',
+    recipient_id: Number(recipient_id),
     sender: messageData.sender,
     profileImageURL: messageData.profileImageURL,
     relationship: messageData.relationship,
     content: messageData.content,
-    font: messageData.font,
+    font: 'Noto Sans',
   };
 
-  const response = await axios.post(
-    `${API_BASE_URL}/${TEAM_ID}/recipients/${recipient_id}/messages/`,
-    payload,
-    { headers: { 'Content-Type': 'application/json' } }
-  );
+  try {
+    console.log(payload);
+    const response = await teamApi.post(
+      `recipients/${recipient_id}/messages/`,
+      payload,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
-  return response;
+    setError(''); // 성공 시 에러 초기화
+    return response;
+  } catch (err) {
+    console.error('❌ 메시지 전송 실패:', err);
+    setError('메시지 전송에 실패했습니다. 다시 시도해주세요.');
+    throw err; // 에러를 다시 던져서 호출한 곳에서 처리할 수 있게 함
+  }
 };
