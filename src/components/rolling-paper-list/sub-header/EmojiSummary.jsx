@@ -28,6 +28,7 @@ const dropdownContainerStyle = cva(
  * @param {boolean} props.loading - 전체 이모지 목록 로딩 상태
  * @returns {JSX.Element | null}
  */
+
 const EmojiSummary = ({ className, topReactions, reactions, loading }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
@@ -37,7 +38,7 @@ const EmojiSummary = ({ className, topReactions, reactions, loading }) => {
     setIsOpen((prev) => !prev);
   };
 
-  if (topReactions.length === 0) {
+  if (!Array.isArray(topReactions) || topReactions.length === 0) {
     return null;
   }
 
