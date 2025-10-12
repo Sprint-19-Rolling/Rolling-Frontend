@@ -33,24 +33,38 @@
 **UI**
 
 **공통 컴포넌트**
-- Footer
-- Button, LinkButton
-- 레이아웃 컴포넌트(MainLayout, PostLayout)
-- Title
-- Error
+- Footer, Button, LinkButton, Title, Error 컴포넌트 구현  
+- MainLayout, PostLayout 등 레이아웃 컴포넌트 구성  
 
 **페이지 컴포넌트**
-- 메인 페이지 구현
-- 
+- 메인 페이지 서비스 소개 섹션 및 전체 레이아웃 구현  
+- 리스트 페이지  
+  - 전체 레이아웃 구성, 에러 처리 뷰, 스켈레톤 카드 컴포넌트 제작  
+- 롤링페이퍼 리스트 페이지  
+  - 날짜, 메시지 리스트, 메시지 카드, 메시지 카드 스켈레톤, 메시지 추가 버튼, 서브헤더, 프로필 영역, 이모지 영역 등 UI 컴포넌트 구현  
+  - 전체 레이아웃 구성  
+- 담당 컴포넌트 전반에 반응형 레이아웃 적용  
 
 **기능**
-- 전역 에러 관리(Error Context) 및 토스트 알림 시스템(Toast Context) 구현
+- 전역 에러 관리(Error Context) 및 토스트 알림 시스템(Toast Context) 구현  
+- 메시지 리스트 및 리액션(이모지) 기능 구현  
+  - 메시지 조회, 리액션 조회/등록 API 연동 및 낙관적 업데이트 적용  
+- 공통 로직을 커스텀 훅으로 분리 (`useError`, `useToast`, `useDataFetch`, `useResponsiveSize`)  
+- 카카오톡 공유 및 URL 복사 기능 구현  
+- 유틸함수
+    - `formatDate`: ISO 형식 UTC 날짜를 한국 시간(KST) 기준 `YYYY.MM.DD` 형식으로 변환
+    - `cn`: 조건부 Tailwind 클래스를 병합하고 중복 클래스를 정리
 
 **기타**
-- 프로젝트 초기 세팅 (ESLint, Prettier, Husky)
-- SEO 및 메타태그 설정 (OG/Twitter 카드, 파비콘)
-- GitHub Wiki 문서화
-- README 작성
+- 초기세팅
+  - ESLint, Prettier 설정  
+  - Husky 설정 (Commit lint + pre-commit, lint-staged 적용)  
+  - VSCode 개발 환경 설정 (settings.json, extensions.json, 코드 스니펫)  
+- 환경변수 설정  
+- SEO 및 메타태그 설정 (OG/Twitter 카드, 파비콘)  
+- React Router 라우팅 설정  
+- GitHub Wiki 문서화  
+- README 작성  
 
 ### 양은지
 
