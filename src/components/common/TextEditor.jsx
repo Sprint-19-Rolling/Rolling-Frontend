@@ -240,11 +240,29 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
         .replace(/\n/g, '')
         .trim();
 
+    const hasContent = () => {
+      // 텍스트가 있는지 확인
+      if (getVisibleText().length > 0) {
+        return true;
+      }
+      // 리스트 요소가 있는지 확인
+      const hasLists = root.querySelector('ol, ul');
+      if (hasLists) {
+        return true;
+      }
+      // 이미지나 다른 블록 요소가 있는지 확인
+      const hasBlocks = root.querySelector('img, iframe, video');
+      if (hasBlocks) {
+        return true;
+      }
+      return false;
+    };
+
     const syncBlankClass = () => {
       if (disposed) {
         return;
       }
-      root.classList.toggle('ql-blank', getVisibleText().length === 0);
+      root.classList.toggle('ql-blank', !hasContent());
     };
 
     const handleTextChange = () => syncBlankClass();
