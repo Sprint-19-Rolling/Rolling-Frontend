@@ -32,14 +32,23 @@
 
 **UI**
 
+**공통 컴포넌트**
+- Footer
+- Button, LinkButton
+- 레이아웃 컴포넌트(MainLayout, PostLayout)
+- Title
+- Error
+
+**페이지 컴포넌트**
+- 메인 페이지 구현
 - 
 
 **기능**
-
-- 
+- 전역 에러 관리(Error Context) 및 토스트 알림 시스템(Toast Context) 구현
 
 **기타**
-
+- 프로젝트 초기 세팅 (ESLint, Prettier, Husky)
+- SEO 및 메타태그 설정 (OG/Twitter 카드, 파비콘)
 - GitHub Wiki 문서화
 - README 작성
 
