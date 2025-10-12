@@ -1,238 +1,197 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import Button from '@/components/common/button/Button';
 import Dropdown from '@/components/common/dropbox/Dropdown';
+import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import ProfileImage from '@/components/common/profile-image/ProfileImage';
 import TextEditor from '@/components/common/TextEditor';
 import TextInput from '@/components/common/TextInput';
 import Title from '@/components/common/Title';
-import { fontMap, fontDisplayNames } from '@/constants/fontMap';
-import useDataFetch from '@/hooks/useDataFetch';
+import { FONT_ITEMS, RELATIONSHIP_ITEMS } from '@/constants/dropdownItems';
+import { FONT_DISPLAY_NAMES } from '@/constants/fontMap';
 import { useInput } from '@/hooks/useInput';
-import { useMessageSubmit } from '@/hooks/useMessageSubmit';
+import usePostMessage from '@/hooks/usePostMessage';
+import useProfileImages from '@/hooks/useProfileImages';
 
 const PostMessage = () => {
   const { id } = useParams();
-  const recipient_id = id;
+  const navigate = useNavigate();
 
   const fromInput = useInput({
-    label: '보내는 사람',
     customErrorMessage: '이름을 입력해 주세요',
   });
 
-  // 프로필 이미지 fetch 함수
-  const fetchProfileImages = async (signal) => {
-    const response = await axios.get(
-      'https://rolling-api.vercel.app/profile-images/',
-      { signal }
-    );
-    return response.data.imageUrls;
-  };
+  const relationshipRef = useRef();
+  const fontRef = useRef();
 
-  const { data: profileImages, loading } = useDataFetch(fetchProfileImages, []);
-
-  const [profileImageURL, setProfileImageURL] = useState('');
-  const [relationship, setRelationship] = useState('지인');
   const [content, setContent] = useState('');
-  const [font, setFont] = useState('noto-sans');
+  const [profileImageURL, setProfileImageURL] = useState('');
+  const [selectedFont, setSelectedFont] = useState('Noto Sans');
 
-  // 프로필 이미지 초기화
-  useEffect(() => {
-    if (
-      Array.isArray(profileImages) &&
-      profileImages.length > 0 &&
-      !profileImageURL
-    ) {
-      setProfileImageURL(profileImages[0]);
+  const handleFontChange = () => {
+    const selectedDisplayName = fontRef.current?.getValue();
+    if (!selectedDisplayName) {
+      return;
     }
-  }, [profileImages, profileImageURL]);
 
-  const {
-    handleSubmit: submitMessage,
-    isSubmitting,
-    setError,
-  } = useMessageSubmit(recipient_id);
-
-  // 내용이 비어있는지 확인
-  const isContentEmpty =
-    !content || content.replace(/<[^>]*>/g, '').trim() === '';
-
-  const handleEditorFontChange = (quillFont) => {
-    console.log('에디터에서 감지된 폰트:', quillFont);
-    if (quillFont && fontMap[quillFont]) {
-      setFont(quillFont);
-    }
-  };
-
-  // 외부 드롭다운에서 폰트 변경 (표시 이름으로 전달됨)
-  const handleDropdownFontChange = (selectedDisplayName) => {
-    console.log('드롭다운에서 선택된 표시 이름:', selectedDisplayName);
-    // 표시 이름 → Quill 형식으로 역변환
-    const fontKey = Object.keys(fontDisplayNames).find(
-      (key) => fontDisplayNames[key] === selectedDisplayName
+    const fontKey = Object.keys(FONT_DISPLAY_NAMES).find(
+      (key) => FONT_DISPLAY_NAMES[key] === selectedDisplayName
     );
+
     if (fontKey) {
       console.log('Quill에 적용될 폰트:', fontKey);
-      setFont(fontKey);
+      setSelectedFont(fontKey);
     }
   };
 
-  // 폼 제출 핸들러
-  const handleSubmit = async () => {
-    setError('');
-    if (!fromInput.validate()) {
-      return;
-    }
-    if (isContentEmpty) {
-      return;
-    }
-    if (!profileImageURL || profileImageURL.trim() === '') {
-      return;
-    }
-    if (!relationship || relationship.trim() === '') {
-      return;
-    }
-    if (!font || font.trim() === '') {
-      return;
-    }
+  const { loading, profileImages } = useProfileImages();
+  const { isSubmitting, submitMessage } = usePostMessage();
 
-    const fontValue = fontMap[font] || font;
-    await submitMessage({
+  useEffect(() => {
+    if (!loading && profileImages && profileImages.length > 0) {
+      setProfileImageURL((prev) => prev || profileImages[0]);
+    }
+  }, [loading, profileImages]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const relationship = relationshipRef.current?.getValue();
+    const font = fontRef.current?.getValue();
+
+    const messageData = {
+      team: '19-7',
+      recipientId: Number(id),
       sender: fromInput.value,
       profileImageURL,
       relationship,
       content,
-      font: fontValue, // 'Noto Sans' 형식
+      font,
+    };
+
+    submitMessage({
+      recipientId: id,
+      messageData,
+      onSuccess: () => navigate(`/post/${id}`),
     });
   };
 
-  // 생성하기 버튼 활성화 조건
+  const isContentEmpty =
+    !content || content.replace(/<[^>]*>/g, '').trim() === '';
+
   const isButtonDisabled =
     isSubmitting ||
+    isContentEmpty ||
     !fromInput.value ||
     fromInput.value.trim() === '' ||
     !profileImageURL ||
     profileImageURL.trim() === '' ||
-    !relationship ||
-    relationship.trim() === '' ||
-    isContentEmpty ||
-    !font ||
-    font.trim() === '';
-
-  const FONT_OPTIONS = Object.values(fontDisplayNames);
-
-  const currentFontDisplayName = fontDisplayNames[font] || 'Noto Sans';
+    !relationshipRef.current?.getValue() ||
+    !fontRef.current?.getValue();
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-white px-4 py-10 sm:px-6">
-      <section className="flex w-full max-w-[720px] flex-col gap-10 sm:max-w-[640px] md:max-w-[720px]">
-        {/* From 입력 */}
-        <div className="w-full">
-          <Title className="mb-[12px]">From.</Title>
-          <TextInput
-            name="From"
-            placeholder="이름을 입력해 주세요"
-            {...fromInput}
-            className="w-full"
-          />
-        </div>
-
-        {/* 프로필 이미지 선택 */}
-        <div>
-          <Title className="mb-[12px]">프로필 이미지</Title>
-          <div className="mt-2 flex flex-col sm:flex-row sm:items-start sm:gap-4">
-            <div className="flex flex-shrink-0 justify-center sm:justify-start">
+    <form
+      className="mx-auto flex max-w-[720px] flex-col gap-[50px] pb-20 pt-12"
+      onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-4">
+        <label
+          htmlFor="From"
+          className="font-20-bold md:font-24-bold text-gray-900">
+          From.
+        </label>
+        <TextInput
+          name="From"
+          placeholder="이름을 입력해 주세요"
+          {...fromInput}
+        />
+      </div>
+      <div>
+        <Title className="mb-[12px]">프로필 이미지</Title>
+        {/* 모바일: 가로 배치, 데스크톱: 가로 배치 */}
+        <div className="mt-2 flex flex-row items-start gap-4">
+          {/* 선택된 프로필 이미지 */}
+          <div className="mt-[20px] flex flex-shrink-0 sm:mt-[7px]">
+            {profileImageURL && (
               <ProfileImage
-                src={
-                  profileImageURL ||
-                  'https://learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com/sprint-proj-image/default_avatar.png'
-                }
+                src={profileImageURL}
                 size="xlarge"
                 borderColor="gray"
                 isSelected={false}
                 isClickable={false}
-                className="mt-[7px]"
               />
-            </div>
-            <div className="mt-4 flex-grow sm:ml-[12px] sm:mt-0">
-              <p className="mb-3 text-center text-base font-medium text-gray-600 sm:text-left">
-                프로필 이미지를 선택해주세요!
-              </p>
-              <div className="flex flex-wrap justify-center gap-[5px] sm:justify-start">
-                {loading ? (
-                  <p className="text-sm text-gray-400">
-                    프로필 이미지를 불러오는 중...
-                  </p>
-                ) : Array.isArray(profileImages) && profileImages.length > 0 ? (
-                  profileImages.map((url) => {
-                    return (
+            )}
+          </div>
+          {/* 선택 가능한 이미지 목록 */}
+          <div className="flex flex-1 flex-col gap-2">
+            <p className="text-base font-medium text-gray-700">
+              프로필 이미지를 선택해주세요!
+            </p>
+            {/* 모바일: 5개씩 고정, 태블릿/데스크톱: 1줄 배치 */}
+            <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:gap-[2px]">
+              {loading ? (
+                <p className="w-full text-sm text-gray-400">
+                  프로필 이미지를 불러오는 중...
+                </p>
+              ) : profileImages && profileImages.length > 0 ? (
+                profileImages.map((url) => {
+                  return (
+                    <div key={url} className="w-[calc(20%-8px)] sm:w-auto">
                       <ProfileImage
-                        key={url}
                         src={url}
                         size="medium"
                         isSelected={profileImageURL === url}
                         isClickable={true}
                         onClick={() => setProfileImageURL(url)}
+                        className="!h-auto !w-full sm:!h-[64px] sm:!w-[64px]"
                       />
-                    );
-                  })
-                ) : (
-                  <p className="text-sm text-gray-400">
-                    사용할 수 있는 이미지가 없습니다.
-                  </p>
-                )}
-              </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="w-full text-sm text-gray-400">
+                  사용할 수 있는 이미지가 없습니다.
+                </p>
+              )}
             </div>
           </div>
         </div>
-
-        {/* 관계 선택 */}
-        <div>
-          <Title className="mb-[12px]">상대와의 관계</Title>
-          <Dropdown
-            items={['친구', '지인', '동료', '가족']}
-            placeholder="지인"
-            onChange={setRelationship}
-            className="w-full"
-          />
-        </div>
-
-        {/* 내용 입력 */}
-        <div className="w-full">
-          <Title className="mb-[12px]">내용을 입력해 주세요</Title>
-          <TextEditor
-            value={content}
-            onChange={setContent}
-            font={font}
-            onFontChange={handleEditorFontChange}
-            className="w-full"
-          />
-        </div>
-
-        {/* 폰트 선택 */}
-        <div className="w-full max-w-[320px]">
-          <Title className="mb-[12px]">폰트 선택</Title>
-          <Dropdown
-            items={FONT_OPTIONS}
-            selectedItem={currentFontDisplayName}
-            placeholder="폰트를 선택하세요"
-            onChange={handleDropdownFontChange}
-            className="w-full"
-          />
-        </div>
-
-        {/* 제출 버튼 */}
-        <div className="flex justify-center">
-          <Button
-            onClick={handleSubmit}
-            disabled={isButtonDisabled}
-            className="flex h-[56px] w-[720px] cursor-pointer items-center justify-center gap-1 rounded-md border-0 border-gray-300 bg-purple-600 px-4 text-center font-[Pretendard] text-[18px] font-bold leading-[28px] tracking-[-0.18px] text-white hover:bg-purple-700 focus-visible:bg-purple-800 focus-visible:outline-2 focus-visible:outline-purple-900 active:bg-purple-800 disabled:cursor-default disabled:border-0 disabled:bg-gray-300 disabled:text-white">
-            {isSubmitting ? '생성 중...' : '생성하기'}
-          </Button>
-        </div>
-      </section>
-    </main>
+      </div>
+      <div className="flex flex-col gap-4">
+        <Title>상대와의 관계</Title>
+        <Dropdown
+          ref={relationshipRef}
+          items={RELATIONSHIP_ITEMS}
+          defaultValue="지인"
+        />
+      </div>
+      <div className="flex flex-col gap-4">
+        <Title>내용을 입력해 주세요</Title>
+        <TextEditor
+          value={content}
+          onChange={setContent}
+          font={selectedFont}
+          onFontChange={handleFontChange}
+        />
+      </div>
+      <div className="flex flex-col gap-4">
+        <Title>폰트 선택</Title>
+        <Dropdown
+          ref={fontRef}
+          items={FONT_ITEMS}
+          defaultValue="Noto Sans"
+          onSelect={handleFontChange}
+        />
+      </div>
+      <FloatingButtonContainer>
+        <Button
+          type="submit"
+          disabled={isButtonDisabled}
+          size={56}
+          className="w-full">
+          {isSubmitting ? '생성 중...' : '생성하기'}
+        </Button>
+      </FloatingButtonContainer>
+    </form>
   );
 };
 
