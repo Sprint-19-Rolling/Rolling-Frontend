@@ -70,7 +70,7 @@ const MessageCard = ({
       role="button"
       tabIndex={0}
       className={cn(
-        'card-style relative flex-col items-start gap-4 p-6 pt-7 transition',
+        'message-card-style relative flex-col items-start gap-4 p-6 pt-7 transition',
         'cursor-pointer hover:shadow-lg active:scale-[0.99]'
       )}
       onClick={onClick}

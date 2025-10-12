@@ -5,7 +5,7 @@
  */
 const MessageCardSkeleton = () => {
   return (
-    <div className="card-style flex-col items-start gap-4 p-6 pt-7">
+    <div className="message-card-style flex-col items-start gap-4 p-6 pt-7">
       <div className="card-skeleton-style h-14 w-full" />
       <div className="flex w-full flex-grow flex-col gap-2">
         <div className="card-skeleton-style h-5 w-full" />
