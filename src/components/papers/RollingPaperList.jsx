@@ -1,72 +1,44 @@
-import { useEffect, useRef, useState } from 'react';
-import { api } from '@/apis/axios';
 import ArrowButton from '@/components/common/button/ArrowButton';
 import RollingPaperCard from '@/components/papers/RollingPaperCard';
+import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
 
-const RollingPaperList = () => {
-  const scrollRef = useRef(null);
-  const [cardData, setCardData] = useState([]);
-
-  const scroll = (direction) => {
-    const container = scrollRef.current;
-    const scrollAmount = 320;
-    container.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
-    });
-  };
-
-  useEffect(() => {
-    const fetchRollingPapers = async () => {
-      try {
-        // 실제 API 엔드포인트로 변경 필요
-        const res = await api.get('/rolling-papers');
-        const data = res.data;
-
-        const normalizedData = data.map((item) => ({
-          ...item,
-          topReactions: item.topReactions || {},
-          recentMessages: item.recentMessages || [],
-        }));
-
-        setCardData(normalizedData);
-      } catch (error) {
-        console.error('롤링페이퍼 불러오기 실패:', error);
-      }
-    };
-
-    fetchRollingPapers();
-  }, []);
+const RollingPaperList = ({ data, loading }) => {
+  // 추후 수정 필요
+  if (loading || !data) {
+    return (
+      <div className="flex w-full justify-between">
+        {[1, 2, 3, 4].map((item) => {
+          return <MessageCardSkeleton key={item} />;
+        })}
+      </div>
+    );
+  }
 
   return (
-    <div className="flex w-full justify-center bg-gray-50 py-10">
-      <div className="relative flex max-w-[1272px] items-center">
-        <ArrowButton position="left" onClick={() => scroll('left')} />
-
-        <div
-          ref={scrollRef}
-          className="no-scrollbar flex gap-8 overflow-x-auto scroll-smooth px-8">
-          {cardData.length > 0 ? (
-            cardData.map((card) => {
-              return (
-                <RollingPaperCard
-                  key={card.id}
-                  name={card.name}
-                  messageCount={card.messageCount}
-                  recentMessages={card.recentMessages}
-                  topReactions={card.topReactions}
-                  backgroundColor={card.backgroundColor}
-                  backgroundImageURL={card.backgroundImageURL}
-                />
-              );
-            })
-          ) : (
-            <div className="text-gray-400">롤링페이퍼가 없습니다 😢</div>
-          )}
+    <div className="relative flex w-full justify-between">
+      {data.previous && <ArrowButton position="left" />}
+      {data.results.length > 0 ? (
+        data.results.map((card) => {
+          return (
+            <RollingPaperCard
+              key={card.id}
+              id={card.id}
+              name={card.name}
+              messageCount={card.messageCount}
+              recentMessages={card.recentMessages}
+              topReactions={card.topReactions}
+              backgroundColor={card.backgroundColor}
+              backgroundImageURL={card.backgroundImageURL}
+            />
+          );
+        })
+      ) : (
+        <div className="h-50 font-18-regular flex w-full items-center justify-center rounded-2xl bg-gray-50 text-gray-400">
+          롤링페이퍼가 없습니다 😢
         </div>
+      )}
 
-        <ArrowButton position="right" onClick={() => scroll('right')} />
-      </div>
+      {data.next && <ArrowButton position="right" />}
     </div>
   );
 };
