@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * 무한 스크롤 훅
@@ -16,15 +16,27 @@ const useInfiniteScroll = ({
   isFetching,
   fetchMore,
 }) => {
+  const latest = useRef({ hasNext, loading, isFetching, fetchMore });
+
   useEffect(() => {
-    if (loading) {
+    latest.current = { hasNext, loading, isFetching, fetchMore };
+  }, [hasNext, loading, isFetching, fetchMore]);
+
+  useEffect(() => {
+    if (latest.current.loading) {
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && hasNext && !isFetching) {
-          fetchMore();
+        const {
+          hasNext: currentHasNext,
+          isFetching: currentIsFetching,
+          fetchMore: currentFetchMore,
+        } = latest.current;
+
+        if (entries[0].isIntersecting && currentHasNext && !currentIsFetching) {
+          currentFetchMore();
         }
       },
       { threshold: 1.0 }
@@ -40,7 +52,7 @@ const useInfiniteScroll = ({
         observer.unobserve(target);
       }
     };
-  }, [targetRef, hasNext, loading, isFetching, fetchMore]);
+  }, [targetRef, loading]);
 };
 
 export default useInfiniteScroll;
