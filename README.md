@@ -34,8 +34,9 @@
 
 **공통 컴포넌트**
 
-- Footer, Button, LinkButton, Title, Error 컴포넌트 구현
-- MainLayout, PostLayout 등 레이아웃 컴포넌트 구성
+- Footer, Button, LinkButton, Title, Error, FloatingButtonContainer 컴포넌트 구현  
+- MainLayout, PostLayout 등 레이아웃 컴포넌트 구성  
+
 
 **페이지 컴포넌트**
 

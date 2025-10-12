@@ -5,12 +5,10 @@ import { SERVICE_INTRO_DATA } from '@/constants/main';
 
 const Main = () => {
   return (
-    <div className="md:pt-15 md:pb-25 relative flex flex-col items-center py-12 md:gap-6">
-      <div className="flex w-full flex-col gap-9">
-        {SERVICE_INTRO_DATA.map((item) => {
-          return <ServiceIntro key={item.introTag} {...item} />;
-        })}
-      </div>
+    <div className="md:pt-15 md:pb-25 relative flex flex-col items-center gap-9 py-12">
+      {SERVICE_INTRO_DATA.map((item) => {
+        return <ServiceIntro key={item.introTag} {...item} />;
+      })}
       <FloatingButtonContainer>
         <LinkButton to={'/list'} size={56} full="mobile">
           구경해보기
