@@ -3,7 +3,7 @@ import RollingPaperCard from '@/components/papers/rolling-paper-card/RollingPape
 import RollingPaperCardSkeleton from '@/components/papers/rolling-paper-card/RollingPaperCardSkeleton';
 import { LIST_LIMIT_ARRAY } from '@/constants/list';
 
-const RollingPaperList = ({ data, loading }) => {
+const RollingPaperList = ({ data, loading, onPageChange }) => {
   if (loading || !data) {
     return (
       <div className="rolling-paper-list-style">
@@ -16,7 +16,12 @@ const RollingPaperList = ({ data, loading }) => {
 
   return (
     <div className="rolling-paper-list-style relative">
-      {data.previous && <ArrowButton position="left" />}
+      {data.previous && (
+        <ArrowButton
+          position="left"
+          onClick={() => onPageChange(data.previous)}
+        />
+      )}
       {data.results.length > 0 ? (
         data.results.map((card) => {
           return (
@@ -38,7 +43,9 @@ const RollingPaperList = ({ data, loading }) => {
         </div>
       )}
 
-      {data.next && <ArrowButton position="right" />}
+      {data.next && (
+        <ArrowButton position="right" onClick={() => onPageChange(data.next)} />
+      )}
     </div>
   );
 };

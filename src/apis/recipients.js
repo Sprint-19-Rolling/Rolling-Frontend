@@ -52,14 +52,25 @@ export const getRecipientData = async (recipientId, signal) => {
   };
 };
 
+/**
+ * 롤링페이퍼 리스트 데이터를 가져오는 API
+ */
 export const getRollingPaperData = async (
-  { limit = LIST_LIMIT, sort },
+  { limit = LIST_LIMIT, sort, url },
   signal
 ) => {
-  const res = await teamApi.get(
-    `recipients/?limit=${limit}&offset=0${sort && `&sort=${sort}`}`,
-    { signal }
-  );
+  let res;
+
+  if (url) {
+    const axios = (await import('axios')).default;
+    res = await axios.get(url, { signal });
+  } else {
+    res = await teamApi.get(
+      `recipients/?limit=${limit}&offset=0${sort ? `&sort=${sort}` : ''}`,
+      { signal }
+    );
+  }
+
   return res.data;
 };
 

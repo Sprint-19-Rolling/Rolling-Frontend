@@ -1,17 +1,39 @@
+import { useState, useEffect } from 'react';
 import RollingPaperList from '@/components/papers/RollingPaperList';
 import useError from '@/hooks/useError';
 import useRollingPaperData from '@/hooks/useRollingPaperData';
 
 const RecentSortedRollingPaper = () => {
   const { error } = useError();
-  const { data, loading } = useRollingPaperData();
+  const { fetchRollingPaperData } = useRollingPaperData();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const fetchData = async (url) => {
+    setLoading(true);
+    const result = await fetchRollingPaperData(url);
+    setData(result);
+    setLoading(false);
+  };
 
-  // 이 부분도 나중에 수정해보면 좋을 것 같습니다
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handlePageChange = (url) => {
+    fetchData(url);
+  };
+
   if (error) {
     return <div className="text-error">에러가 발생했어요!</div>;
   }
 
-  return <RollingPaperList data={data} loading={loading} />;
+  return (
+    <RollingPaperList
+      data={data}
+      loading={loading}
+      onPageChange={handlePageChange}
+    />
+  );
 };
 
 export default RecentSortedRollingPaper;
