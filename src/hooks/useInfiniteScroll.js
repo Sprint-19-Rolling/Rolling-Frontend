@@ -23,7 +23,7 @@ const useInfiniteScroll = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasNext && !isFetching) {
+        if (entries[0]?.isIntersecting && hasNext && !isFetching) {
           fetchMore();
         }
       },
