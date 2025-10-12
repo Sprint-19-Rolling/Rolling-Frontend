@@ -93,7 +93,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
 
   if (loading && !isFetching) {
     return (
-      <div className="card-grid-style">
+      <div className="message-card-grid-style">
         {MESSAGE_LIST_SKELETON_ARRAY.map((_, index) => {
           return <MessageCardSkeleton key={index} />;
         })}
@@ -103,7 +103,7 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
 
   return (
     <>
-      <div className="card-grid-style">
+      <div className="message-card-grid-style">
         {!isEditPage && <AddMessageCardButton id={recipientId} />}
         {messages.length > 0 &&
           messages.map((item) => {

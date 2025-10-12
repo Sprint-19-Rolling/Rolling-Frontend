@@ -8,15 +8,15 @@ import { cn } from '@/utils/style';
  */
 const buttonStyles = cva(
   `absolute top-1/2 z-20 hidden h-10 w-10 -translate-y-1/2 
-   items-center justify-center rounded-full 
-   bg-white/70 backdrop-blur-md border border-[#DADCDF]
-   shadow-md transition-all hover:bg-white hover:shadow-lg 
-   md:flex`,
+  items-center justify-center rounded-full border border-[#DADCDF]
+  bg-white/70 backdrop-blur-md shadow-md transition-all
+  hover:bg-white hover:shadow-lg
+  md:flex`,
   {
     variants: {
       position: {
-        left: 'left-2.5',
-        right: 'right-2.5',
+        left: '-left-5',
+        right: '-right-5',
       },
     },
     defaultVariants: {

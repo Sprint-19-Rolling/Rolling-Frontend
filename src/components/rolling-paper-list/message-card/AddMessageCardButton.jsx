@@ -20,7 +20,7 @@ const AddMessageCardButton = ({ id }) => {
   return (
     <Link
       to={`/post/${id}/message`}
-      className="card-style items-center justify-center"
+      className="message-card-style items-center justify-center"
       aria-label="롤링페이퍼 메세지 추가 페이지로 이동">
       <div className={iconWrapperStyles}>
         <Icons.PlusIcon />

@@ -1,21 +1,21 @@
-import ArrowButton from '@/components/common/button/ArrowButton';
-import RollingPaperCard from '@/components/papers/RollingPaperCard';
-import MessageCardSkeleton from '@/components/rolling-paper-list/message-card/MessageCardSkeleton';
+import ArrowButton from '@/components/papers/ArrowButton';
+import RollingPaperCard from '@/components/papers/rolling-paper-card/RollingPaperCard';
+import RollingPaperCardSkeleton from '@/components/papers/rolling-paper-card/RollingPaperCardSkeleton';
+import { LIST_LIMIT_ARRAY } from '@/constants/list';
 
 const RollingPaperList = ({ data, loading }) => {
-  // 추후 수정 필요
   if (loading || !data) {
     return (
-      <div className="flex w-full justify-between">
-        {[1, 2, 3, 4].map((item) => {
-          return <MessageCardSkeleton key={item} />;
+      <div className="rolling-paper-list-style">
+        {LIST_LIMIT_ARRAY.map((_, index) => {
+          return <RollingPaperCardSkeleton key={index} />;
         })}
       </div>
     );
   }
 
   return (
-    <div className="relative flex w-full justify-between">
+    <div className="rolling-paper-list-style relative">
       {data.previous && <ArrowButton position="left" />}
       {data.results.length > 0 ? (
         data.results.map((card) => {

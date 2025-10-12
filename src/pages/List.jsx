@@ -1,14 +1,22 @@
 import LinkButton from '@/components/common/button/LinkButton';
+import Error from '@/components/common/Error';
 import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import Title from '@/components/common/Title';
 import LikeSortedRollingPaper from '@/components/papers/LikeSortedRollingPaper';
 import RecentSortedRollingPaper from '@/components/papers/RecentSortedRollingPaper';
+import useError from '@/hooks/useError';
 import { cn } from '@/utils/style';
 
 const List = () => {
+  const { error } = useError();
   const listStyle = 'flex flex-col gap-4';
+
+  if (error) {
+    return <Error />;
+  }
+
   return (
-    <div className="py-15 flex flex-col gap-6">
+    <div className="py-15 mx-auto flex max-w-[1160px] flex-col gap-6">
       <div className={listStyle}>
         <Title>인기 롤링 페이퍼 🔥</Title>
         <LikeSortedRollingPaper />
