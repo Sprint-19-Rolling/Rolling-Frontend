@@ -1,8 +1,8 @@
 export const fontMap = {
-  'noto-sans': "'Noto Sans', sans-serif",
-  pretendard: "'Pretendard', sans-serif",
-  'nanum-myeongjo': "'Nanum Myeongjo', serif",
-  handletter: "'Nanum Pen Script', cursive",
+  'noto-sans': 'Noto Sans',
+  pretendard: 'Pretendard',
+  'nanum-myeongjo': 'Nanum Myeongjo',
+  handletter: 'Nanum Pen Script',
 };
 
 // 드롭다운에 표시될 한글/영어 라벨
