@@ -38,16 +38,25 @@ const dropdownContainerVariants = cva(
  * />
  */
 
+const fontMap = {
+  'noto sans': "'Noto Sans', sans-serif",
+  pretendard: "'Pretendard', sans-serif",
+  'nanum-myeongjo': "'Nanum Myeongjo', serif",
+  handletter: "'Nanum Pen Script', cursive",
+};
+
 const BasicDropdown = ({ items, onSelect, className = '', size = 'basic' }) => {
   return (
     <div className={cn(dropdownContainerVariants({ size }), className)}>
       <ul className="flex flex-col">
         {items.map((item) => {
+          const fontFamily = fontMap[item.toLowerCase()] || 'inherit';
           return (
             <li
               key={item}
               onClick={() => onSelect?.(item)}
-              className="h-[50px] cursor-pointer px-4 py-3 text-gray-900 hover:bg-gray-100">
+              className="h-[50px] cursor-pointer px-4 py-3 text-gray-900 hover:bg-gray-100"
+              style={{ fontFamily }}>
               {item}
             </li>
           );
