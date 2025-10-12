@@ -10,7 +10,7 @@ import useError from '@/hooks/useError.js';
  */
 const useDataFetch = (fetcher, deps = []) => {
   const { setError } = useError();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
