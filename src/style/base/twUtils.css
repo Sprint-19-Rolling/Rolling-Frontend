@@ -47,7 +47,12 @@
 
 /* rolling-paper-list-style */
 @utility rolling-paper-list-style {
-  @apply flex w-full justify-between gap-5;
+  @apply flex w-full gap-5;
+}
+
+/* rolling-paper-list-mobile-style */
+@utility rolling-paper-list-mobile-style {
+  @apply flex w-full snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth lg:hidden;
 }
 
 /* divider-style */

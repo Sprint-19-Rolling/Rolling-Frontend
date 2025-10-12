@@ -6,16 +6,19 @@ import ProfileGroup from '@/components/common/profile-image/ProfileGroup';
 import Title from '@/components/common/Title';
 import { cn } from '@/utils/style';
 
-const cardStyle = cva('relative overflow-hidden rolling-paper-card-style', {
-  variants: {
-    backgroundColor: {
-      beige: 'bg-beige-200',
-      purple: 'bg-purple-200',
-      blue: 'bg-blue-200',
-      green: 'bg-green-200',
+const cardStyle = cva(
+  'relative overflow-hidden rolling-paper-card-style shrink-0 snap-start',
+  {
+    variants: {
+      backgroundColor: {
+        beige: 'bg-beige-200',
+        purple: 'bg-purple-200',
+        blue: 'bg-blue-200',
+        green: 'bg-green-200',
+      },
     },
-  },
-});
+  }
+);
 
 const RollingPaperCard = ({
   id,
