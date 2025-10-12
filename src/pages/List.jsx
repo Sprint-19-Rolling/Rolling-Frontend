@@ -15,7 +15,7 @@ const List = () => {
   }
 
   return (
-    <div className="py-15 mx-auto flex max-w-[1160px] flex-col gap-12">
+    <div className="md:py-15 mx-auto flex max-w-[1160px] flex-col gap-12 py-[50px]">
       <div className={listStyle}>
         <Title>인기 롤링 페이퍼 🔥</Title>
         <LikeSortedRollingPaper />
