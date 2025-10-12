@@ -6,7 +6,7 @@ export const fontMap = {
 };
 
 // 드롭다운에 표시될 한글/영어 라벨
-export const fontDisplayNames = {
+export const FONT_DISPLAY_NAMES = {
   'noto-sans': 'Noto Sans',
   pretendard: 'Pretendard',
   'nanum-myeongjo': '나눔명조',
