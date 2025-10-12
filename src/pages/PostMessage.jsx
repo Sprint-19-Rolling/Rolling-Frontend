@@ -7,68 +7,10 @@ import ProfileImage from '@/components/common/profile-image/ProfileImage';
 import TextEditor from '@/components/common/TextEditor';
 import TextInput from '@/components/common/TextInput';
 import Title from '@/components/common/Title';
-import useError from '@/hooks/useError';
+import { fontDisplayNames } from '@/constants/fontMap';
+import useDataFetch from '@/hooks/useDataFetch';
 import { useInput } from '@/hooks/useInput';
 import { useMessageSubmit } from '@/hooks/useMessageSubmit';
-
-// useDataFetch 훅 (내부 정의)
-const useDataFetch = (fetcher, deps = []) => {
-  const { setError } = useError();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    setData(null);
-    setError(null);
-    setLoading(true);
-
-    const fetchData = async () => {
-      try {
-        const result = await fetcher(controller.signal);
-        setData(result);
-      } catch (err) {
-        if (axios.isCancel(err) || err.name === 'CanceledError') {
-          return;
-        }
-
-        setError({
-          status: err.response?.status || 500,
-          message:
-            err.response?.data?.message || '데이터를 불러오는 데 실패했습니다.',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      controller.abort();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-
-  return { data, setData, loading };
-};
-
-// 글꼴 리스트 상수
-const FONT_OPTIONS = [
-  'Noto Sans',
-  'Pretendard',
-  '나눔 명조',
-  '나눔손글씨 손편지체',
-];
-
-// 글꼴 매핑
-const FONT_MAP = {
-  'Noto Sans': 'noto-sans',
-  Pretendard: 'pretendard',
-  '나눔 명조': 'nanum-myeongjo',
-  '나눔손글씨 손편지체': 'handletter',
-};
 
 const PostMessage = () => {
   const { id } = useParams();
@@ -79,7 +21,6 @@ const PostMessage = () => {
     customErrorMessage: '이름을 입력해 주세요',
   });
 
-  // API 호출 함수
   const fetchProfileImages = async (signal) => {
     const response = await axios.get(
       'https://rolling-api.vercel.app/profile-images/',
@@ -91,6 +32,10 @@ const PostMessage = () => {
   const { data: profileImages, loading } = useDataFetch(fetchProfileImages, []);
 
   const [profileImageURL, setProfileImageURL] = useState('');
+  const [relationship, setRelationship] = useState('지인');
+  const [content, setContent] = useState('');
+  const [font, setFont] = useState('noto-sans');
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     if (
@@ -109,24 +54,48 @@ const PostMessage = () => {
     setError,
   } = useMessageSubmit(recipient_id);
 
-  const [relationship, setRelationship] = useState('지인');
-  const [content, setContent] = useState('');
-  const [font, setFont] = useState('Noto Sans'); // 서버 저장용
-  const [editorFont, setEditorFont] = useState('noto-sans'); // 에디터 표시용
-  const [formError, setFormError] = useState('');
-
   const isContentEmpty =
     !content || content.replace(/<[^>]*>/g, '').trim() === '';
+
+  const handleFontChange = (selectedDisplayName) => {
+    console.log('드롭다운에서 선택된 표시 이름:', selectedDisplayName);
+
+    const fontKey = Object.keys(fontDisplayNames).find(
+      (key) => fontDisplayNames[key] === selectedDisplayName
+    );
+
+    if (fontKey) {
+      console.log('Quill에 적용될 폰트:', fontKey);
+      setFont(fontKey);
+    }
+  };
 
   const handleSubmit = async () => {
     setFormError('');
     setError('');
 
     if (!fromInput.validate()) {
+      setFormError('이름을 입력해 주세요.');
       return;
     }
+
     if (isContentEmpty) {
       setFormError('내용을 입력해주세요.');
+      return;
+    }
+
+    if (!profileImageURL || profileImageURL.trim() === '') {
+      setFormError('프로필 이미지를 선택해주세요.');
+      return;
+    }
+
+    if (!relationship || relationship.trim() === '') {
+      setFormError('상대와의 관계를 선택해주세요.');
+      return;
+    }
+
+    if (!font || font.trim() === '') {
+      setFormError('폰트를 선택해주세요.');
       return;
     }
 
@@ -141,35 +110,26 @@ const PostMessage = () => {
 
   const isButtonDisabled =
     isSubmitting ||
-    !fromInput.value.trim() ||
+    !fromInput.value ||
+    fromInput.value.trim() === '' ||
     !profileImageURL ||
+    profileImageURL.trim() === '' ||
     !relationship ||
-    isContentEmpty;
+    relationship.trim() === '' ||
+    isContentEmpty ||
+    !font ||
+    font.trim() === '';
 
-  const handleFontChange = (newFont) => {
-    const isHyphenFormat =
-      newFont.includes('-') ||
-      ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'].includes(
-        newFont
-      );
+  const FONT_OPTIONS = Object.values(fontDisplayNames);
 
-    if (isHyphenFormat) {
-      return;
-    }
-
-    setFont(newFont);
-
-    const formattedFont =
-      FONT_MAP[newFont] || newFont.replace(/\s+/g, '-').toLowerCase();
-    setEditorFont(formattedFont);
-  };
+  const currentFontDisplayName = fontDisplayNames[font] || 'Noto Sans';
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-white px-4 py-10 sm:px-6">
       <section className="flex w-full max-w-[720px] flex-col gap-10 sm:max-w-[640px] md:max-w-[720px]">
         {/* From 입력 */}
         <div className="w-full">
-          <Title>From.</Title>
+          <Title className="mb-[12px]">From.</Title>
           <TextInput
             name="From"
             placeholder="이름을 입력해 주세요"
@@ -180,7 +140,7 @@ const PostMessage = () => {
 
         {/* 프로필 이미지 선택 */}
         <div>
-          <Title>프로필 이미지</Title>
+          <Title className="mb-[12px]">프로필 이미지</Title>
           <div className="mt-2 flex flex-col sm:flex-row sm:items-start sm:gap-4">
             <div className="flex flex-shrink-0 justify-center sm:justify-start">
               <ProfileImage
@@ -230,7 +190,7 @@ const PostMessage = () => {
 
         {/* 관계 선택 */}
         <div>
-          <Title>상대와의 관계</Title>
+          <Title className="mb-[12px]">상대와의 관계</Title>
           <Dropdown
             items={['친구', '지인', '동료', '가족']}
             placeholder="지인"
@@ -241,11 +201,11 @@ const PostMessage = () => {
 
         {/* 내용 입력 */}
         <div className="w-full">
-          <Title>내용을 입력해 주세요</Title>
+          <Title className="mb-[12px]">내용을 입력해 주세요</Title>
           <TextEditor
             value={content}
             onChange={setContent}
-            font={editorFont}
+            font={font}
             onFontChange={handleFontChange}
             className="w-full"
           />
@@ -253,9 +213,10 @@ const PostMessage = () => {
 
         {/* 폰트 선택 */}
         <div className="w-full max-w-[320px]">
-          <Title>폰트 선택</Title>
+          <Title className="mb-[12px]">폰트 선택</Title>
           <Dropdown
             items={FONT_OPTIONS}
+            selectedItem={currentFontDisplayName}
             placeholder="폰트를 선택하세요"
             onChange={handleFontChange}
             className="w-full"
