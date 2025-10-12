@@ -1,4 +1,5 @@
 import { teamApi } from '@/apis/axios';
+import { LIST_LIMIT } from '@/constants/list';
 
 /**
  * 새로운 수신자를 생성하는 API 호출 함수
@@ -51,7 +52,10 @@ export const getRecipientData = async (recipientId, signal) => {
   };
 };
 
-export const getRollingPaperData = async ({ limit = 4, sort }, signal) => {
+export const getRollingPaperData = async (
+  { limit = LIST_LIMIT, sort },
+  signal
+) => {
   const res = await teamApi.get(
     `recipients/?limit=${limit}&offset=0${sort && `&sort=${sort}`}`,
     { signal }
