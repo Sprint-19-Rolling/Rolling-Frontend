@@ -43,7 +43,7 @@ const RollingPaperCard = ({
   return (
     <Link
       to={`/post/${id}`}
-      className={`shadow-basic relative h-[260px] w-[275px] overflow-hidden rounded-2xl border border-black/10 bg-${backgroundColor}-200 pt-7.5 flex flex-col items-start justify-between px-6 pb-5`}
+      className={`relative overflow-hidden bg-${backgroundColor}-200 rolling-paper-card-style`}
       style={backgroundImageURL && backgroundStyle}>
       {renderShape()}
       {/* 콘텐츠 */}
