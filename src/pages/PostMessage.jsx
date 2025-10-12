@@ -237,7 +237,7 @@ const PostMessage = () => {
             value={content}
             onChange={setContent}
             font={font}
-            onFontChange={setFont}
+            onFontChange={handleFontChange}
             className="w-full"
           />
         </div>
