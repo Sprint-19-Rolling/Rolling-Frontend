@@ -4,15 +4,22 @@ import useError from '@/hooks/useError';
 import useRollingPaperData from '@/hooks/useRollingPaperData';
 
 const RecentSortedRollingPaper = () => {
-  const { error } = useError();
+  const { error, setError } = useError();
   const { fetchRollingPaperData } = useRollingPaperData();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const fetchData = async (url) => {
     setLoading(true);
-    const result = await fetchRollingPaperData(url);
-    setData(result);
-    setLoading(false);
+    try {
+      const result = await fetchRollingPaperData(url);
+      setData(result);
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

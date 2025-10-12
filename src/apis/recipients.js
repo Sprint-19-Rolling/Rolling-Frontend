@@ -62,8 +62,7 @@ export const getRollingPaperData = async (
   let res;
 
   if (url) {
-    const axios = (await import('axios')).default;
-    res = await axios.get(url, { signal });
+    res = await teamApi.get(url, { signal });
   } else {
     res = await teamApi.get(
       `recipients/?limit=${limit}&offset=0${sort ? `&sort=${sort}` : ''}`,
