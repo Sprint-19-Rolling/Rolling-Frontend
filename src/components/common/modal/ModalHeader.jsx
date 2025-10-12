@@ -1,37 +1,24 @@
-import RelationshipBadge from '@/components/common/badge/RelationshipBadge';
-import ProfileImage from '@/components/common/profile-image/ProfileImage';
+import AuthorInfo from '@/components/rolling-paper-list/AuthorInfo';
 import DateText from '@/components/rolling-paper-list/DateText';
 
-const containerStyle =
-  'flex justify-between items-center pb-4 border-b border-gray-200 mb-6';
-const profileInfoStyle = 'flex items-center gap-2';
-
 /**
- * 모달의 헤더 정보를 표시하는 컴포넌트 (프로필 이미지, 이름, 역할, 날짜)
+ * 모달 상단 헤더 컴포넌트
+ * 작성자 정보(프로필, 이름, 관계)와 작성 날짜를 표시합니다.
+ *
+ * @param {object} props
+ * @param {string} props.sender - 작성자 이름
+ * @param {string} props.role - 관계 (친구, 가족, 동료, 지인)
+ * @param {string} props.date - 작성 날짜
+ * @param {string} props.profileImgUrl - 프로필 이미지 URL
  */
 const ModalHeader = ({ sender, role, date, profileImgUrl }) => {
   return (
-    <div className={containerStyle}>
-      <div className={profileInfoStyle}>
-        <ProfileImage
-          src={profileImgUrl}
-          alt={`${sender}님의 프로필`}
-          size="large"
-          borderColor="gray"
-        />
-        <div className="flex flex-col">
-          <p className="font-20-regular sm:font-20-regular text-gray-900">
-            From.
-            <span className="font-20-bold sm:font-20-bold ml-1">{sender}</span>
-          </p>
-
-          {role && (
-            <div className="pt-0.5">
-              <RelationshipBadge type={role} />
-            </div>
-          )}
-        </div>
-      </div>
+    <div className="mb-6 flex items-center justify-between border-b border-gray-200 pb-4">
+      <AuthorInfo
+        sender={sender}
+        profileImageURL={profileImgUrl}
+        relationship={role}
+      />
       <DateText createdAt={date} size="modal" />
     </div>
   );

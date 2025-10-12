@@ -3,6 +3,7 @@ import ReactQuill, { Quill } from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import '@/style/base/quill-custom.css';
 
+// 색상 팔레트
 const QUILL_COLORS = [
   '#000000',
   '#e60000',
@@ -41,10 +42,12 @@ const QUILL_COLORS = [
   '#3d1466',
 ];
 
+// Quill 폰트 설정
 const Font = Quill.import('formats/font');
 Font.whitelist = ['noto-sans', 'pretendard', 'nanum-myeongjo', 'handletter'];
 Quill.register(Font, true);
 
+// 글꼴 유지 기능
 const useFontPersistence = (reactQuillRef) => {
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
@@ -60,6 +63,7 @@ const useFontPersistence = (reactQuillRef) => {
       if (!ops) {
         return;
       }
+
       for (let i = 0; i < ops.length; i++) {
         const op = ops[i];
         if (op.insert === '\n') {
@@ -89,13 +93,13 @@ const useFontPersistence = (reactQuillRef) => {
   }, [reactQuillRef]);
 };
 
+// 체크리스트 툴바 상태 관리
 const useChecklistToolbarManager = (reactQuillRef) => {
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
     if (!quill) {
       return;
     }
-
     const container = quill.root;
 
     const updateToolbarButtons = () => {
@@ -109,25 +113,17 @@ const useChecklistToolbarManager = (reactQuillRef) => {
         return;
       }
 
-      const checkButton = toolbar.querySelector(
-        'button.ql-list[value="check"]'
-      );
-      const orderedButton = toolbar.querySelector(
-        'button.ql-list[value="ordered"]'
-      );
-      const bulletButton = toolbar.querySelector(
-        'button.ql-list[value="bullet"]'
-      );
+      const buttons = {
+        check: toolbar.querySelector('button.ql-list[value="check"]'),
+        ordered: toolbar.querySelector('button.ql-list[value="ordered"]'),
+        bullet: toolbar.querySelector('button.ql-list[value="bullet"]'),
+      };
 
-      if (checkButton) {
-        checkButton.classList.toggle('ql-active', formats.list === 'check');
-      }
-      if (orderedButton) {
-        orderedButton.classList.toggle('ql-active', formats.list === 'ordered');
-      }
-      if (bulletButton) {
-        bulletButton.classList.toggle('ql-active', formats.list === 'bullet');
-      }
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (btn) {
+          btn.classList.toggle('ql-active', formats.list === key);
+        }
+      });
     };
 
     const updateChecklistColors = () => {
@@ -139,12 +135,11 @@ const useChecklistToolbarManager = (reactQuillRef) => {
         }
         const index = quill.getIndex(blot);
         const formats = quill.getFormat(index, 1);
-        const isChecked = formats.checked === true;
         const uiElement = item.querySelector('.ql-ui');
         if (uiElement) {
           uiElement.setAttribute(
             'data-color-init',
-            isChecked ? 'purple' : 'gray'
+            formats.checked === true ? 'purple' : 'gray'
           );
         }
       });
@@ -161,8 +156,7 @@ const useChecklistToolbarManager = (reactQuillRef) => {
       }
       const index = quill.getIndex(blot);
       const formats = quill.getFormat(index, 1);
-      const isChecked = formats.checked === true;
-      quill.formatLine(index, 1, { checked: !isChecked });
+      quill.formatLine(index, 1, { checked: !formats.checked });
       quill.setSelection(index, 0, 'silent');
       updateToolbarButtons();
     };
@@ -187,12 +181,51 @@ const useChecklistToolbarManager = (reactQuillRef) => {
   }, [reactQuillRef]);
 };
 
-const TextEditor = ({ value, onChange }) => {
+const TextEditor = ({ value, onChange, onFontChange, font }) => {
   const reactQuillRef = useRef(null);
-
   useFontPersistence(reactQuillRef);
   useChecklistToolbarManager(reactQuillRef);
 
+  // 외부 Dropdown에서 선택된 폰트 → 에디터 전체에 적용
+  useEffect(() => {
+    const quill = reactQuillRef.current?.getEditor();
+    if (!quill || !font) {
+      return;
+    }
+
+    // 전체 텍스트 범위 가져오기
+    const length = quill.getLength();
+    if (length <= 1) {
+      // 텍스트가 없을 때는 커서 위치에 폰트 설정
+      quill.format('font', font, 'api');
+    } else {
+      // 텍스트가 있을 때는 전체에 폰트 적용
+      quill.formatText(0, length, { font }, 'api');
+    }
+  }, [font]);
+
+  // Quill에서 글꼴 변경 감지 → 외부로 전달 (선택 영역 기준)
+  useEffect(() => {
+    const quill = reactQuillRef.current?.getEditor();
+    if (!quill || !onFontChange) {
+      return;
+    }
+
+    const handleSelectionChange = (range) => {
+      if (!range) {
+        return;
+      }
+      const format = quill.getFormat(range);
+      if (format.font && format.font !== font) {
+        onFontChange(format.font);
+      }
+    };
+
+    quill.on('selection-change', handleSelectionChange);
+    return () => quill.off('selection-change', handleSelectionChange);
+  }, [onFontChange, font]);
+
+  // 에디터 공백 감지 (placeholder 처리)
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
     if (!quill) {
@@ -201,28 +234,40 @@ const TextEditor = ({ value, onChange }) => {
     const root = quill.root;
     let disposed = false;
 
-    const getVisibleText = () => {
-      const raw = root.textContent || '';
-
-      return raw
+    const getVisibleText = () =>
+      (root.textContent || '')
         .replace(/[\u200B\uFEFF\u00A0]/g, '')
         .replace(/\n/g, '')
         .trim();
+
+    const hasContent = () => {
+      // 텍스트가 있는지 확인
+      if (getVisibleText().length > 0) {
+        return true;
+      }
+      // 리스트 요소가 있는지 확인
+      const hasLists = root.querySelector('ol, ul');
+      if (hasLists) {
+        return true;
+      }
+      // 이미지나 다른 블록 요소가 있는지 확인
+      const hasBlocks = root.querySelector('img, iframe, video');
+      if (hasBlocks) {
+        return true;
+      }
+      return false;
     };
 
     const syncBlankClass = () => {
       if (disposed) {
         return;
       }
-      const isEmpty = getVisibleText().length === 0;
-      root.classList.toggle('ql-blank', isEmpty);
+      root.classList.toggle('ql-blank', !hasContent());
     };
 
     const handleTextChange = () => syncBlankClass();
     const handleInput = () => syncBlankClass();
-    const handleCompositionEnd = () => {
-      setTimeout(syncBlankClass, 0);
-    };
+    const handleCompositionEnd = () => setTimeout(syncBlankClass, 0);
 
     quill.on('text-change', handleTextChange);
     quill.on('selection-change', syncBlankClass);
@@ -242,6 +287,7 @@ const TextEditor = ({ value, onChange }) => {
     };
   }, [reactQuillRef]);
 
+  // 툴바 설정
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -256,7 +302,7 @@ const TextEditor = ({ value, onChange }) => {
           ['clean'],
         ],
         handlers: {
-          clean: function () {
+          clean() {
             const range = this.quill.getSelection();
             if (range) {
               this.quill.removeFormat(range.index, range.length);

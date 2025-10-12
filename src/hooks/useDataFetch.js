@@ -5,7 +5,7 @@ import useError from '@/hooks/useError.js';
 /**
  * 공통 데이터 fetching 훅입니다.
  * 데이터를 가져오는 비동기 함수와, useEffect 의존성 배열을 인자로 받습니다.
- * @param {function(): Promise<any>} fetcher - 데이터를 가져오는 async 함수
+ * @param {function(signal: AbortSignal): Promise<any>} fetcher - 데이터를 가져오는 async 함수
  * @param {Array} deps - useEffect 의존성 배열
  */
 const useDataFetch = (fetcher, deps = []) => {
@@ -41,9 +41,7 @@ const useDataFetch = (fetcher, deps = []) => {
 
     fetchData();
 
-    return () => {
-      controller.abort();
-    };
+    return () => controller.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 

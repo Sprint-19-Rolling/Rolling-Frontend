@@ -16,7 +16,6 @@ const inputWrapper = cva(
     },
   }
 );
-
 /**
  * 텍스트 입력 컴포넌트
  *
@@ -32,21 +31,30 @@ const inputWrapper = cva(
  * @param {string} [props.className] - 추가 클래스
  * @param {boolean} [props.disabled=false] - 비활성화 여부
  */
-const TextInput = ({
-  name,
-  type = 'text',
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  error = false,
-  errorMessage,
-  className = '',
-  disabled = false,
-  ...props
-}) => {
-  // DOM에 필요 없는 커스텀 props 제거
-  const { validate: _validate, ...restProps } = props;
+const TextInput = (props) => {
+  const {
+    name,
+    type = 'text',
+    placeholder,
+    value,
+    onChange,
+    onBlur,
+    error = false,
+    errorMessage,
+    className = '',
+    disabled = false,
+    validate,
+    ...restProps
+  } = props;
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    onChange(newValue);
+
+    if (validate) {
+      validate(newValue);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -56,7 +64,7 @@ const TextInput = ({
           name={name}
           type={type}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
           disabled={disabled}
@@ -64,7 +72,7 @@ const TextInput = ({
             'font-16-regular flex-1 bg-transparent text-gray-900 outline-none placeholder:text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
             className
           )}
-          {...restProps} // validate 제거된 나머지 props만 전달
+          {...restProps}
         />
       </div>
       {error && errorMessage && (

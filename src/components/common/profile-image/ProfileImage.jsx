@@ -1,11 +1,11 @@
 import { cva } from 'class-variance-authority';
-import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
 
 const profileImageStyle = cva('rounded-full object-cover', {
   variants: {
     size: {
-      large: 'w-14 h-14',
+      xlarge: 'w-[80px] h-[80px]',
+      medium: 'w-14 h-14',
       small: 'w-7 h-7',
     },
     borderColor: {
@@ -19,7 +19,7 @@ const profileImageStyle = cva('rounded-full object-cover', {
     },
   },
   defaultVariants: {
-    size: 'large',
+    size: 'medium',
     borderColor: 'gray',
     isClickable: false,
   },
@@ -47,17 +47,6 @@ const ProfileImage = ({
       )}
     />
   );
-};
-
-ProfileImage.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  size: PropTypes.oneOf(['large', 'small']),
-  borderColor: PropTypes.oneOf(['gray', 'white', 'purple']),
-  isSelected: PropTypes.bool,
-  isClickable: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 export default ProfileImage;
