@@ -1,4 +1,3 @@
-// EmojiBadge.jsx
 // 이모지 뱃지 컴포넌트
 
 import { cva } from 'class-variance-authority';
@@ -20,7 +19,7 @@ const emojiBadgeStyle = cva(
 /**
  * EmojiBadge 컴포넌트
  *
- * @param {Object} props - 컴포넌트 props
+ * @param {object} props - 컴포넌트 props
  * @param {string} props.emoji - 뱃지에 표시할 이모지 (필수)
  * @param {number} [props.count] - 선택적으로 표시할 숫자
  * @param {'s' | 'md' | 'lg'} [props.size='md'] - 뱃지 크기

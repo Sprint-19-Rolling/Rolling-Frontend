@@ -20,7 +20,7 @@ const relationshipBadgeStyle = cva(
 /**
  * 관계 뱃지 컴포넌트
  *
- * @param {Object} props - 컴포넌트 속성
+ * @param {object} props - 컴포넌트 속성
  * @param {'친구' | '가족' | '동료' | '지인'} props.type - 관계 유형
  * @returns {JSX.Element} 관계 뱃지 엘리먼트
  */
