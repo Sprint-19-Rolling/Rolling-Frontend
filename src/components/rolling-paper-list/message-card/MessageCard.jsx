@@ -1,26 +1,9 @@
-import { cva } from 'class-variance-authority';
-import DOMPurify from 'dompurify';
-import { useMemo } from 'react';
 import Icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
+import PostContent from '@/components/common/modal/PostContent';
 import AuthorInfo from '@/components/rolling-paper-list/AuthorInfo';
 import DateText from '@/components/rolling-paper-list/DateText';
-import { SANITIZE_CONFIG_MESSAGECARD } from '@/constants/sanitizeConfig';
 import { cn } from '@/utils/style';
-
-const textStyle = cva(
-  'font-15-regular sm:font-18-regular line-clamp-2 text-gray-600 sm:line-clamp-3',
-  {
-    variants: {
-      font: {
-        Pretendard: 'font-sans',
-        'Noto Sans': 'ff-noto',
-        나눔명조: 'ff-nanum-myeongjo',
-        '나눔손글씨 손편지체': 'ff-nanum-sonpyeonji',
-      },
-    },
-  }
-);
 
 /** 롤링페이퍼 목록에서 사용되는 메시지 카드 컴포넌트입니다.
  * 클릭 시 해당 메시지의 상세 모달을 띄웁니다.
@@ -48,11 +31,6 @@ const MessageCard = ({
   edit = false,
   onDelete,
 }) => {
-  const sanitizedContent = useMemo(
-    () => DOMPurify.sanitize(content, SANITIZE_CONFIG_MESSAGECARD),
-    [content]
-  );
-
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -95,12 +73,12 @@ const MessageCard = ({
           <Icons.DeletedIcon />
         </Button>
       )}
-
-      <div
-        className={cn(textStyle({ font }))}
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+      <PostContent
+        htmlContent={content}
+        className={'line-clamp-2 sm:line-clamp-3'}
+        font={font}
+        card
       />
-
       <DateText className="mt-auto" createdAt={createdAt} />
     </div>
   );
