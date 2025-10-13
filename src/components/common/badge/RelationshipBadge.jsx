@@ -1,7 +1,6 @@
 // 관계 뱃지 컴포넌트
 
 import { cva } from 'class-variance-authority';
-import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
 
 const relationshipBadgeStyle = cva(
@@ -18,12 +17,15 @@ const relationshipBadgeStyle = cva(
   }
 );
 
+/**
+ * 관계 뱃지 컴포넌트
+ *
+ * @param {Object} props - 컴포넌트 속성
+ * @param {'친구' | '가족' | '동료' | '지인'} props.type - 관계 유형
+ * @returns {JSX.Element} 관계 뱃지 엘리먼트
+ */
 const RelationshipBadge = ({ type }) => {
   return <span className={cn(relationshipBadgeStyle({ type }))}>{type}</span>;
-};
-
-RelationshipBadge.propTypes = {
-  type: PropTypes.oneOf(['친구', '가족', '동료', '지인']).isRequired,
 };
 
 export default RelationshipBadge;

@@ -1,8 +1,9 @@
-//이모지 뱃지 컴포넌트
+// EmojiBadge.jsx
+// 이모지 뱃지 컴포넌트
 
 import { cva } from 'class-variance-authority';
-import PropTypes from 'prop-types';
 import { cn } from '@/utils/style';
+
 const emojiBadgeStyle = cva(
   'inline-flex items-center justify-center rounded-full bg-black/50 text-white font-16-regular',
   {
@@ -15,6 +16,16 @@ const emojiBadgeStyle = cva(
     },
   }
 );
+
+/**
+ * EmojiBadge 컴포넌트
+ *
+ * @param {Object} props - 컴포넌트 props
+ * @param {string} props.emoji - 뱃지에 표시할 이모지 (필수)
+ * @param {number} [props.count] - 선택적으로 표시할 숫자
+ * @param {'s' | 'md' | 'lg'} [props.size='md'] - 뱃지 크기
+ * @returns {JSX.Element} 이모지와 숫자를 포함한 뱃지 요소
+ */
 const EmojiBadge = ({ emoji, count, size = 'md' }) => {
   return (
     <span className={cn(emojiBadgeStyle({ size }))}>
@@ -23,9 +34,5 @@ const EmojiBadge = ({ emoji, count, size = 'md' }) => {
     </span>
   );
 };
-EmojiBadge.propTypes = {
-  emoji: PropTypes.string.isRequired,
-  count: PropTypes.number,
-  size: PropTypes.oneOf(['s', 'md', 'lg']),
-};
+
 export default EmojiBadge;
