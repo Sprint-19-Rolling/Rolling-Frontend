@@ -73,7 +73,7 @@ const EmojiSummary = ({
             'flex flex-col items-center gap-2 rounded-lg border border-gray-300 bg-white',
             hasNext && 'pb-2 md:pb-2'
           )}>
-          <div className="grid grid-cols-3 gap-2 md:grid-cols-4">
+          <div className="grid w-full grid-cols-3 gap-2 md:grid-cols-4">
             {loading ? (
               <span className="col-span-3 text-center md:col-span-4">
                 로딩중...
