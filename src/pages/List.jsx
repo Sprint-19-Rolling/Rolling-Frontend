@@ -1,9 +1,8 @@
+import FloatingButtonContainer from '@/components/common/button/FloatingButtonContainer';
 import LinkButton from '@/components/common/button/LinkButton';
 import Error from '@/components/common/Error';
-import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import Title from '@/components/common/Title';
-import LikeSortedRollingPaper from '@/components/papers/LikeSortedRollingPaper';
-import RecentSortedRollingPaper from '@/components/papers/RecentSortedRollingPaper';
+import RollingPaperListContainer from '@/components/papers/RollingPaperListContainer';
 import useError from '@/hooks/useError';
 
 const List = () => {
@@ -18,11 +17,11 @@ const List = () => {
     <div className="md:py-15 mx-auto flex max-w-[1160px] flex-col gap-12 py-[50px]">
       <div className={listStyle}>
         <Title>인기 롤링 페이퍼 🔥</Title>
-        <LikeSortedRollingPaper />
+        <RollingPaperListContainer sort={'like'} />
       </div>
       <div className={listStyle}>
         <Title>최근에 만든 롤링 페이퍼 ⭐️️</Title>
-        <RecentSortedRollingPaper />
+        <RollingPaperListContainer />
       </div>
       <FloatingButtonContainer>
         <LinkButton to={'/post'} size={56} full="mobile">

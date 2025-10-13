@@ -109,14 +109,10 @@ const MessageList = ({ recipientId, isEditPage = false }) => {
               />
             );
           })}
-
-        <div ref={observerRef} className="h-2" />
-        {isFetching && (
-          <div className="p-2 text-center text-gray-900">
-            📝 롤링페이퍼 메시지를 불러오는 중...
-          </div>
-        )}
+        {isFetching && <MessageCardSkeleton />}
       </div>
+
+      <div ref={observerRef} className="h-2" />
 
       {isOpenModal && selectedMessage && (
         <Modal
