@@ -1,14 +1,8 @@
-import { cva } from 'class-variance-authority';
 import { useRef, useState } from 'react';
 import Icons from '@/assets/icons/icons';
 import EmojiBadge from '@/components/common/badge/EmojiBadge';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/style';
-
-// 이모지 드롭다운 컨테이너 공통 스타일 분리
-const dropdownContainerStyle = cva(
-  'shadow-basic absolute right-0 top-full mt-[7px] grid gap-2 rounded-lg border border-gray-300 bg-white'
-);
 
 /**
  * @typedef {Object} ReactionItem
@@ -18,7 +12,7 @@ const dropdownContainerStyle = cva(
  */
 
 /**
- * 선택된 이모지 반응의 요약(최대 3개)을 표시하고, 클릭 시 목록(최대 8개)을 토글하는 컴포넌트입니다.
+ * 선택된 이모지 반응의 요약(최대 3개)을 표시하고, 클릭 시 목록을 토글하는 컴포넌트입니다.
  * 외부 클릭 감지 (useClickOutside)를 통해 드롭다운을 닫습니다.
  * @component
  * @param {object} props - 컴포넌트의 props
@@ -29,7 +23,14 @@ const dropdownContainerStyle = cva(
  * @returns {JSX.Element | null}
  */
 
-const EmojiSummary = ({ className, topReactions, reactions, loading }) => {
+const EmojiSummary = ({
+  className,
+  topReactions,
+  reactions,
+  loading,
+  onNext,
+  hasNext,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setIsOpen(false));
@@ -50,7 +51,7 @@ const EmojiSummary = ({ className, topReactions, reactions, loading }) => {
         return (
           <EmojiBadge
             size="lg"
-            key={item.id}
+            key={`${item.id}-top`}
             emoji={item.emoji}
             count={item.count}
             className={'sm:font-16-regular sm:h-[36px] sm:px-3 sm:py-2'}
@@ -67,28 +68,41 @@ const EmojiSummary = ({ className, topReactions, reactions, loading }) => {
       {isOpen && (
         <div
           className={cn(
-            dropdownContainerStyle(),
-            'w-[203px] grid-cols-3 p-4 sm:w-[248px] md:w-[312px] md:grid-cols-4 md:p-6'
+            'shadow-basic absolute left-0 top-full mt-[7px] p-4 sm:left-auto sm:right-0 md:p-6',
+            'w-[203px] sm:w-[248px] md:w-[312px]',
+            'flex flex-col items-center gap-2 rounded-lg border border-gray-300 bg-white',
+            hasNext && 'pb-2 md:pb-2'
           )}>
-          {loading ? (
-            <span className="col-span-3 text-center md:col-span-4">
-              로딩중...
-            </span>
-          ) : reactions && reactions.length > 0 ? (
-            reactions.map((item) => {
-              return (
-                <EmojiBadge
-                  key={item.id}
-                  size="lg"
-                  emoji={item.emoji}
-                  count={item.count}
-                />
-              );
-            })
-          ) : (
-            <span className="col-span-3 text-center text-gray-500 md:col-span-4">
-              데이터를 불러올 수 없습니다.
-            </span>
+          <div className="grid grid-cols-3 gap-2 md:grid-cols-4">
+            {loading ? (
+              <span className="col-span-3 text-center md:col-span-4">
+                로딩중...
+              </span>
+            ) : reactions && reactions.length > 0 ? (
+              reactions.map((item) => {
+                return (
+                  <EmojiBadge
+                    key={`${item.id}-dropdown`}
+                    size="lg"
+                    emoji={item.emoji}
+                    count={item.count}
+                  />
+                );
+              })
+            ) : (
+              <span className="col-span-3 text-center text-gray-500 md:col-span-4">
+                데이터를 불러올 수 없습니다.
+              </span>
+            )}
+          </div>
+          {hasNext && (
+            <button
+              type="button"
+              aria-label="이모지 불러오기"
+              className="cursor-pointer"
+              onClick={onNext}>
+              <Icons.ArrowDownIcon />
+            </button>
           )}
         </div>
       )}
