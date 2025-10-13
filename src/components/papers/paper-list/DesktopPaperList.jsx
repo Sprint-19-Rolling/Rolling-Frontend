@@ -2,8 +2,14 @@ import ArrowButton from '@/components/papers/ArrowButton';
 import RollingPaperCard from '@/components/papers/paper-card/RollingPaperCard';
 import RollingPaperCardSkeleton from '@/components/papers/paper-card/RollingPaperCardSkeleton';
 import { LIST_LIMIT_ARRAY } from '@/constants/list';
+import useRollingPaperData from '@/hooks/useRollingPaperData';
 
-const DesktopPaperList = ({ sort, data, loading, onNext, onPrev }) => {
+const DesktopPaperList = ({ sort }) => {
+  const { data, loading, goNext, goPrev } = useRollingPaperData(
+    sort,
+    'desktop'
+  );
+
   if (loading || !data) {
     return (
       <div className="rolling-paper-list-style">
@@ -17,7 +23,7 @@ const DesktopPaperList = ({ sort, data, loading, onNext, onPrev }) => {
   return (
     <div className="rolling-paper-list-style relative">
       {/* 왼쪽 화살표 */}
-      {data.previous && <ArrowButton position="left" onClick={onPrev} />}
+      {data.previous && <ArrowButton position="left" onClick={goPrev} />}
 
       {/* 카드 리스트 */}
       {data.results.length > 0 ? (
@@ -42,7 +48,7 @@ const DesktopPaperList = ({ sort, data, loading, onNext, onPrev }) => {
       )}
 
       {/* 오른쪽 화살표 */}
-      {data.next && <ArrowButton position="right" onClick={onNext} />}
+      {data.next && <ArrowButton position="right" onClick={goNext} />}
     </div>
   );
 };
