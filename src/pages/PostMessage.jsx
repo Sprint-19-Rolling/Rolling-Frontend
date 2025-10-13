@@ -28,7 +28,24 @@ const PostMessage = () => {
   const [profileImageURL, setProfileImageURL] = useState('');
   const [selectedFont, setSelectedFont] = useState('Noto Sans');
 
-  const handleFontChange = () => {
+  // TextEditor에서 폰트 변경 시 호출 (fontKey를 직접 받음)
+  const handleEditorFontChange = (fontKey) => {
+    if (!fontKey) {
+      return;
+    }
+
+    // 선택된 폰트 상태 업데이트
+    setSelectedFont(fontKey);
+
+    // 외부 드롭다운도 동기화
+    const displayName = FONT_DISPLAY_NAMES[fontKey];
+    if (displayName && fontRef.current?.setValue) {
+      fontRef.current.setValue(displayName);
+    }
+  };
+
+  // 외부 Dropdown에서 폰트 변경 시 호출
+  const handleDropdownFontChange = () => {
     const selectedDisplayName = fontRef.current?.getValue();
     if (!selectedDisplayName) {
       return;
@@ -169,7 +186,7 @@ const PostMessage = () => {
           value={content}
           onChange={setContent}
           font={selectedFont}
-          onFontChange={handleFontChange}
+          onFontChange={handleEditorFontChange}
         />
       </div>
       <div className="flex flex-col gap-4">
@@ -178,7 +195,7 @@ const PostMessage = () => {
           ref={fontRef}
           items={FONT_ITEMS}
           defaultValue="Noto Sans"
-          onSelect={handleFontChange}
+          onSelect={handleDropdownFontChange}
         />
       </div>
       <FloatingButtonContainer>
