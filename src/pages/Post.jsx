@@ -101,7 +101,7 @@ const Post = () => {
         size={40}
         full="always"
         className="font-18-bold h-[56px] w-full"
-        disabled={loading}>
+        disabled={loading || !toInput.value.trim()}>
         {loading ? '생성 중...' : '생성하기'}
       </Button>
     </div>
