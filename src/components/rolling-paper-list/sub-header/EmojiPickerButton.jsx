@@ -37,7 +37,7 @@ const EmojiPickerButton = ({ recipientId, onSuccess }) => {
   };
 
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative ml-auto" ref={ref}>
       <Button
         aria-label="이모티콘 추가 버튼"
         theme="outlined"
