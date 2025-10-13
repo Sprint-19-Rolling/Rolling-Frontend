@@ -5,7 +5,7 @@ import Button from '@/components/common/button/Button';
 import TextInput from '@/components/common/TextInput';
 import TabButtonBox from '@/components/post/TabButtonBox';
 import useError from '@/hooks/useError';
-import { useInput } from '@/hooks/useInput';
+import { useInput, validateText } from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 
 const Post = () => {
@@ -101,7 +101,7 @@ const Post = () => {
         size={40}
         full="always"
         className="font-18-bold h-[56px] w-full"
-        disabled={loading}>
+        disabled={loading || validateText(toInput.value) !== ''}>
         {loading ? '생성 중...' : '생성하기'}
       </Button>
     </div>
