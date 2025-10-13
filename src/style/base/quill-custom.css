@@ -599,3 +599,6 @@ div.ql-snow .ql-picker-options .ql-picker-item.ql-selected {
   height: auto !important;
   max-height: none !important;
 }
+.ql-picker-label:hover::before {
+  color: #7c3aed !important;
+}
