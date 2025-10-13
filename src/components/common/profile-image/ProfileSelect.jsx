@@ -6,7 +6,7 @@ import ProfileImage from './ProfileImage';
 /**
  * 프로필 선택 컴포넌트
  *
- * @param {Object} props - 컴포넌트 props
+ * @param {object} props - 컴포넌트 props
  * @param {string[]} props.profiles - 프로필 이미지 URL 배열
  * @param {(url: string) => void} props.onSelect - 선택한 프로필 URL을 전달하는 콜백 함수
  * @returns {JSX.Element}
