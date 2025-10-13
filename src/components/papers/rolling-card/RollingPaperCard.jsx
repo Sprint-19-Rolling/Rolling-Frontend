@@ -54,6 +54,7 @@ const RollingPaperCard = ({
     backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${backgroundImageURL})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    backgroundOrigin: 'border-box',
   };
 
   return (
