@@ -22,7 +22,7 @@ const ProfileGroup = ({ recentMessages = [], messageCount }) => {
 
   return (
     <div className="flex items-center">
-      {recentMessages.map((item) => {
+      {recentMessages.map((item, index) => {
         return (
           <ProfileImage
             key={item.id}
@@ -31,7 +31,7 @@ const ProfileGroup = ({ recentMessages = [], messageCount }) => {
             borderColor="white"
             isSelected={false}
             isClickable={false}
-            className="-ml-2"
+            className={index === 0 ? '' : '-ml-2'}
           />
         );
       })}

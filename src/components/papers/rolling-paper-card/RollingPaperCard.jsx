@@ -65,7 +65,7 @@ const RollingPaperCard = ({
           To. {name}
         </Title>
         {recentMessages.length > 0 && (
-          <div className="ml-2">
+          <div>
             <ProfileGroup
               recentMessages={recentMessages}
               messageCount={messageCount}
