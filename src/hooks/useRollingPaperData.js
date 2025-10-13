@@ -66,11 +66,10 @@ const useRollingPaperData = (sort, mode = 'desktop') => {
         if (!prev || !prev.results) {
           return result;
         }
-        const merged = [...prev.results, ...result.results];
-        const unique = merged.filter(
-          (item, idx, arr) => idx === arr.findIndex((t) => t.id === item.id)
-        );
-        return { ...result, results: unique };
+        return {
+          ...result,
+          results: [...prev.results, ...result.results],
+        };
       });
     } catch (err) {
       setError({
