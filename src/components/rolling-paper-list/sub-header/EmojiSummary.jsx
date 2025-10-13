@@ -12,15 +12,26 @@ import { cn } from '@/utils/style';
  */
 
 /**
- * 선택된 이모지 반응의 요약(최대 3개)을 표시하고, 클릭 시 목록을 토글하는 컴포넌트입니다.
- * 외부 클릭 감지 (useClickOutside)를 통해 드롭다운을 닫습니다.
+ * EmojiSummary 컴포넌트
+ * 선택된 이모지 반응의 요약(top 3)을 표시하고,
+ * 클릭 시 전체 이모지 목록(dropdown)을 토글합니다.
+ * 외부 클릭 감지(`useClickOutside`)를 통해 드롭다운을 닫습니다.
+ *
  * @component
- * @param {object} props - 컴포넌트의 props
+ * @param {Object} props - 컴포넌트 props
  * @param {string} [props.className] - 외부에서 전달된 CSS 클래스
- * @param {Array<ReactionItem>} props.topReactions - 화면에 표시할 요약 이모지 목록 (빈 배열일 경우 null 반환)
- * @param {Array<ReactionItem> | null} [props.reactions] - 드롭다운에 표시할 이모지 목록
- * @param {boolean} props.loading - 전체 이모지 목록 로딩 상태
- * @returns {JSX.Element | null}
+ * @param {Array<ReactionItem>} props.topReactions - 상단 요약으로 표시할 이모지 목록
+ * @param {Array<ReactionItem>|null} [props.reactions] - 드롭다운에서 표시할 전체 이모지 목록
+ * @param {boolean} props.loading - 드롭다운 로딩 상태
+ * @param {function} [props.onNext] - 다음 페이지 이모지를 불러오는 콜백
+ * @param {boolean} [props.hasNext] - 다음 페이지 존재 여부 (다음 페이지 버튼 노출 여부 결정)
+ *
+ * @typedef {Object} ReactionItem
+ * @property {number} id - 이모지 ID
+ * @property {string} emoji - 이모지 문자열
+ * @property {number} count - 해당 이모지 총 개수
+ *
+ * @returns {JSX.Element|null} topReactions가 없으면 null, 아니면 이모지 요약 UI 반환
  */
 
 const EmojiSummary = ({
@@ -79,7 +90,9 @@ const EmojiSummary = ({
                 로딩중...
               </span>
             ) : reactions && reactions.length > 0 ? (
-              reactions.map((item) => {
+              Array.from(
+                new Map(reactions.map((item) => [item.emoji, item])).values()
+              ).map((item) => {
                 return (
                   <EmojiBadge
                     key={`${item.id}-dropdown`}

@@ -32,7 +32,6 @@ const SubHeader = ({ recipientId }) => {
     reactions,
     setReactions,
     loading: reactionsLoading,
-    pageSize,
     hasNext,
     goNext,
   } = useReactions(recipientId);
@@ -98,10 +97,7 @@ const SubHeader = ({ recipientId }) => {
         updatedReactions = [...prevReactions, reaction];
       }
 
-      const sortedReactions = updatedReactions.sort(
-        (a, b) => b.count - a.count
-      );
-      return sortedReactions.slice(0, pageSize);
+      return updatedReactions.sort((a, b) => b.count - a.count);
     });
   };
 
