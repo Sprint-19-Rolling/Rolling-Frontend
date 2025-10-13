@@ -32,7 +32,8 @@ const SubHeader = ({ recipientId }) => {
     reactions,
     setReactions,
     loading: reactionsLoading,
-    pageSize,
+    hasNext,
+    goNext,
   } = useReactions(recipientId);
   const { showToast } = useToast();
 
@@ -79,26 +80,24 @@ const SubHeader = ({ recipientId }) => {
     });
 
     // reactions 배열 낙관적 업데이트
-    setReactions((prev) => {
-      if (!prev) {
+    setReactions((prevReactions) => {
+      if (!prevReactions || prevReactions.length === 0) {
         return [reaction];
       }
 
-      const existingIndex = prev.findIndex((r) => r.emoji === reaction.emoji);
+      const existingIndex = prevReactions.findIndex(
+        (r) => r.emoji === reaction.emoji
+      );
       let updatedReactions;
       if (existingIndex !== -1) {
-        updatedReactions = prev.map((r, index) =>
+        updatedReactions = prevReactions.map((r, index) =>
           index === existingIndex ? { ...r, count: reaction.count } : r
         );
       } else {
-        updatedReactions = [...prev, reaction];
+        updatedReactions = [...prevReactions, reaction];
       }
 
-      const sortedReactions = updatedReactions.sort(
-        (a, b) => b.count - a.count
-      );
-
-      return sortedReactions.slice(0, pageSize);
+      return updatedReactions.sort((a, b) => b.count - a.count);
     });
   };
 
@@ -176,6 +175,8 @@ const SubHeader = ({ recipientId }) => {
                 reactions={reactions}
                 loading={reactionsLoading}
                 topReactions={topReactions}
+                onNext={goNext}
+                hasNext={hasNext}
               />
               <EmojiPickerButton
                 recipientId={recipientId}
