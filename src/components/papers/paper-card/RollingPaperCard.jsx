@@ -59,7 +59,7 @@ const RollingPaperCard = ({
       style={backgroundImageURL && backgroundStyle}>
       {renderShape()}
       {/* 콘텐츠 */}
-      <div className="z-40 flex flex-col items-start gap-3">
+      <div className="z-1 flex flex-col items-start gap-3">
         <Title as="h3" className={backgroundImageURL && 'text-white'}>
           To. {name}
         </Title>
@@ -77,7 +77,7 @@ const RollingPaperCard = ({
         </span>
       </div>
       {topReactions.length > 0 && (
-        <div className="border-black/12 z-40 w-full border-t pt-4">
+        <div className="border-black/12 z-1 w-full border-t pt-4">
           <div className="inline-flex items-start gap-2">
             {topReactions.map((item) => {
               return (
