@@ -42,12 +42,12 @@
 
 /* rolling-paper-card-style */
 @utility rolling-paper-card-style {
-  @apply shadow-basic pt-7.5 flex h-[260px] w-[275px] flex-col items-start justify-between rounded-2xl border border-black/10 px-6 pb-5;
+  @apply shadow-basic pt-7.5 flex h-[232px] w-[208px] shrink-0 flex-col items-start justify-between rounded-2xl border border-black/10 px-6 pb-5 sm:h-[260px] sm:w-[275px] lg:shrink;
 }
 
 /* rolling-paper-list-style */
 @utility rolling-paper-list-style {
-  @apply flex w-full justify-between gap-5;
+  @apply flex w-full gap-5;
 }
 
 /* divider-style */
@@ -84,4 +84,13 @@
 
 @utility animate-fadeOut {
   animation: fadeOut 0.2s ease-out forwards;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
 }

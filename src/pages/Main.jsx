@@ -1,5 +1,5 @@
+import FloatingButtonContainer from '@/components/common/button/FloatingButtonContainer';
 import LinkButton from '@/components/common/button/LinkButton';
-import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import ServiceIntro from '@/components/main/ServiceIntro';
 import { SERVICE_INTRO_DATA } from '@/constants/main';
 

@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 export const SANITIZE_CONFIG = {
   ALLOWED_TAGS: [
     'p',

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import Button from '@/components/common/button/Button';
+import FloatingButtonContainer from '@/components/common/button/FloatingButtonContainer';
 import Dropdown from '@/components/common/dropbox/Dropdown';
-import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import ProfileImage from '@/components/common/profile-image/ProfileImage';
 import TextEditor from '@/components/common/TextEditor';
 import TextInput from '@/components/common/TextInput';
