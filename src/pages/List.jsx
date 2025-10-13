@@ -1,6 +1,6 @@
+import FloatingButtonContainer from '@/components/common/button/FloatingButtonContainer';
 import LinkButton from '@/components/common/button/LinkButton';
 import Error from '@/components/common/Error';
-import FloatingButtonContainer from '@/components/common/FloatingButtonContainer';
 import Title from '@/components/common/Title';
 import RollingPaperListContainer from '@/components/papers/RollingPaperListContainer';
 import useError from '@/hooks/useError';
