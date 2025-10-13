@@ -42,7 +42,10 @@ const MobilePaperList = ({ sort }) => {
             );
           })}
       {hasNext && <div ref={observerRef} className="w-10 shrink-0" />}
-      {isFetching && <div className="text-gray-500">로딩 중...</div>}
+      {isFetching &&
+        LIST_LIMIT_ARRAY.slice(0, 2).map((_, idx) => {
+          return <RollingPaperCardSkeleton key={`fetch-${idx}`} />;
+        })}
     </div>
   );
 };
