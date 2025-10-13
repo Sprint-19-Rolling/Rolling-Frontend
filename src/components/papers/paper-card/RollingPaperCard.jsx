@@ -26,22 +26,21 @@ const RollingPaperCard = ({
   backgroundColor,
   backgroundImageURL,
 }) => {
-  // 도형 렌더링
+  const cardSvgStyle = 'absolute -bottom-12 -right-4 sm:bottom-0 sm:right-0';
   const renderShape = () => {
-    // backgroundImageURL이 존재하면 색상 도형 대신 이미지 배경 사용
     if (backgroundImageURL) {
       return null;
     }
 
     switch (backgroundColor) {
       case 'beige':
-        return <Card.Beige />;
+        return <Card.Beige className={cardSvgStyle} />;
       case 'purple':
-        return <Card.Purple />;
+        return <Card.Purple className={cardSvgStyle} />;
       case 'blue':
-        return <Card.Blue />;
+        return <Card.Blue className={cardSvgStyle} />;
       case 'green':
-        return <Card.Green />;
+        return <Card.Green className={cardSvgStyle} />;
       default:
         return null;
     }
@@ -60,7 +59,7 @@ const RollingPaperCard = ({
       style={backgroundImageURL && backgroundStyle}>
       {renderShape()}
       {/* 콘텐츠 */}
-      <div className="flex flex-col items-start gap-3">
+      <div className="z-40 flex flex-col items-start gap-3">
         <Title as="h3" className={backgroundImageURL && 'text-white'}>
           To. {name}
         </Title>
