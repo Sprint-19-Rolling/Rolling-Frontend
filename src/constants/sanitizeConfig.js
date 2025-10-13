@@ -35,6 +35,7 @@ export const SANITIZE_CONFIG_MESSAGECARD = {
   ALLOWED_ATTR: ['src', 'alt', 'class', 'style'],
 };
 
+// DOMPurify의 전역 훅을 설정합니다.
 DOMPurify.addHook('uponSanitizeAttribute', (node, data) => {
   if (data.attrName === 'style') {
     const allowedStyles = [
