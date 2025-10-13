@@ -42,7 +42,7 @@
 
 /* rolling-paper-card-style */
 @utility rolling-paper-card-style {
-  @apply shadow-basic pt-7.5 flex h-[232px] w-[208px] shrink-0 flex-col items-start justify-between rounded-2xl border border-black/10 px-6 pb-5 sm:h-[260px] sm:w-[275px];
+  @apply shadow-basic pt-7.5 flex h-[232px] w-[208px] shrink-0 flex-col items-start justify-between rounded-2xl border border-black/10 px-6 pb-5 sm:h-[260px] sm:w-[275px] sm:shrink;
 }
 
 /* rolling-paper-list-style */
