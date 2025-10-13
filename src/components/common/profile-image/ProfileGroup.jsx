@@ -1,3 +1,4 @@
+import { cn } from '@/utils/style';
 import ProfileImage from './ProfileImage';
 
 /**
@@ -31,7 +32,7 @@ const ProfileGroup = ({ recentMessages = [], messageCount }) => {
             borderColor="white"
             isSelected={false}
             isClickable={false}
-            className={index === 0 ? '' : '-ml-2'}
+            className={cn(index > 0 && '-ml-2')}
           />
         );
       })}
