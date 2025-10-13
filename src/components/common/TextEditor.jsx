@@ -183,6 +183,8 @@ const useChecklistToolbarManager = (reactQuillRef) => {
 
 const TextEditor = ({ value, onChange, onFontChange, font }) => {
   const reactQuillRef = useRef(null);
+  const lastSelectionFontRef = useRef(null); // 마지막 선택 영역의 폰트 추적
+
   useFontPersistence(reactQuillRef);
   useChecklistToolbarManager(reactQuillRef);
 
@@ -202,28 +204,45 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
       // 텍스트가 있을 때는 전체에 폰트 적용
       quill.formatText(0, length, { font }, 'api');
     }
+
+    // 외부에서 폰트가 변경되면 ref도 업데이트
+    lastSelectionFontRef.current = font;
   }, [font]);
 
-  // Quill에서 글꼴 변경 감지 → 외부로 전달 (선택 영역 기준)
+  // Quill에서 글꼴 변경 감지 → 외부로 전달 (툴바 사용 시만)
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
     if (!quill || !onFontChange) {
       return;
     }
 
-    const handleSelectionChange = (range) => {
+    const handleTextChange = (delta, oldDelta, source) => {
+      // 'user' 소스는 사용자 입력, 'api' 소스는 프로그래밍 방식 변경
+      if (source !== 'user') {
+        return;
+      }
+
+      // 폰트 변경이 포함된 경우만 체크
+      const hasFontChange = delta.ops?.some((op) => op.attributes?.font);
+      if (!hasFontChange) {
+        return;
+      }
+
+      const range = quill.getSelection();
       if (!range) {
         return;
       }
+
       const format = quill.getFormat(range);
-      if (format.font && format.font !== font) {
+      if (format.font && format.font !== lastSelectionFontRef.current) {
+        lastSelectionFontRef.current = format.font;
         onFontChange(format.font);
       }
     };
 
-    quill.on('selection-change', handleSelectionChange);
-    return () => quill.off('selection-change', handleSelectionChange);
-  }, [onFontChange, font]);
+    quill.on('text-change', handleTextChange);
+    return () => quill.off('text-change', handleTextChange);
+  }, [onFontChange]);
 
   // 에디터 공백 감지 (placeholder 처리)
   useEffect(() => {
