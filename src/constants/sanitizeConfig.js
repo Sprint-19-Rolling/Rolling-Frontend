@@ -30,5 +30,5 @@ export const SANITIZE_CONFIG = {
 
 export const SANITIZE_CONFIG_MESSAGECARD = {
   ALLOWED_TAGS: ['p', 'br', 'ol', 'ul', 'li', 'span', 'img'],
-  ALLOWED_ATTR: ['src', 'alt', 'class'],
+  ALLOWED_ATTR: ['src', 'alt', 'class', 'style'],
 };
