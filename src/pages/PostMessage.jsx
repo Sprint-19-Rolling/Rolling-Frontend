@@ -28,44 +28,19 @@ const PostMessage = () => {
   const [profileImageURL, setProfileImageURL] = useState('');
   const [selectedFont, setSelectedFont] = useState('Noto Sans');
 
-  // TextEditor에서 폰트 변경 시 호출 (fontKey를 직접 받음)
-  const handleEditorFontChange = (fontKey) => {
-    if (!fontKey) {
-      return;
-    }
-
-    // 선택된 폰트 상태 업데이트
-    setSelectedFont(fontKey);
-
-    // 외부 드롭다운도 동기화
-    const displayName = FONT_DISPLAY_NAMES[fontKey];
-    if (displayName && fontRef.current?.setValue) {
-      fontRef.current.setValue(displayName);
-    }
-  };
-
-  // 외부 Dropdown에서 폰트 변경 시 호출
-  const handleDropdownFontChange = () => {
-    const selectedDisplayName = fontRef.current?.getValue();
-    if (!selectedDisplayName) {
-      return;
-    }
-
-    const fontKey = Object.keys(FONT_DISPLAY_NAMES).find(
-      (key) => FONT_DISPLAY_NAMES[key] === selectedDisplayName
-    );
-
-    if (fontKey) {
-      setSelectedFont(fontKey);
-    }
-  };
-
   const { loading, profileImages } = useProfileImages();
   const { isSubmitting, submitMessage } = usePostMessage();
 
+  // 오른쪽 리스트에서 첫 번째 이미지를 제외한 이미지들 관리
+  const [rightImages, setRightImages] = useState([]);
+
   useEffect(() => {
     if (!loading && profileImages && profileImages.length > 0) {
-      setProfileImageURL((prev) => prev || profileImages[0]);
+      // 첫 번째 이미지를 왼쪽 기본 이미지로 세팅
+      setProfileImageURL(profileImages[0]);
+
+      // 오른쪽 이미지는 첫 번째 이미지를 제외한 나머지 이미지들
+      setRightImages(profileImages.slice(1));
     }
   }, [loading, profileImages]);
 
@@ -98,10 +73,8 @@ const PostMessage = () => {
   const isButtonDisabled =
     isSubmitting ||
     isContentEmpty ||
-    !fromInput.value ||
-    fromInput.value.trim() === '' ||
-    !profileImageURL ||
-    profileImageURL.trim() === '' ||
+    !fromInput.value?.trim() ||
+    !profileImageURL?.trim() ||
     !relationshipRef.current?.getValue() ||
     !fontRef.current?.getValue();
 
@@ -109,6 +82,7 @@ const PostMessage = () => {
     <form
       className="mx-auto flex max-w-[720px] flex-col gap-[50px] pb-20 pt-12"
       onSubmit={handleSubmit}>
+      {/* From 입력 */}
       <div className="flex flex-col gap-4">
         <label
           htmlFor="From"
@@ -121,11 +95,12 @@ const PostMessage = () => {
           {...fromInput}
         />
       </div>
+
+      {/* 프로필 이미지 선택 영역 */}
       <div>
         <Title className="mb-[12px]">프로필 이미지</Title>
-        {/* 모바일: 가로 배치, 데스크톱: 가로 배치 */}
         <div className="mt-2 flex flex-row items-start gap-4">
-          {/* 선택된 프로필 이미지 */}
+          {/* 왼쪽 - 선택된 프로필 이미지 */}
           <div className="mt-[20px] flex flex-shrink-0 sm:mt-[7px]">
             {profileImageURL && (
               <ProfileImage
@@ -137,19 +112,19 @@ const PostMessage = () => {
               />
             )}
           </div>
-          {/* 선택 가능한 이미지 목록 */}
+
+          {/* 오른쪽 - 선택 가능한 이미지 리스트 */}
           <div className="flex flex-1 flex-col gap-2">
             <p className="text-base font-medium text-gray-700">
               프로필 이미지를 선택해주세요!
             </p>
-            {/* 모바일: 5개씩 고정, 태블릿/데스크톱: 1줄 배치 */}
             <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:gap-[2px]">
               {loading ? (
                 <p className="w-full text-sm text-gray-400">
                   프로필 이미지를 불러오는 중...
                 </p>
-              ) : profileImages && profileImages.length > 0 ? (
-                profileImages.map((url) => {
+              ) : rightImages && rightImages.length > 0 ? (
+                rightImages.map((url) => {
                   return (
                     <div key={url} className="w-[calc(20%-8px)] sm:w-auto">
                       <ProfileImage
@@ -172,6 +147,8 @@ const PostMessage = () => {
           </div>
         </div>
       </div>
+
+      {/* 관계 선택 */}
       <div className="flex flex-col gap-4">
         <Title>상대와의 관계</Title>
         <Dropdown
@@ -180,24 +157,53 @@ const PostMessage = () => {
           defaultValue="지인"
         />
       </div>
+
+      {/* 내용 입력 */}
       <div className="flex flex-col gap-4">
         <Title>내용을 입력해 주세요</Title>
         <TextEditor
           value={content}
           onChange={setContent}
           font={selectedFont}
-          onFontChange={handleEditorFontChange}
+          onFontChange={(fontKey) => {
+            if (!fontKey) {
+              return;
+            }
+            setSelectedFont(fontKey);
+
+            const displayName = FONT_DISPLAY_NAMES[fontKey];
+            if (displayName && fontRef.current?.setValue) {
+              fontRef.current.setValue(displayName);
+            }
+          }}
         />
       </div>
+
+      {/* 폰트 선택 */}
       <div className="flex flex-col gap-4">
         <Title>폰트 선택</Title>
         <Dropdown
           ref={fontRef}
           items={FONT_ITEMS}
           defaultValue="Noto Sans"
-          onSelect={handleDropdownFontChange}
+          onSelect={() => {
+            const selectedDisplayName = fontRef.current?.getValue();
+            if (!selectedDisplayName) {
+              return;
+            }
+
+            const fontKey = Object.keys(FONT_DISPLAY_NAMES).find(
+              (key) => FONT_DISPLAY_NAMES[key] === selectedDisplayName
+            );
+
+            if (fontKey) {
+              setSelectedFont(fontKey);
+            }
+          }}
         />
       </div>
+
+      {/* 제출 버튼 */}
       <FloatingButtonContainer>
         <Button
           type="submit"
