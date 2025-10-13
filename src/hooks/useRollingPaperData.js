@@ -12,7 +12,7 @@ import useError from '@/hooks/useError';
  * @param {string} [sort] - 정렬 기준 ('like' 또는 undefined)
  * @param {'desktop' | 'mobile'} [mode='desktop'] - 데이터 로드 모드
  * @returns {{
- *   data: Object[] | null,
+ *   data: Object | null,
  *   loading: boolean,
  *   goNext: () => void,
  *   goPrev: () => void,
