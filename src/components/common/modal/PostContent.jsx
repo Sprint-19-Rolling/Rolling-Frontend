@@ -1,32 +1,94 @@
 import DOMPurify from 'dompurify';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
+import { FONT_CLASSES, QUILL_FONT_CLASSES } from '@/constants/fontMap';
 import { SANITIZE_CONFIG } from '@/constants/sanitizeConfig';
-
-const FONT_CLASSES = {
-  Pretendard: 'font-sans',
-  'Noto Sans': 'ff-noto',
-  나눔명조: 'ff-nanum-myeongjo',
-  '나눔손글씨 손편지체': 'ff-nanum-sonpyeonji',
-};
 
 const textStyle = (font) => {
   const fontClass = FONT_CLASSES[font] || 'font-sans';
-  return `font-15-regular sm:font-18-regular text-gray-900 ${fontClass}`;
+
+  return `${fontClass} text-gray-900`;
 };
 
-/**
- * React Quill 에디터의 HTML 값을 안전하게 출력하는 컴포넌트
- */
-const PostContent = ({ htmlContent, font }) => {
-  const cleanHtml = useMemo(
-    () => DOMPurify.sanitize(htmlContent, SANITIZE_CONFIG),
-    [htmlContent]
-  );
+const PostContent = ({ htmlContent, font, className, card }) => {
+  const contentRef = useRef(null);
+
+  const cleanHtml = useMemo(() => {
+    let sanitized = DOMPurify.sanitize(htmlContent, SANITIZE_CONFIG);
+
+    sanitized = sanitized.replace(/<span class="ql-ui".*?<\/span>/g, '');
+
+    return sanitized;
+  }, [htmlContent]);
+
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) {
+      return;
+    }
+
+    container.innerHTML = cleanHtml;
+
+    const listItems = container.querySelectorAll('li');
+    listItems.forEach((li) => {
+      li.style.position = 'relative';
+
+      li.style.paddingLeft = '1.5em';
+    });
+
+    const lists = [
+      {
+        selector: 'li[data-list="ordered"]',
+        content: (index) => `${index + 1}. `,
+      },
+
+      { selector: 'li[data-list="bullet"]', content: () => ' • ' },
+
+      {
+        selector: 'li[data-list="unchecked"]',
+        content: () => '☐ ',
+        style: { color: '#1f2937' },
+      },
+
+      {
+        selector: 'li[data-list="checked"]',
+        content: () => '☑ ',
+        style: { fontWeight: 'bold', color: 'rgb(31, 41, 55)' },
+      },
+    ];
+
+    lists.forEach(({ selector, style }) => {
+      const items = container.querySelectorAll(selector);
+      items.forEach((li) => {
+        if (li.querySelector('.ql-ui')) {
+          return;
+        }
+
+        const ui = document.createElement('span');
+        ui.className = 'ql-ui';
+
+        if (style) {
+          Object.assign(ui.style, style);
+        }
+
+        li.prepend(ui);
+      });
+    });
+  }, [cleanHtml]);
+
+  const quillFontClass = QUILL_FONT_CLASSES[font] || '';
 
   return (
     <div
-      className={`quill-content-view ${textStyle(font)}`}
-      dangerouslySetInnerHTML={{ __html: cleanHtml }}
+      ref={contentRef}
+      className={`ql-editor w-full ${textStyle(font)} ${quillFontClass} ${className}`}
+      style={{
+        padding: 0,
+        ...(card
+          ? {
+              overflow: 'hidden',
+            }
+          : {}),
+      }}
     />
   );
 };

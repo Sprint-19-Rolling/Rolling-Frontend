@@ -79,7 +79,7 @@
 
 .ql-editor {
   font-family: 'Noto Sans KR', sans-serif;
-  min-height: 260px;
+  /*min-height: 260px;*/
 }
 
 .ql-editor.ql-blank::before {
@@ -101,6 +101,7 @@
 
 .ql-editor li {
   list-style-type: none !important;
+  /* PostContent.jsx에서 인라인 스타일로 적용하므로, 이 코드는 Quill 에디터에서만 유효 */
   padding-left: 1.5em;
   position: relative;
 }
@@ -119,7 +120,6 @@
   padding-left: 1.5em;
 }
 .ql-editor li[data-list='check'] > .ql-ui {
-  position: absolute;
   left: 0;
   color: #9ca3af !important;
   cursor: pointer;
@@ -166,7 +166,6 @@
 }
 
 .ql-editor li[data-list='check'] > .ql-ui {
-  position: absolute;
   left: 0;
   color: #9ca3af !important;
   cursor: pointer;
@@ -257,7 +256,7 @@ button.ql-list.ql-active {
 }
 
 .ql-snow.ql-toolbar button.ql-list.ql-active .ql-stroke,
-.ql-snow.ql-toolbar button.ql-list.ql-active .ql-stroke,
+.ql-snow .ql-toolbar button.ql-list.ql-active .ql-stroke,
 button.ql-list.ql-active .ql-stroke {
   stroke: #7c3aed !important;
 }
@@ -577,4 +576,26 @@ div.ql-snow .ql-picker-options .ql-picker-item.ql-selected {
 
 .ql-toolbar .ql-formats:nth-child(7) {
   margin-right: 1px !important;
+}
+
+.ql-editor li[data-list='check'] {
+  list-style-type: none !important;
+  position: relative;
+}
+
+.ql-editor li[data-list='check'] > .ql-ui {
+  left: 0;
+  top: 0.15em;
+  color: #9ca3af !important;
+  cursor: pointer;
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ql-editor {
+  height: auto !important;
+  max-height: none !important;
 }

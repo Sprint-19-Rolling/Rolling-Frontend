@@ -1,5 +1,3 @@
-import DOMPurify from 'dompurify';
-
 export const SANITIZE_CONFIG = {
   ALLOWED_TAGS: [
     'p',
@@ -26,38 +24,36 @@ export const SANITIZE_CONFIG = {
     'blockquote',
     'code',
     'pre',
+    'input',
   ],
-  ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style'],
+  ALLOWED_ATTR: [
+    'href',
+    'src',
+    'alt',
+    'title',
+    'class',
+    'style',
+    'type',
+    'checked',
+    'data-list',
+    'data-checked',
+    'align',
+  ],
+  ALLOW_ARBITRARY_ATTRIBUTES: true,
+  KEEP_CONTENT: true,
+  ALLOWED_CSS_PROPERTIES: [
+    'font-size',
+    'text-align',
+    'color',
+    'background-color',
+    'font-weight',
+    'font-style',
+    'text-decoration',
+    'line-height',
+    'letter-spacing',
+    'position',
+    'left',
+    'padding-left',
+    'top',
+  ],
 };
-
-export const SANITIZE_CONFIG_MESSAGECARD = {
-  ALLOWED_TAGS: ['p', 'br', 'ol', 'ul', 'li', 'span', 'img'],
-  ALLOWED_ATTR: ['src', 'alt', 'class', 'style'],
-};
-
-// DOMPurify의 전역 훅을 설정합니다.
-DOMPurify.addHook('uponSanitizeAttribute', (node, data) => {
-  if (data.attrName === 'style') {
-    const allowedStyles = [
-      'color',
-      'background-color',
-      'text-align',
-      'font-weight',
-      'font-style',
-      'text-decoration',
-    ];
-    const styleObj = {};
-    data.attrValue.split(';').forEach((item) => {
-      const [key, value] = item.split(':').map((s) => s?.trim());
-      if (key && value && allowedStyles.includes(key.toLowerCase())) {
-        styleObj[key] = value;
-      }
-    });
-    data.attrValue = Object.entries(styleObj)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join('; ');
-    if (!data.attrValue) {
-      delete node.style;
-    }
-  }
-});

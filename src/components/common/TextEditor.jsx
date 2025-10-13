@@ -183,29 +183,35 @@ const useChecklistToolbarManager = (reactQuillRef) => {
 
 const TextEditor = ({ value, onChange, onFontChange, font }) => {
   const reactQuillRef = useRef(null);
-  const lastSelectionFontRef = useRef(null); // 마지막 선택 영역의 폰트 추적
+  const lastSelectionFontRef = useRef(null);
+
+  const handleChange = (content) => {
+    onChange(content);
+  };
 
   useFontPersistence(reactQuillRef);
   useChecklistToolbarManager(reactQuillRef);
 
-  // 외부 Dropdown에서 선택된 폰트 → 에디터 전체에 적용
+  // 외부 Dropdown에서 선택된 폰트 → 선택된 영역에만 적용 (수정됨!)
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
     if (!quill || !font) {
       return;
     }
 
-    // 전체 텍스트 범위 가져오기
-    const length = quill.getLength();
-    if (length <= 1) {
-      // 텍스트가 없을 때는 커서 위치에 폰트 설정
+    const range = quill.getSelection();
+
+    if (!range) {
+      // 포커스가 없으면 다음 입력에 적용될 포맷만 설정
+      quill.format('font', font, 'api');
+    } else if (range.length === 0) {
+      // 커서만 있고 선택 영역이 없으면 다음 입력에 적용
       quill.format('font', font, 'api');
     } else {
-      // 텍스트가 있을 때는 전체에 폰트 적용
-      quill.formatText(0, length, { font }, 'api');
+      // 선택 영역이 있으면 해당 영역에만 폰트 적용
+      quill.formatText(range.index, range.length, { font }, 'api');
     }
 
-    // 외부에서 폰트가 변경되면 ref도 업데이트
     lastSelectionFontRef.current = font;
   }, [font]);
 
@@ -217,12 +223,10 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
     }
 
     const handleTextChange = (delta, oldDelta, source) => {
-      // 'user' 소스는 사용자 입력, 'api' 소스는 프로그래밍 방식 변경
       if (source !== 'user') {
         return;
       }
 
-      // 폰트 변경이 포함된 경우만 체크
       const hasFontChange = delta.ops?.some((op) => op.attributes?.font);
       if (!hasFontChange) {
         return;
@@ -260,16 +264,13 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
         .trim();
 
     const hasContent = () => {
-      // 텍스트가 있는지 확인
       if (getVisibleText().length > 0) {
         return true;
       }
-      // 리스트 요소가 있는지 확인
       const hasLists = root.querySelector('ol, ul');
       if (hasLists) {
         return true;
       }
-      // 이미지나 다른 블록 요소가 있는지 확인
       const hasBlocks = root.querySelector('img, iframe, video');
       if (hasBlocks) {
         return true;
@@ -312,6 +313,7 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
       toolbar: {
         container: [
           [{ font: Font.whitelist }],
+          [{ size: ['small', false, 'large', 'huge'] }],
           ['bold', 'italic', 'underline', 'strike'],
           [{ align: [] }],
           [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
@@ -339,7 +341,7 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
         ref={reactQuillRef}
         theme="snow"
         value={value || ''}
-        onChange={onChange}
+        onChange={handleChange}
         modules={modules}
         placeholder="여기에 내용을 입력해주세요."
       />
