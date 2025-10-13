@@ -1,0 +1,85 @@
+/* Pretendard Regular */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/woff2/Pretendard-Regular.woff2') format('woff2'),
+    url('/fonts/woff/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pretendard Medium */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/woff2/Pretendard-Medium.woff2') format('woff2'),
+    url('/fonts/woff/Pretendard-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pretendard Bold */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/fonts/woff2/Pretendard-Bold.woff2') format('woff2'),
+    url('/fonts/woff/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Noto Sans KR Regular */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src:
+    url('/fonts/woff2/noto-sans-kr-regular.woff2') format('woff2'),
+    url('/fonts/woff/noto-sans-kr-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Noto Sans KR Bold */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src:
+    url('/fonts/woff2/noto-sans-kr-bold.woff2') format('woff2'),
+    url('/fonts/woff/noto-sans-kr-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 나눔 명조 Regular */
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src:
+    url('/fonts/woff2/nanum-myeongjo-regular.woff2') format('woff2'),
+    url('/fonts/woff/nanum-myeongjo-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 나눔 명조 Bold */
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src:
+    url('/fonts/woff2/nanum-myeongjo-bold.woff2') format('woff2'),
+    url('/fonts/woff/nanum-myeongjo-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 나눔손글씨 손편지체 */
+@font-face {
+  font-family: 'Sonpyeonji';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Handletter.woff')
+    format('woff');
+  font-weight: normal;
+  font-display: swap;
+}

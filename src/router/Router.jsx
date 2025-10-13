@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { Routes, Route, BrowserRouter } from 'react-router';
+import MainLayout from '@/components/common/layout/MainLayout';
+import PostLayout from '@/components/common/layout/PostLayout';
 import List from '@/pages/List';
 import Main from '@/pages/Main';
 import Post from '@/pages/Post';
@@ -10,13 +12,17 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Main />} />
-        <Route path="/list" element={<List />} />
-        <Route path="/post">
-          <Route index element={<Post />} />
-          <Route path=":id" element={<PostDetail />} />
-          <Route path=":id/edit" element={<PostEdit />} />
-          <Route path=":id/message" element={<PostMessage />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Main />} />
+          <Route path="list" element={<List />} />
+          <Route path="post">
+            <Route index element={<Post />} />
+            <Route path=":id/message" element={<PostMessage />} />
+          </Route>
+        </Route>
+        <Route element={<PostLayout />}>
+          <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/post/:id/edit" element={<PostEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>
