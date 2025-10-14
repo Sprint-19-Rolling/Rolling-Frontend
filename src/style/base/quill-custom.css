@@ -602,3 +602,9 @@ div.ql-snow .ql-picker-options .ql-picker-item.ql-selected {
 .ql-picker-label:hover::before {
   color: #7c3aed !important;
 }
+.ql-snow .ql-picker.ql-size .ql-picker-item.ql-selected {
+  color: #7c3aed !important;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label.ql-active {
+  color: #7c3aed !important;
+}
