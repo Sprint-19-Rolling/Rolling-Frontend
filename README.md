@@ -70,7 +70,7 @@
 - SEO 및 메타태그 설정 (OG/Twitter 카드, 파비콘)
 - React Router 라우팅 설정
 - GitHub Wiki 문서화
-- README 작성
+- README 작성, 시연 영상 및 발표 PPT 제작
 
 ### 양은지
 
@@ -98,6 +98,11 @@
 - 공통 API 오류 처리 로직 구현
 - 롤링페이퍼 생성 페이지 오류 처리 및 API 분리
 - API 함수 단위 리팩토링
+
+**기타**
+
+- 프로젝트 발표 및 PPT 제작
+- 버그 점검 및 담당자 피드백 전달
 
 ### 최희락
 
@@ -250,28 +255,66 @@
 
 |                                                                         PC                                                                          |                                                                         Tablet                                                                          |                                                                         Mobile                                                                          |
 | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img width="100%" alt="Rolling 서비스 메인 페이지 PC 화면" src="https://github.com/user-attachments/assets/c0945b67-9839-44f7-ad24-c5c7b94f0f3c" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Tablet 화면" src="https://github.com/user-attachments/assets/035aaf9b-0a5a-4168-8add-654775b8e0ca" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Mobile 화면" src="https://github.com/user-attachments/assets/79734a5f-dfaf-4ea4-8206-c1dbd21a8356" /> |
+| <img width="100%" alt="Rolling 서비스 메인 페이지 PC 화면" src="https://github.com/user-attachments/assets/7c9b4527-a1bd-4f7e-b0b4-3fd0ad8004d8" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Tablet 화면" src="https://github.com/user-attachments/assets/712b6a78-abcb-4909-9ed6-e7c39db571b7" /> | <img width="100%" alt="Rolling 서비스 메인 페이지 Mobile 화면" src="https://github.com/user-attachments/assets/3fbe3d5f-770b-490b-a907-11e83e7dfa5c" /> |
 
 ### 🖥️ 리스트 페이지
+
+|                                                                         PC                                                                          |                                                                         Tablet                                                                          |                                                                         Mobile                                                                          |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: |
+<img width="100%" alt="Rolling 서비스 리스트 페이지 PC 화면" src="https://github.com/user-attachments/assets/d3914f0b-fe9f-4e99-9dd9-3004319bc83d" /> | <img width="100%" alt="Rolling 서비스 리스트 페이지 Tablet 화면" src="https://github.com/user-attachments/assets/bb2391de-29b6-49a5-ad2a-0c60f3f24157" /> | <img width="100%" alt="Rolling 서비스 리스트 페이지 Mobile 화면" src="https://github.com/user-attachments/assets/2d15324c-dab7-4e5e-a37d-6f88024f6ae1" /> |
 
 ### 🖥️ 롤링페이퍼 생성 페이지
 
 **롤링페이퍼 생성하기**
 | 롤링페이퍼 생성 | 에러 처리 |
 | :---: | :---: |
-| <img width="100%" alt="롤링페이퍼 생성 성공" src="https://github.com/user-attachments/assets/8ab87ffd-ce3c-4113-9396-9d6cd232d551" /> | <img width="100%" alt="롤링페이퍼 생성 에러" src="https://github.com/user-attachments/assets/5e743b70-1bf7-45be-9f28-fcf474a7cec8" /> |
+| <img width="100%" alt="롤링페이퍼 생성 성공" src="https://github.com/user-attachments/assets/329654a1-673d-4019-acd1-bb0935f35d91" /> | <img width="100%" alt="롤링페이퍼 생성 에러" src="https://github.com/user-attachments/assets/5e743b70-1bf7-45be-9f28-fcf474a7cec8" /> |
 
 **반응형**
 
 |                                                                    PC                                                                     |                                                                    Tablet                                                                    |                                                                    Mobile                                                                    |
 | :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img width="100%" alt="롤링페이퍼 생성  PC 화면" src="https://github.com/user-attachments/assets/7ab7fe19-0260-481c-bc05-48811054a60b" /> | <img width="100%" alt="롤링페이퍼 생성 Tablet 화면" src="https://github.com/user-attachments/assets/44637d2c-3e62-451a-b7ba-cdd0906ed820" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="https://github.com/user-attachments/assets/01c59a7d-d00a-41c9-9b38-9eac30e858bc" /> |
+| <img width="100%" alt="롤링페이퍼 생성  PC 화면" src="https://github.com/user-attachments/assets/1c46651c-63a9-4269-9b54-8dbf6b48882b" /> | <img width="100%" alt="롤링페이퍼 생성 Tablet 화면" src="https://github.com/user-attachments/assets/fe5f2ca7-d8d1-4a3f-a91a-82cbabb7875b" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="https://github.com/user-attachments/assets/f87d3e02-eb29-46a5-8154-dd6b493274a6" /> |
 
 ### 🖥️ 롤링페이퍼 리스트 페이지
 
+**롤링페이퍼 공유하기**
+| 카카오톡 공유하기 | URL 복사 |
+| :---: | :---: |
+| <img width="100%" alt="카카오톡 공유하기" src="" /> | <img width="100%" alt="URL 복사" src="" /> |
+
+**반응형**
+
+|                                                                    PC                                                                     |                                                                    Tablet                                                                    |                                                                    Mobile                                                                    |
+| :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="100%" alt="롤링페이퍼 생성 PC 화면" src="https://github.com/user-attachments/assets/7ab7fe19-0260-481c-bc05-48811054a60b" /> | <img width="100%" alt="롤링페이퍼 생성 Tablet 화면" src="https://github.com/user-attachments/assets/44637d2c-3e62-451a-b7ba-cdd0906ed820" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="https://github.com/user-attachments/assets/01c59a7d-d00a-41c9-9b38-9eac30e858bc" /> |
+
+
 ### 🖥️ 롤링페이퍼 리스트 편집 페이지
 
+**롤링페이퍼 삭제하기**
+| 롤링페이퍼 메세지 삭제 | 롤링페이퍼 삭제 |
+| :---: | :---: |
+| <img width="100%" alt="롤링페이퍼 메세지 삭제 성공" src="" /> | <img width="100%" alt="롤링페이퍼 삭제 성공" src="" /> |
+
+**반응형**
+
+|                                                                    PC                                                                     |                                                                    Tablet                                                                    |                                                                    Mobile                                                                    |
+| :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="100%" alt="롤링페이퍼 편집페이지 PC 화면" src="" /> | <img width="100%" alt="롤링페이퍼 편집페이지 Tablet 화면" src="" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="" /> |
+
 ### 🖥️ 롤링페이퍼 메세지 등록 페이지
+
+**롤링페이퍼 메세지 등록**
+| 롤링페이퍼 메세지 등록 | 에러처리 |
+| :---: | :---: |
+| <img width="100%" alt="롤링페이퍼 메세지 생성 성공" src="https://github.com/user-attachments/assets/92c7f6ce-2ee6-419a-9826-14d6c5ecf705" /> | <img width="100%" alt="롤링페이퍼 생성 에러" src="https://github.com/user-attachments/assets/01c8b0ed-0f6c-49ff-a1e4-3023be49fa77" /> |
+
+**반응형**
+
+|                                                                    PC                                                                     |                                                                    Tablet                                                                    |                                                                    Mobile                                                                    |
+| :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="100%" alt="롤링페이퍼 메세지 생성 PC 화면" src="https://github.com/user-attachments/assets/46ed66e3-d51d-413d-9845-f7b04c17e448" /> | <img width="100%" alt="롤링페이퍼 메세지 생성 Tablet 화면" src="https://github.com/user-attachments/assets/56405b47-3e24-475c-87bb-8eff1fed5450" /> | <img width="100%" alt="롤링페이퍼 메세지 생성 Mobile 화면" src="https://github.com/user-attachments/assets/0ad4fe74-a9c3-4f44-8c39-2b5a02564f50" /> |
 
 ## 👀 플로우 차트
 
@@ -283,4 +326,4 @@
 - [📝 Wiki](https://github.com/Sprint-19-Rolling/frontend/wiki)
 - 팀 노션(추가 예정)
 - 발표 자료(추가 예정)
-- 시연 영상(추가 예정)
+- [🎥 시연 영상](https://youtu.be/PKDVtuITyT4?si=Vbo-LUmxBeZKjDM9)
