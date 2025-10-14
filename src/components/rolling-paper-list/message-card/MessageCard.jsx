@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Icons from '@/assets/icons/icons';
 import Button from '@/components/common/button/Button';
 import PostContent from '@/components/common/modal/PostContent';
@@ -31,6 +32,8 @@ const MessageCard = ({
   edit = false,
   onDelete,
 }) => {
+  const cardRef = useRef(null);
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -43,8 +46,19 @@ const MessageCard = ({
     onDelete?.();
   };
 
+  useEffect(() => {
+    if (!cardRef.current) {
+      return;
+    }
+    const editor = cardRef.current.querySelector('.ql-editor');
+    if (editor) {
+      editor.style.cursor = 'pointer';
+    }
+  }, [content]);
+
   return (
     <div
+      ref={cardRef}
       role="button"
       tabIndex={0}
       className={cn(
@@ -73,12 +87,14 @@ const MessageCard = ({
           <Icons.DeletedIcon />
         </Button>
       )}
+
       <PostContent
         htmlContent={content}
-        className={'line-clamp-2 sm:line-clamp-3'}
+        className="line-clamp-2 cursor-pointer sm:line-clamp-3"
         font={font}
         card
       />
+
       <DateText className="mt-auto" createdAt={createdAt} />
     </div>
   );
