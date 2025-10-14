@@ -281,7 +281,7 @@
 **롤링페이퍼 공유하기**
 | 카카오톡 공유하기 | URL 복사 |
 | :---: | :---: |
-| <img width="100%" alt="카카오톡 공유하기" src="" /> | <img width="100%" alt="URL 복사" src="" /> |
+| <img width="100%" alt="카카오톡 공유하기" src="https://github.com/user-attachments/assets/165ab877-c424-4c3b-8a1b-1f62466547d3" /> | <img width="100%" alt="URL 복사" src="https://github.com/user-attachments/assets/f912fcaf-cbba-4b53-86c9-4a090fb6aaec" /> |
 
 **롤링페이퍼 이모지 추가**
 | 이모지 추가 | 이모지 확인 |
