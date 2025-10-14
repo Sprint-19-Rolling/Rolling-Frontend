@@ -1,4 +1,4 @@
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef, useEffect, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import '@/style/base/quill-custom.css';
@@ -71,10 +71,12 @@ const useFontPersistence = (reactQuillRef) => {
           if (!selection || selection.length !== 0) {
             continue;
           }
+
           const previousIndex = selection.index - 1;
           if (previousIndex < 0) {
             continue;
           }
+
           const previousFormat = quill.getFormat(previousIndex, 1);
           if (previousFormat.font) {
             setTimeout(() => {
@@ -100,6 +102,7 @@ const useChecklistToolbarManager = (reactQuillRef) => {
     if (!quill) {
       return;
     }
+
     const container = quill.root;
 
     const updateToolbarButtons = () => {
@@ -182,17 +185,21 @@ const useChecklistToolbarManager = (reactQuillRef) => {
 };
 
 const TextEditor = ({ value, onChange, onFontChange, font }) => {
+  const [ready, setReady] = useState(false);
   const reactQuillRef = useRef(null);
   const lastSelectionFontRef = useRef(null);
 
-  const handleChange = (content) => {
-    onChange(content);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => setReady(true), 50); // 50ms 뒤 렌더
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleChange = (content) => onChange(content);
 
   useFontPersistence(reactQuillRef);
   useChecklistToolbarManager(reactQuillRef);
 
-  // 외부 Dropdown에서 선택된 폰트 → 선택된 영역에만 적용 (수정됨!)
+  // 외부 Dropdown에서 선택된 폰트 → 선택된 영역에만 적용
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
     if (!quill || !font) {
@@ -200,22 +207,18 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
     }
 
     const range = quill.getSelection();
-
     if (!range) {
-      // 포커스가 없으면 다음 입력에 적용될 포맷만 설정
       quill.format('font', font, 'api');
     } else if (range.length === 0) {
-      // 커서만 있고 선택 영역이 없으면 다음 입력에 적용
       quill.format('font', font, 'api');
     } else {
-      // 선택 영역이 있으면 해당 영역에만 폰트 적용
       quill.formatText(range.index, range.length, { font }, 'api');
     }
 
     lastSelectionFontRef.current = font;
   }, [font]);
 
-  // Quill에서 글꼴 변경 감지 → 외부로 전달 (툴바 사용 시만)
+  // Quill에서 글꼴 변경 감지 → 외부로 전달
   useEffect(() => {
     const quill = reactQuillRef.current?.getEditor();
     if (!quill || !onFontChange) {
@@ -272,10 +275,7 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
         return true;
       }
       const hasBlocks = root.querySelector('img, iframe, video');
-      if (hasBlocks) {
-        return true;
-      }
-      return false;
+      return !!hasBlocks;
     };
 
     const syncBlankClass = () => {
@@ -337,14 +337,17 @@ const TextEditor = ({ value, onChange, onFontChange, font }) => {
 
   return (
     <div className="editor-wrapper-react">
-      <ReactQuill
-        ref={reactQuillRef}
-        theme="snow"
-        value={value || ''}
-        onChange={handleChange}
-        modules={modules}
-        placeholder="여기에 내용을 입력해주세요."
-      />
+      {ready && (
+        <ReactQuill
+          ref={reactQuillRef}
+          theme="snow"
+          value={value || ''}
+          onChange={handleChange}
+          modules={modules}
+          placeholder="여기에 내용을 입력해주세요."
+          autoFocus={false}
+        />
+      )}
     </div>
   );
 };
