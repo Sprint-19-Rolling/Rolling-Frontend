@@ -71,7 +71,7 @@ const Modal = ({
           date={createdAt}
           profileImgUrl={profileImgUrl}
         />
-        <div className="flex-grow overflow-y-auto">
+        <div className="modal-content flex-grow overflow-y-auto">
           <PostContent htmlContent={contentHtml} font={font} />
         </div>
         <div className="flex justify-center pt-6">
