@@ -608,3 +608,15 @@ div.ql-snow .ql-picker-options .ql-picker-item.ql-selected {
 .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active {
   color: #7c3aed !important;
 }
+
+/* 🔹 카드(요약뷰)에서는 손가락 커서로 강제 */
+.pointer-mode,
+.pointer-mode * {
+  cursor: pointer !important;
+}
+
+/* 🔸 모달(상세뷰)에서는 기본 커서로 강제 */
+.default-mode,
+.default-mode * {
+  cursor: default !important;
+}
