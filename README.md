@@ -283,11 +283,16 @@
 | :---: | :---: |
 | <img width="100%" alt="카카오톡 공유하기" src="" /> | <img width="100%" alt="URL 복사" src="" /> |
 
+**롤링페이퍼 이모지 추가**
+| 이모지 추가 | 이모지 확인 |
+| :---: | :---: |
+| <img width="100%" alt="이모지 추가하기" src="https://github.com/user-attachments/assets/8e376191-41ac-4ed4-8729-a51b4f0a20b2" /> | <img width="100%" alt="이모지 확인" src="https://github.com/user-attachments/assets/ab4fbb13-cad5-4543-b24f-072afdb44a10" /> |
+
 **반응형**
 
 |                                                                    PC                                                                     |                                                                    Tablet                                                                    |                                                                    Mobile                                                                    |
 | :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img width="100%" alt="롤링페이퍼 생성 PC 화면" src="https://github.com/user-attachments/assets/7ab7fe19-0260-481c-bc05-48811054a60b" /> | <img width="100%" alt="롤링페이퍼 생성 Tablet 화면" src="https://github.com/user-attachments/assets/44637d2c-3e62-451a-b7ba-cdd0906ed820" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="https://github.com/user-attachments/assets/01c59a7d-d00a-41c9-9b38-9eac30e858bc" /> |
+| <img width="100%" alt="롤링페이퍼 리스트 PC 화면" src="https://github.com/user-attachments/assets/2948f2a6-8759-47d3-8157-0c3ced5bbcd7" /> | <img width="100%" alt="롤링페이퍼 리스트 Tablet 화면" src="https://github.com/user-attachments/assets/2dd01f7d-5fd9-493d-b2b1-2462a9d86dc2" /> | <img width="100%" alt="롤링페이퍼 리스트 Mobile 화면" src="https://github.com/user-attachments/assets/d5e3a5c7-63ad-412f-a013-073eb46cfb94" /> |
 
 
 ### 🖥️ 롤링페이퍼 리스트 편집 페이지
@@ -295,13 +300,13 @@
 **롤링페이퍼 삭제하기**
 | 롤링페이퍼 메세지 삭제 | 롤링페이퍼 삭제 |
 | :---: | :---: |
-| <img width="100%" alt="롤링페이퍼 메세지 삭제 성공" src="" /> | <img width="100%" alt="롤링페이퍼 삭제 성공" src="" /> |
+| <img width="100%" alt="롤링페이퍼 메세지 삭제 성공" src="https://github.com/user-attachments/assets/32932e79-865f-4e5a-a44c-075027ed4bca" /> | <img width="100%" alt="롤링페이퍼 삭제 성공" src="https://github.com/user-attachments/assets/5596e0be-07a1-452b-8b2e-a6fe94656edd" /> |
 
 **반응형**
 
 |                                                                    PC                                                                     |                                                                    Tablet                                                                    |                                                                    Mobile                                                                    |
 | :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img width="100%" alt="롤링페이퍼 편집페이지 PC 화면" src="" /> | <img width="100%" alt="롤링페이퍼 편집페이지 Tablet 화면" src="" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="" /> |
+| <img width="100%" alt="롤링페이퍼 편집페이지 PC 화면" src="https://github.com/user-attachments/assets/3a6fccb9-06f5-467e-a467-9436a8a032ca" /> | <img width="100%" alt="롤링페이퍼 편집페이지 Tablet 화면" src="https://github.com/user-attachments/assets/eb4d6e28-bd8a-4aba-bb35-1001e8ec748f" /> | <img width="100%" alt="롤링페이퍼 생성 Mobile 화면" src="https://github.com/user-attachments/assets/ba78dd97-0240-468c-8927-805ef41a0592" /> |
 
 ### 🖥️ 롤링페이퍼 메세지 등록 페이지
 
@@ -324,6 +329,5 @@
 
 - [🚀 배포 사이트](https://rolling-7team.vercel.app/)
 - [📝 Wiki](https://github.com/Sprint-19-Rolling/frontend/wiki)
-- 팀 노션(추가 예정)
-- 발표 자료(추가 예정)
+- [🙋 발표 자료](https://drive.google.com/file/d/1Mslh6L-426UW2uy-gXlpvn3DqAnEHMbF/view?usp=sharing)
 - [🎥 시연 영상](https://youtu.be/PKDVtuITyT4?si=Vbo-LUmxBeZKjDM9)
