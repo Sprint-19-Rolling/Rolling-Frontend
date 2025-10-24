@@ -1,0 +1,197 @@
+@import 'tailwindcss';
+@import './fonts.css';
+@import './twUtils.css';
+
+/* Tailwind 테마 설정 */
+@theme {
+  --font-sans:
+    'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-noto: 'Noto Sans KR', sans-serif;
+  --font-nanum-myeongjo: 'Nanum Myeongjo', serif;
+  --font-nanum-sonpyeonji: 'Sonpyeonji', cursive;
+
+  /* 컬러 */
+  --color-purple-100: #f8f0ff;
+  --color-purple-200: #ecd9ff;
+  --color-purple-300: #dcb9ff;
+  --color-purple-400: #c894fd;
+  --color-purple-500: #ab57ff;
+  --color-purple-600: #9935ff;
+  --color-purple-700: #861dee;
+  --color-purple-800: #6e0ad1;
+  --color-purple-900: #5603a7;
+
+  --color-beige-100: #fff0d6;
+  --color-beige-200: #ffe2ad;
+  --color-beige-300: #ffc583;
+  --color-beige-400: #ffae65;
+  --color-beige-500: #ff8832;
+
+  --color-blue-100: #e2f5ff;
+  --color-blue-200: #b1e4ff;
+  --color-blue-300: #7cd2ff;
+  --color-blue-400: #34b9ff;
+  --color-blue-500: #00a2fe;
+
+  --color-green-100: #e4fbdc;
+  --color-green-200: #d0f5c3;
+  --color-green-300: #9be282;
+  --color-green-400: #60cf37;
+  --color-green-500: #2ba600;
+
+  --color-gray-100: #f6f6f6;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #cccccc;
+  --color-gray-400: #999999;
+  --color-gray-500: #555555;
+  --color-gray-600: #4a4a4a;
+  --color-gray-700: #3a3a3a;
+  --color-gray-800: #2b2b2b;
+  --color-gray-900: #181818;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-error: #dc3a3a;
+  --color-surface: #f6f8ff;
+  --color-divider: #ededed;
+
+  /* 텍스트 사이즈 */
+  --text-12: 12px;
+  --leading-12: 18px;
+
+  --text-14: 14px;
+  --leading-14: 20px;
+
+  --text-15: 15px;
+  --leading-15: 22px;
+
+  --text-16: 16px;
+  --leading-16: 24px;
+
+  --text-18: 18px;
+  --leading-18: 28px;
+
+  --text-20: 20px;
+  --leading-20: 30px;
+
+  --text-24: 24px;
+  --leading-24: 36px;
+
+  --text-28: 28px;
+  --leading-28: 42px;
+}
+
+/* 텍스트 스타일 유틸리티 */
+@utility font-28-bold {
+  font-size: var(--text-28);
+  line-height: var(--leading-28);
+  font-weight: 700;
+}
+
+@utility font-24-bold {
+  font-size: var(--text-24);
+  line-height: var(--leading-24);
+  font-weight: 700;
+}
+
+@utility font-24-regular {
+  font-size: var(--text-24);
+  line-height: var(--leading-24);
+  font-weight: 400;
+}
+
+@utility font-20-bold {
+  font-size: var(--text-20);
+  line-height: var(--leading-20);
+  font-weight: 700;
+}
+
+@utility font-20-regular {
+  font-size: var(--text-20);
+  line-height: var(--leading-20);
+  font-weight: 400;
+}
+
+@utility font-18-bold {
+  font-size: var(--text-18);
+  line-height: var(--leading-18);
+  font-weight: 700;
+}
+
+@utility font-18-regular {
+  font-size: var(--text-18);
+  line-height: var(--leading-18);
+  font-weight: 400;
+}
+
+@utility font-16-medium {
+  font-size: var(--text-16);
+  line-height: var(--leading-16);
+  font-weight: 500;
+}
+
+@utility font-16-bold {
+  font-size: var(--text-16);
+  line-height: var(--leading-16);
+  font-weight: 700;
+}
+
+@utility font-16-regular {
+  font-size: var(--text-16);
+  line-height: var(--leading-16);
+  font-weight: 400;
+}
+
+@utility font-15-bold {
+  font-size: var(--text-15);
+  line-height: var(--leading-15);
+  font-weight: 700;
+}
+
+@utility font-15-regular {
+  font-size: var(--text-15);
+  line-height: var(--leading-15);
+  font-weight: 400;
+}
+
+@utility font-14-bold {
+  font-size: var(--text-14);
+  line-height: var(--leading-14);
+  font-weight: 700;
+}
+
+@utility font-14-regular {
+  font-size: var(--text-14);
+  line-height: var(--leading-14);
+  font-weight: 400;
+}
+
+@utility font-12-medium {
+  font-size: var(--text-12);
+  line-height: var(--leading-12);
+  font-weight: 500;
+}
+
+@utility font-12-regular {
+  font-size: var(--text-12);
+  line-height: var(--leading-12);
+  font-weight: 400;
+}
+
+/* font family 유틸리티 */
+@utility ff-noto {
+  font-family: var(--font-noto);
+}
+
+@utility ff-nanum-myeongjo {
+  font-family: var(--font-nanum-myeongjo);
+}
+
+@utility ff-nanum-sonpyeonji {
+  font-family: var(--font-nanum-sonpyeonji);
+}
+
+/* shadow 유틸리티 */
+@utility shadow-basic {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+}

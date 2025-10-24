@@ -1,0 +1,96 @@
+/* container */
+@utility wrapper-px {
+  @apply px-5 md:px-6;
+}
+
+/* content */
+@utility content {
+  @apply mx-auto max-w-[1200px];
+}
+
+/* footer */
+@utility footer-text-bold {
+  @apply font-16-bold text-gray-500;
+}
+
+@utility footer-text {
+  @apply font-16-regular text-gray-500;
+}
+
+@utility footer-link {
+  @apply font-16-bold text-gray-500 hover:text-gray-900;
+}
+
+@utility footer-separator {
+  @apply font-14-regular text-gray-300;
+}
+
+/* card-skeleton-style */
+@utility card-skeleton-style {
+  @apply animate-pulse rounded-lg bg-gray-200;
+}
+
+/* message-card-style */
+@utility message-card-style {
+  @apply shadow-basic flex h-[230px] rounded-3xl bg-white sm:h-[284px] md:h-[280px];
+}
+
+/* message-card-grid-style */
+@utility message-card-grid-style {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+/* rolling-paper-card-style */
+@utility rolling-paper-card-style {
+  @apply shadow-basic pt-7.5 flex h-[232px] w-[208px] shrink-0 flex-col items-start justify-between rounded-2xl border border-black/10 px-6 pb-5 sm:h-[260px] sm:w-[275px] lg:shrink;
+}
+
+/* rolling-paper-list-style */
+@utility rolling-paper-list-style {
+  @apply flex w-full gap-5;
+}
+
+/* divider-style */
+@utility divider-style {
+  @apply h-7 border-l border-gray-200;
+}
+
+/* toast-animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@utility animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+@utility animate-fadeOut {
+  animation: fadeOut 0.2s ease-out forwards;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
+}
